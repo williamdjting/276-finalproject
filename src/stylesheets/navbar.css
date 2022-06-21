@@ -10,7 +10,7 @@
 
 
 
-ul {
+.nav ul {
     display: flex;
     list-style-type: none;
     margin: 0;
@@ -20,7 +20,7 @@ ul {
     text-align: center;
 }
 
-li {
+.nav li {
     list-style: none;
     display: flex;
     padding: 0;
@@ -28,7 +28,7 @@ li {
     align-items: center;
 }
 
-a {
+.nav a {
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -41,7 +41,7 @@ a {
     font-weight: 400;
 }
 
-    a:hover {
+    .nav a:hover {
         color: #ffecd1;
         background-color: #b2967d;
         height: 100%;
