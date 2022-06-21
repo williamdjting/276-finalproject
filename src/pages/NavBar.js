@@ -1,11 +1,13 @@
 import React from 'react'
-
+import '../stylesheets/navbar.css';
 
 
 const NavBar = () => {
     return (
-        <nav>
-            <a href="/" className="logo">Splittr</a>
+
+        <div className="nav">
+            <p className="logo">Splittr</p>
+           
             <ul>
                 <li>
                     <a href="/">Dashboard</a>
@@ -17,11 +19,12 @@ const NavBar = () => {
                 </li>
 
                 <li>
-                    <a href="/login">Login</a>
+                    <a href="/login">Log Out</a>
 
                 </li>
-            </ul>
-        </nav>
+                </ul>
+             
+        </div>
     );
 
 

@@ -1,0 +1,47 @@
+
+.nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 18px 50px;
+    background-color:antiquewhite;
+    
+}
+
+
+
+ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #555;
+    transition: all 0.5s ease 0s;
+    height:100%;
+    padding: 20px 20px;
+    margin: 0;
+}
+
+    a:hover {
+        color: #ffecd1;
+        background-color: #b2967d;
+    }
+
+
+.logo {
+    margin-right: auto;
+    font-size: 20px;
+    padding:0;
+    font-weight:800;
+   
+}

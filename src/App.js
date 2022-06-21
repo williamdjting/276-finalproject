@@ -2,11 +2,11 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import NewForm from "./components/NewForm";
-import WithoutNav from "./components/WithoutNav";
-import WithNav from "./components/WithNav";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import NewForm from "./pages/NewForm";
+import WithoutNav from "./pages/WithoutNav";
+import WithNav from "./pages/WithNav";
 
 function App() {
 
