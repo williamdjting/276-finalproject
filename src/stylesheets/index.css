@@ -7,16 +7,30 @@
   -moz-osx-font-smoothing: grayscale;
 }*/
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
+  background-color: #fefdfd;
+}
+
+.padding {
+  padding: 40px 55px;
+}
+
+.border {
+  border-radius: 5px;
+  border: 1px solid silver;
+}
+
+.margin-bottom {
+  margin-bottom: 30px;
 }
 
 /*code {
