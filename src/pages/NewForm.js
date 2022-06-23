@@ -9,7 +9,7 @@ const NewForm = () => {
 
   const passData = (data) => {
     setUserListData(data);
-    //console.log("parent: " + data);
+    console.log("parent: " + data);
   };
 
   return (
