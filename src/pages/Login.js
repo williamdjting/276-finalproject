@@ -1,5 +1,6 @@
 import React from "react";
 import "../stylesheets/newform.css";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -10,17 +11,23 @@ const Login = () => {
           <input type="text" name="username" placeholder="Email or Username" />
           <input type="password" name="password" placeholder="Password" />
 
-          <input type="submit" name="login" value="Log In" />
+          <input
+            type="button"
+            name="login"
+            value="Log In"
+            onClick={() => (window.location.href = "/")}
+          />
 
           <input
-            type="submit"
+            type="button"
             name="signup"
             value="Sign Up"
             className="signUp"
+            onClick={() => (window.location.href = "/signup")}
           />
 
           <a
-            href="/"
+            href="/login"
             style={{
               fontSize: "14px",
               alignSelf: "flex-end",

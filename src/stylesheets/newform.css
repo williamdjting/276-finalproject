@@ -36,7 +36,8 @@ input:hover {
 }
 
 /*Button Section--------------------*/
-input[type="submit"] {
+input[type="submit"],
+input[type="button"] {
   border-radius: 25px;
   background-color: #5ea2bf;
   color: white;
@@ -50,7 +51,8 @@ input[type="submit"] {
   border-color: #5ea2bf;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+input[type="button"]:hover {
   width: 70%;
   transition: 0.2s;
   box-shadow: none;
@@ -64,7 +66,8 @@ button:hover {
   box-shadow: none;
 }
 
-input[type="submit"]:focus {
+input[type="submit"]:focus,
+input[type="button"]:focus {
   box-shadow: none;
 }
 
