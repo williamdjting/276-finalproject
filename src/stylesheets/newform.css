@@ -129,7 +129,6 @@ h3 {
   height: 40px;
   display: flex;
   justify-content: space-between;
-  padding-right: 18px;
   padding: 12px 18px 12px 0;
   margin-bottom: 10px;
   pointer-events: none;

@@ -31,7 +31,10 @@ const PeopleForm = ({ passData }) => {
   };
 */
   return (
-    <div className="formContent padding border">
+    <div
+      className="formContent padding border"
+      style={{ alignItems: "flex-start" }}
+    >
       <h3 style={{ alignSelf: "flex-start" }}>Add People</h3>
       <div style={{ width: "360px" }}>
         <input
