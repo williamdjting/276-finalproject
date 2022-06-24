@@ -6,9 +6,11 @@ import deleteIcon from "../../icons/close.svg";
 const PeopleForm = ({ passData }) => {
   const [input, setInput] = React.useState("");
   const [userList, setUserList] = React.useState([]);
+  const [reverseList, setReverseList] = React.useState([]);
 
   const saveInput = (e) => {
     setInput(e.target.value);
+    console.log("children: " + [userList]);
   };
 
   const addNewUser = () => {
@@ -19,6 +21,8 @@ const PeopleForm = ({ passData }) => {
 
   useEffect(() => {
     passData(userList);
+    setReverseList(userList);
+    reverseList.reverse();
   }, [userList]);
   /*
   const removeUser = (index) => {
@@ -51,11 +55,10 @@ const PeopleForm = ({ passData }) => {
 
       {/* Interactive User List */}
       <TransitionGroup component="ul">
-        {userList.reverse().map((item, index) => (
+        {reverseList.map((item) => (
           <CSSTransition timeout={500} key={item} classNames="userInFormList">
             <li key={item}>
               <p>{item}</p>
-
               <img
                 src={deleteIcon}
                 alt="delete"
