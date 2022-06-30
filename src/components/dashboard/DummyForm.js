@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import "../../stylesheets/dashboardcomponents/dummyform.css";
 
+
+
+// I've deprecated this js file. I moved the contents of this into Dashboard.js because I needed to have Dashboard as parent so the other components11/12/13/21/22 could get props received from Dashboard.Js
+
+// Otherwise it would have been like 
+// DummyForm > Dashboard > Child Components, makes props drilling difficult. If we switch over to useContext then maybe we can simplify.
+
+
 function DummyForm() {
 
   useEffect( () => {
@@ -42,7 +50,7 @@ function DummyForm() {
 
     </form>
     {/* add child components here */}
-    
+    <Component11 names={name}/>
     </>
    );
 }

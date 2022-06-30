@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Component12(props) {
+function Component31(props) {
 
   const forLoop = () => {
     const localArr = [];
@@ -22,7 +22,7 @@ function Component12(props) {
     
     <div >
       <header>
-        <h3>List of Component12</h3>
+        <h3>List of Component31</h3>
       </header>
 
       <section> 
@@ -34,4 +34,4 @@ function Component12(props) {
 
 }
 
-export default Component12;
+export default Component31;
