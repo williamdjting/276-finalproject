@@ -2,25 +2,46 @@
   border-style: solid;
   border-width: 1;
   border-color: black;
-  max-width: 300px;
+  /* max-width: 300px;
   min-width: 300px;
   max-height: 200px;
   min-height: 200px;
-  overflow-y: auto;
+  overflow-y: auto; */
+
 }
 
 .placeholder2 {
   border-style: solid;
   border-width: 1;
   border-color: black;
-  max-width: 300px;
+  /* max-width: 300px;
   min-width: 300px;
   max-height: 200px;
   min-height: 200px;
-  overflow-y: auto;
+  overflow-y: auto; */
 }
 
-.placeholder3 {
+#dummysubmitform {
+  display:flex; 
+  flex-direction:column;
+}
+
+#dummyinputbutton {
+  max-width: 150px;
+}
+
+#dummysubmitbutton {
+  max-width: 150px;
+
+}
+
+#h1dashboard {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* .placeholder3 {
   border-style: solid;
   border-width: 1;
   border-color: black;
@@ -29,6 +50,6 @@
   max-height: 200px;
   min-height: 200px;
   /* overflow-y: scroll; */
-}
+/* }  */
 
 

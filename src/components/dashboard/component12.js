@@ -20,7 +20,7 @@ function Component12(props) {
 
   return (
     
-    <div >
+    <div id="placeholder12">
       <header>
         <h3>List of Component12</h3>
       </header>

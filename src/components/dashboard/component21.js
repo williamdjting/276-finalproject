@@ -20,7 +20,7 @@ function Component21(props) {
 
   return (
     
-    <div >
+    <div id="placeholder21">
       <header>
         <h3>List of Component21</h3>
       </header>
