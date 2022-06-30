@@ -1,9 +1,37 @@
-.placeholder {
+.placeholder1 {
   border-style: solid;
-  border-width: 3;
+  border-width: 1;
   border-color: black;
   width: 400px;
   height: 300px;
 
 }
 
+.placeholder2 {
+  border-style: solid;
+  border-width: 1;
+  border-color: black;
+  width: 400px;
+  height: 300px;
+
+}
+
+.placeholder3 {
+  border-style: solid;
+  border-width: 1;
+  border-color: black;
+  width: 400px;
+  height: 300px;
+}
+
+/* .column {
+  float: center;
+}
+
+.left {
+  width: 65%;
+}
+
+.right {
+  width: 35%;
+} */
