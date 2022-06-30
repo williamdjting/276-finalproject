@@ -1,52 +1,56 @@
 import React from 'react';
+import "../stylesheets/dashboard.css";
 
 
 const Dashboard = () => {
     return (
         <div>
-            <div>
-                <h1>Dashboard</h1>
+            <div> <h1>Dashboard</h1>
             </div>
+        
+            
+            
             <table>
                 <tr>
-                    <td id="placeholder11">
-                        <div>
+                    <td className="placeholder" id="placeholder11">
+                        
                         [Component Placeholder: Row 1, Col 1]
-                        </div>
+                        
                     </td>
-                    <td id="placeholder12">
-                        <div>
+                    <td className="placeholder" id="placeholder12">
+                        
                         [Component Placeholder: Row 1, Col 2]
-                        </div>
+                        
                     </td>
-                    <td id="placeholder13">
-                        <div>
+                    <td className="placeholder" id="placeholder13">
+                        <td>
                         [Component Placeholder: Row 1, Col 3]
-                        </div>
+                        </td>
                     </td>
                 </tr>
                 <tr>
-                    <td id="placeholder21">
-                        <div>
+                    <td className="placeholder" id="placeholder21">
+                        
                         [Component Placeholder: Row 2, Col 1]
-                        </div>
+                        
                     </td>
-                    <td id="placeholder22">
-                        <div>
+                    <td className="placeholder" id="placeholder22">
+                        
                         [Component Placeholder: Row 2, Col 2]
-                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
-                    <td id="placeholder31">
-                        <div>
-                        [Component Placdeholder: Row 3, Col 1, for dummy submit form]
-                        </div>
+                    <td className="placeholder" id="placeholder31">
+                        
+                        [Component Placeholder: Row 3, Col 1, for dummy submit form]
+                        
                     </td>
                 </tr>
             </table>
         
         </div>
+        
     );
 };
 export default Dashboard;
