@@ -31,7 +31,7 @@ const Login = () => {
 
     console.log(userObject);
     axios
-      .post("/api/data", userObject)
+      .post("/auth/login", userObject)
       .then((res) => {
         console.log(res);
         setUser("");
