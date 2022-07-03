@@ -1,19 +1,33 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  //init variables
   const [name, setName] = useState("");
   const [pwd, setPwd] = useState("");
   const [username, setUsername] = useState("");
   //const [email, setEmail] = useState("");
   const [rePwd, setRePwd] = useState("");
-  const[success, setSuccess] = useState("false");
 
+  //message and verification
+  const [pwdErr, setPwdErr] = useState(true);
+  const [errMsg, setErrMsg] = useState("");
+
+  const navigate = useNavigate();
+
+  //update values each of rendering
   useEffect(() => {
-    //setErrMsg("");
-  }, [name, pwd, rePwd, username]);
+    if (pwd == rePwd || rePwd == "" || pwd == "") {
+      setPwdErr(false);
+    } else {
+      setPwdErr(true);
+    }
+    setErrMsg("");
+  }, [name, pwd, rePwd, username, pwdErr]);
 
+  //handle submit action
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,13 +39,15 @@ const Signup = () => {
     };
 
     console.log(userObject);
-    axios
+    await axios
       .post("/auth/signup", userObject)
       .then((res) => {
         console.log(res);
-        //setName("");
-        //setUsername("");
-        //setSuccess(true);
+        if (res.data.signup) {
+          navigate("/login");
+        } else {
+          setErrMsg("Error: User Already Existed");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -43,6 +59,11 @@ const Signup = () => {
       <form onSubmit={handleSubmit}>
         <div className="formContent padding border">
           <h2>Splittr</h2>
+          {errMsg != "" ? (
+            <p className="errorMessage">{errMsg}</p>
+          ) : (
+            <div></div>
+          )}
           <input
             type="text"
             name="name"
@@ -50,7 +71,7 @@ const Signup = () => {
             onChange={(e) => setName(e.target.value)}
             value={name}
             required
-            maxlength="10"
+            maxLength="10"
           />
           <input
             type="text"
@@ -59,7 +80,7 @@ const Signup = () => {
             onChange={(e) => setUsername(e.target.value)}
             value={username}
             required
-            maxlength="20"
+            maxLength="20"
           />
 
           <input
@@ -69,7 +90,7 @@ const Signup = () => {
             onChange={(e) => setPwd(e.target.value)}
             value={pwd}
             required
-            maxlength="20"
+            maxLength="20"
           />
           <input
             type="password"
@@ -78,9 +99,14 @@ const Signup = () => {
             onChange={(e) => setRePwd(e.target.value)}
             value={rePwd}
             required
-            maxlength="20"
+            maxLength="20"
+            style={{ marginBottom: "10px" }}
           />
-
+          {pwdErr ? (
+            <p className="subErrorMessage">Error: Passwords Not Match</p>
+          ) : (
+            <div></div>
+          )}
           <input type="submit" name="createaccount" value="Create" />
           <a
             href="/login"

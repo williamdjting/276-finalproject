@@ -1,9 +1,19 @@
 import React from 'react'
 import '../stylesheets/navbar.css';
-
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 
+   // const authed = useAuth();
+    const {logout} = useAuth();
+    const navigate = useNavigate();
+
+    //handle funtions
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+      };
     return (
 
         <div className="nav">
@@ -20,7 +30,7 @@ const NavBar = () => {
                 </li>
 
                 <li>
-                    <button>Log Out</button>
+                    <button onClick={handleLogout}>Log Out</button>
 
                 </li>
                 </ul>

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "../stylesheets/newform.css";
-import {useRef,useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const [user, setUser] = useState("");
@@ -9,9 +10,10 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [post, setPost] = useState(null);
-  
-  const userRef = useRef();
 
+  const userRef = useRef();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     userRef.current.focus();
@@ -23,27 +25,31 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const userObject = {
       username: user,
       password: pwd,
     };
 
     console.log(userObject);
-    axios
+    await axios
       .post("/auth/login", userObject)
       .then((res) => {
         console.log(res.data);
 
-        if(res.data.login){
+        if (res.data.login) {
           setUser("");
           setPwd("");
-         setSuccess(true);
-        }
-        else{
+          //setSuccess(true);
+
+          //set Auth = true
+          login().then(() => {
+            navigate("/");
+            console.log("navigate to dashboard");
+          });
+        } else {
           setErrMsg(res.data.status);
         }
-     
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +71,11 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className="formContent padding border">
               <h2>Splittr</h2>
-              {(errMsg!="")?(<p className="errorMessage">{errMsg}</p>):(<div></div>)}
+              {errMsg != "" ? (
+                <p className="errorMessage">{errMsg}</p>
+              ) : (
+                <div></div>
+              )}
               <input
                 type="text"
                 name="username"

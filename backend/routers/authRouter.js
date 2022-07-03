@@ -50,12 +50,12 @@ router.post("/signup", async (req, res) => {
       "Insert Into users(nickname,username,passhash) VALUES ($1,$2,$3) RETURNING username",
       [name,username, hashedPass]
     );
-    res.json({login:true, username}) //test
+    res.json({signup:true, username}) //test
     console.log("correct signup");
   }
 
   else{
-    res.json({login:false, status:  "username taken" }) //test
+    res.json({signup:false, status:  "username taken" }) //test
     console.log("wrong signup");
   }
 });
