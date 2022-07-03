@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, {useState} from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -9,6 +9,11 @@ import WithoutNav from "./pages/WithoutNav";
 import WithNav from "./pages/WithNav";
 
 function App() {
+  const [token, setToken] = useState();
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
     <BrowserRouter>
       <Routes>

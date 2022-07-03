@@ -3,6 +3,7 @@ import '../stylesheets/navbar.css';
 
 
 const NavBar = () => {
+
     return (
 
         <div className="nav">
@@ -19,7 +20,7 @@ const NavBar = () => {
                 </li>
 
                 <li>
-                    <a href="/login">Log Out</a>
+                    <button>Log Out</button>
 
                 </li>
                 </ul>

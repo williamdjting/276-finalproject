@@ -5,32 +5,38 @@ const pool = require("../db");
 
 router.post("/login", async (req,res) => {
   console.log("login posted");
+
+  let username = req.body.username;
+  let password = req.body.password;
  
- const loginData = await pool.query("SELECT id, username FROM users u WHERE u.username=$1", [req.body.username]);
+ const loginData = await pool.query("SELECT id, username, passhash FROM users u WHERE u.username=$1", [username]);
 
  if(loginData.rowCount > 0){ 
-    const isPasswordMatch = bcrypt.compare(req.body.password, loginData.rows[0].passhash);
+    let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].passhash);
+    console.log("passhash:" + loginData.rows[0].passhash);
+    console.log("pwd" + password);
     if(isPasswordMatch){
-        res.json({login:false, username}) //test
+        res.json({login:true, username}) //test
         console.log("correct login");
     }
     else{
-        res.json({login:false, status: "wrong password"}) //test
-        console.log("wrong password");
+        res.json({login:false, status: "Error: Wrong Password"}) //test
+        console.log("Error: Wrong Password");
     }
 }
 else {
-    res.json({login:false, status: "user not exist"}) //test
-    console.log("user not existed");
+    res.json({login:false, status: "Error: User Not Existed"}) //test
+    console.log("Error: User Not Existed");
 }
 
 });
 
 router.post("/signup", async (req, res) => {
 
-  var nickname = req.body.nickname;
-  var username = req.body.username;
-  var password = req.body.password;
+  let name = req.body.name;
+  let username = req.body.username;
+  //let email = req.body.email;
+  let password = req.body.password;
 
   //Check identify user in the system
   const getUser = await pool.query(
@@ -42,7 +48,7 @@ router.post("/signup", async (req, res) => {
     const hashedPass = await bcrypt.hash(password, 10);
     const newUserQuery = await pool.query(
       "Insert Into users(nickname,username,passhash) VALUES ($1,$2,$3) RETURNING username",
-      [nickname,username, hashedPass]
+      [name,username, hashedPass]
     );
     res.json({login:true, username}) //test
     console.log("correct signup");

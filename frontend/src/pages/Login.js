@@ -8,7 +8,7 @@ const Login = () => {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-  //const [testMssg, setTestMssg] = useState("");
+  const [post, setPost] = useState(null);
   
   const userRef = useRef();
 
@@ -33,10 +33,17 @@ const Login = () => {
     axios
       .post("/auth/login", userObject)
       .then((res) => {
-        console.log(res);
-        setUser("");
-        setPwd("");
-        //setSuccess(true);
+        console.log(res.data);
+
+        if(res.data.login){
+          setUser("");
+          setPwd("");
+         setSuccess(true);
+        }
+        else{
+          setErrMsg(res.data.status);
+        }
+     
       })
       .catch((error) => {
         console.log(error);
@@ -50,7 +57,7 @@ const Login = () => {
           <h1>You are logged in!</h1>
           <br />
           <p>
-            <a href="#">Go to Home</a>
+            <a href="/">Go to Home</a>
           </p>
         </section>
       ) : (
@@ -58,6 +65,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className="formContent padding border">
               <h2>Splittr</h2>
+              {(errMsg!="")?(<p className="errorMessage">{errMsg}</p>):(<div></div>)}
               <input
                 type="text"
                 name="username"
