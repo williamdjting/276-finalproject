@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import '../../pages/Dashboard'
+import '../../stylesheets/dashboardcomponents/component21.css'
 
 function Component21(props) {
 

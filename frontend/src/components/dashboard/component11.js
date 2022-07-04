@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
+import '../../pages/Dashboard'
+import '../../stylesheets/dashboardcomponents/component11.css'
 
 function Component11(props) {
 

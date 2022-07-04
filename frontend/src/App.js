@@ -10,11 +10,11 @@ import WithNav from "./pages/WithNav";
 import useAuth, { AuthProvider } from "./hooks/useAuth";
 
 function App() {
-  function RequireAuth({ children }) {
-    const authed = localStorage.getItem("isAuthed");
-    console.log("authed: " + authed);
-    return authed ? children : <Navigate to="/login" replace />;
-  }
+  // function RequireAuth({ children }) {
+  //   const authed = localStorage.getItem("isAuthed");
+  //   console.log("authed: " + authed);
+  //   return authed ? children : <Navigate to="/login" replace />;
+  // }
 
   return (
     <AuthProvider>
@@ -27,12 +27,12 @@ function App() {
 
           <Route
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <WithNav />
-              </RequireAuth>
+              // </RequireAuth>
             }
           >
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/newForm" element={<NewForm />} />
           </Route>
         </Routes>

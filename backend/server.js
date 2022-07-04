@@ -7,7 +7,7 @@ const userRoute = require("./routers/authRouter");
 //init variables
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 //use
 app.use(express.static(publicPath));
