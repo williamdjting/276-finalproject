@@ -6,60 +6,98 @@ const pool = new Pool({
   }
 });
 
-// return all user data
-const getUser = (request, response) => {
-    const userid = parseInt(request.params.userid);
-    pool.query('SELECT * FROM $1', [userid], (error, results) => {
-      if (error) {
-        throw error
-      }
-      // returns the results found as JSON
-      response.status(200).json(results.rows)
-    })
-}
-  
-// returns all users based on ID
-const getTransactionsById = (request, response) => {
-  const userid = parseInt(request.params.userid);
-  const id = parseInt(request.params.id)
-  
-    pool.query('SELECT * FROM $1 WHERE id = $2', [id], (error, results) => {
-      if (error) {
-        throw error
-      }
-      // returns the results found as JSON
-      response.status(200).json(results.rows)
-    })
-}
-  
 // create a new user
 // NOTE: fields are all varchar to handle bad input data to avoid crashes
 const createUser = (request, response) => {
-  const { name, weight, height, hair_color, gpa, international, account_balance, credits } = request.body
-  
-    pool.query('INSERT INTO students (name, weight, height, hair_color, gpa, international, account_balance, credits) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [name, weight, height, hair_color, gpa, international, account_balance, credits], (error, results) => {
+    const { username, password, name} = request.body
+    
+    pool.query(
+        'INSERT INTO loginauth (username, password, nickname) VALUES ($1, $2, $3) RETURNING *',
+        [username, password, name], (error, results) => {
+        if (error) {
+          throw error
+        }
+        // returns a response for success, not json
+        response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+      })
+}
+
+const generateUserTable = (request, response) => {
+    const { userid } = request.body
+    
+    pool.query(
+        'CREATE TABLE userid_$1 (req_sent BIT, date DATE, receiverid INT, amount INT, paid BIT )',
+        [userid], (error, results) => {
+        if (error) {
+          throw error
+        }
+        // returns a response for success, not json
+        response.status(201).send(`User table generated`)
+      })
+  }
+
+// return user nickname
+const getUserData = (request, response) => {
+    const userid = parseInt(request.params.userid);
+    pool.query(
+        'SELECT * FROM userid_$1',
+        [userid], (error, results) => {
       if (error) {
         throw error
       }
-      // returns a response for success, not json
-      response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+      // returns the results found as JSON
+      response.status(200).json(results.rows)
     })
 }
-  
+
 // updates existing user entry
-const updateUser = (request, response) => {
+const updateNickname = (request, response) => {
     const id = parseInt(request.params.id)
-    const { name, weight, height, hair_color, gpa, international, account_balance, credits } = request.body
+    const { nickname, userid } = request.body
   
     pool.query(
-      'UPDATE students SET name = $1, weight = $2, height = $3, hair_color = $4, gpa = $5, international =$6, account_balance = $7, credits = $8 WHERE id = $9',
-      [name, weight, height, hair_color, gpa, international, account_balance, credits, id],
+      'UPDATE loginauth SET nickname = $1 WHERE userid = $2',
+      [nickname, userid],
       (error, results) => {
         if (error) {
           throw error
         }
       // returns a response for success, not json
-        response.status(200).send(`User modified with ID: ${id}`)
+        response.status(200).send(`User modified with new nickname: ${nickname}`)
+      }
+    )
+}
+
+// updates existing user entry
+const updatePassword = (request, response) => {
+    const { password, userid } = request.body
+  
+    pool.query(
+      'UPDATE loginauth SET password = $1 WHERE userid = $2',
+      [password, userid],
+      (error, results) => {
+        if (error) {
+          throw error
+        }
+      // returns a response for success, not json
+        response.status(200).send(`User modified with new password`)
+      }
+    )
+}
+
+// updates existing user entry
+const resetPassword = (request, response) => {
+    const { userid } = request.body
+  
+    pool.query(
+      'UPDATE loginauth SET password = "password" WHERE userid = $1',
+      [userid],
+      (error, results) => {
+        if (error) {
+          throw error
+        }
+      // returns a response for success, not json
+        response.status(200).send(`User modified with new password`)
       }
     )
 }
@@ -68,19 +106,39 @@ const updateUser = (request, response) => {
 const deleteUser = (request, response) => {
     const id = parseInt(request.params.id)
   
-    pool.query('DELETE FROM students WHERE id = $1', [id], (error, results) => {
+    pool.query(
+        'DELETE FROM loginauth WHERE id = $1\n' +
+        'DROP TABLE userid_$1',
+        [id], (error, results) => {
       if (error) {
         throw error
       }
       response.status(200).send(`User deleted with ID: ${id}`)
     })
 }
+
+// return user nickname
+const getUserNickname = (request, response) => {
+    const userid = parseInt(request.params.userid);
+    pool.query(
+        'SELECT nickname FROM loginauth WHERE userid = $1',
+        [userid], (error, results) => {
+      if (error) {
+        throw error
+      }
+      // returns the results found as JSON
+      response.status(200).json(results.rows)
+    })
+}
   
 // export methods to routing
 module.exports = {
-    getUsers,
-    getUserById,
     createUser,
-    updateUser,
+    generateUserTable,
+    getUserData,
+    updateNickname,
+    updatePassword,
+    resetPassword,
     deleteUser,
+    getUserNickname
   }
