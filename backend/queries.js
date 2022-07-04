@@ -1,10 +1,4 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+const pool = require("../db");
 
 // create a new user
 // NOTE: fields are all varchar to handle bad input data to avoid crashes
