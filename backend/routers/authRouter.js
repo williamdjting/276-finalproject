@@ -4,39 +4,40 @@ const bcrypt = require("bcrypt");
 const pool = require("../db");
 
 // Cookie packages
-const sessions = require('express-session')
-const cookieParser = require("cookie-parser");
-const pgSession = require('connect-pg-simple')(sessions)
+// const sessions = require('express-session')
+// const cookieParser = require("cookie-parser");
+// const pgSession = require('connect-pg-simple')(sessions)
 
 // cookie maker
-const oneDay = 1000 * 60 * 60 * 24;
-const oneHour = 1000 * 60 * 60;
-const oneMin = 1000 * 60;
+// const oneDay = 1000 * 60 * 60 * 24;
+// const oneHour = 1000 * 60 * 60;
+// const oneMin = 1000 * 60;
 
-const sessionConfig = {
-  store: new pgSession({
-    pool: pool,
-    tableName: 'session'
-  }),
-  name: 'loginAuth',
-  secret: randomString.generate({
-    length: 14,
-    charset: 'alphanumeric'
-  }),
-  saveUninitialized: true,
-  cookie: {
-    maxAge: oneDay,
-    secure: false //only use on HTTPS
-  },
-  resave: false
-}
+// const sessionConfig = {
+//   store: new pgSession({
+//     pool: pool,
+//     tableName: 'session'
+//   }),
+//   name: 'loginAuth',
+//   secret: randomString.generate({
+//     length: 14,
+//     charset: 'alphanumeric'
+//   }),
+//   saveUninitialized: true,
+//   cookie: {
+//     maxAge: oneDay,
+//     secure: false //only use on HTTPS
+//   },
+//   resave: false
+// }
+
 // set maxAge to NULL for the browser to delete on close
-router.use(sessions(sessionConfig));
+// router.use(sessions(sessionConfig));
 
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
-router.use(cookieParser());
-var session;
+// router.use(express.json());
+// router.use(express.urlencoded({ extended: true }));
+// router.use(cookieParser());
+// var session;
 
 router.post("/login", async (req,res) => {
   console.log("login posted");
@@ -53,10 +54,10 @@ router.post("/login", async (req,res) => {
     if(isPasswordMatch){
         res.json({login:true, username}) //test
         console.log("correct login");
-              //added session
-      session = req.session;
-        session.userid = req.body.username;
-        console.log("correct login. Session is: $1", [req.session]);
+      //added session
+      // session = req.session;
+      //   session.userid = req.body.username;
+      //   console.log("correct login. Session is: $1", [req.session]);
     }
     else{
         res.json({login:false, status: "Error: Wrong Password"}) //test
@@ -90,9 +91,9 @@ router.post("/signup", async (req, res) => {
       [name,username, hashedPass]
     );
     res.json({signup:true, username}) //test
-    session = req.session;
-    session.userid = req.body.username;
-    console.log("correct signup");
+    // session = req.session;
+    // session.userid = req.body.username;
+    // console.log("correct signup");
   }
 
   else{
@@ -103,7 +104,7 @@ router.post("/signup", async (req, res) => {
 
 //When clicking logout, the session needs to be destroyed so we do not join the login again by accident
 router.get('/logout', (req, res) => {
-  req.session.destroy();
+  // req.session.destroy();
   res.redirect('/');
 });
 
