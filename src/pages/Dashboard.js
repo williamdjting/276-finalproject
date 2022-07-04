@@ -104,13 +104,32 @@ const Dashboard = () => {
             </table>
             <form id="dummysubmitform" onSubmit = {formSubmitHandler}>
                             <input 
-                            id="dummyinputbutton" placeholder="Name"
-                            type="text" value={userData1} onChange={e=> setUserData1(e.target.value)}/>
+                                id="dummyinputbutton" 
+                                placeholder="Name"
+                                type="text" 
+                                value={userData1} 
+                                onChange={e=> setUserData1(e.target.value)}
+                            />
                             <input 
-                            id="dummyinputbutton" placeholder="Email"
-                            type="text" value={userData2} onChange={e=> setUserData2(e.target.value)}/>
-                            <input  id="dummyinputbutton" placeholder="Amount" type="number" value={userData3} onChange={e=> setUserData3(e.target.value)}/>
-                            <input id="dummysubmitbutton" type="submit" text="Submit" intent="primary"/>
+                                id="dummyinputbutton" 
+                                placeholder="Email"
+                                type="text" 
+                                value={userData2} 
+                                onChange={e=> setUserData2(e.target.value)}
+                            />
+                            <input  
+                                id="dummyinputbutton" 
+                                placeholder="Amount" 
+                                type="number" 
+                                value={userData3} 
+                                onChange={e=> setUserData3(e.target.value)}
+                            />
+                            <input 
+                                id="dummysubmitbutton" 
+                                type="submit" 
+                                text="Submit" 
+                                intent="primary"
+                            />
             </form>
 
         </div>
