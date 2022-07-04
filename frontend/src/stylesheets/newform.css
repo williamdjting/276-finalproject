@@ -35,6 +35,27 @@ input:hover {
   box-shadow: 6px 6px #c3c3c3;
 }
 
+.errorMessage {
+  color:  #CC3333;
+ width: 100%;
+ padding: 7px;
+ padding-left: 18px;
+  background-color: #e1f6ff;
+  margin-bottom: 15px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.subErrorMessage{
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #CC3333;
+  font-weight:  700;
+  
+}
 /*Button Section--------------------*/
 input[type="submit"],
 input[type="button"] {
@@ -134,7 +155,7 @@ h3 {
   pointer-events: none;
 }
 
-.formContent p {
+.listitem {
   align-self: center;
   font-size: 14px;
   color: silver;

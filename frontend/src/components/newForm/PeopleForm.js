@@ -58,7 +58,7 @@ const PeopleForm = ({ passData }) => {
         {reverseList.map((item) => (
           <CSSTransition timeout={500} key={item} classNames="userInFormList">
             <li key={item}>
-              <p>{item}</p>
+              <p className="listitem">{item}</p>
               <img
                 src={deleteIcon}
                 alt="delete"
