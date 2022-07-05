@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoute = require("./routers/authRouter");
+const adminRoute = require("./routers/adminRouter");
 
 //init variables
 const app = express();
@@ -21,6 +22,7 @@ app.get('/api/hello', (req, res) => {
    res.send({ express: 'Hello From Express' });
  });
  app.use('/auth', userRoute);
+ app.use('/admindata', adminRoute);
  //post
  /*
  app.post('/api/data', (req, res) => {

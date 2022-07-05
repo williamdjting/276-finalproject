@@ -52,7 +52,7 @@ router.post("/login", async (req,res) => {
     console.log("passhash:" + loginData.rows[0].passhash);
     console.log("pwd" + password);
     if(isPasswordMatch){
-        res.json({login:true, username}) //test
+        res.json({login:true, username: username, type: loginData.rows[0].type}) //test
         console.log("correct login");
       //added session
       // session = req.session;
@@ -87,8 +87,8 @@ router.post("/signup", async (req, res) => {
   if (getUser.rowCount === 0) {
     const hashedPass = await bcrypt.hash(password, 10);
     const newUserQuery = await pool.query(
-      "Insert Into users(nickname,username,passhash) VALUES ($1,$2,$3) RETURNING username",
-      [name,username, hashedPass]
+      "Insert Into users(nickname,username,passhash,type) VALUES ($1,$2,$3,$4) RETURNING username",
+      [name,username,hashedPass,"regular"]
     );
     res.json({signup:true, username}) //test
     // session = req.session;
