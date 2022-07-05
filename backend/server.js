@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoute = require("./routers/authRouter");
-
+const queries = require("./queries")
 //init variables
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
@@ -17,8 +17,8 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
    res.sendFile(path.join(publicPath, 'index.html'));
 });
-app.get('/api/hello', (req, res) => {
-   res.send({ express: 'Hello From Express' });
+app.get('/api/users', (req, res) => {
+  queries.getAllUsers(req, res);
  });
  app.use('/auth', userRoute);
  //post
