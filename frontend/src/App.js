@@ -32,7 +32,7 @@ function App() {
               // </RequireAuth>
             }
           >
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/newForm" element={<NewForm />} />
           </Route>
         </Routes>

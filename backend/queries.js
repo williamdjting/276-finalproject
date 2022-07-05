@@ -30,6 +30,21 @@ const generateUserTable = (request, response) => {
       })
   }
 
+// return all user info found in datatable
+// william
+const getAllUserData = (request, response) => {
+  const userid = parseInt(request.params.userid);
+  pool.query(
+      'SELECT * FROM dummytable', (error, results) => {
+    if (error) {
+      throw error
+    }
+    // returns the results found as JSON
+    response.status(200).json(results.rows)
+  })
+}
+
+
 // return user nickname
 const getUserData = (request, response) => {
     const userid = parseInt(request.params.userid);
@@ -134,5 +149,6 @@ module.exports = {
     updatePassword,
     resetPassword,
     deleteUser,
-    getUserNickname
+    getUserNickname,
+    getAllUserData
   }
