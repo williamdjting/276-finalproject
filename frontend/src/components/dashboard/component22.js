@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/Dashboard'
 import '../../stylesheets/dashboardcomponents/component22.css'
-
+import FetchAPI22 from '../../hooks/FetchAPI22';
 
 function Component22(props) {
 
@@ -30,6 +30,10 @@ function Component22(props) {
 
       <section> 
       {forLoop()}
+      </section>
+
+      <section>
+      <FetchAPI22/>
       </section>
 
     </div>
