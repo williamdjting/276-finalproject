@@ -45,6 +45,7 @@ router.post("/login", async (req,res) => {
   let username = req.body.username;
   let password = req.body.password;
  
+<<<<<<< HEAD
 //  const loginData = await pool.query("SELECT id, username, passhash FROM users u WHERE u.username=$1", [username]);
   
 //===== using prod DB =====
@@ -64,8 +65,16 @@ router.post("/login", async (req,res) => {
     //=========================
 
     console.log("pwd" + password);
+=======
+ const loginData = await pool.query("SELECT id, username, password FROM loginauth u WHERE u.username=$1", [username]);
+
+ if(loginData.rowCount > 0){ 
+    let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].password);
+    console.log("password:" + loginData.rows[0].password);
+    console.log("pwd: " + password);
+>>>>>>> 0b44eaac66f6190c4f2dde04cec8011be51f22e7
     if(isPasswordMatch){
-        res.json({login:true, username}) //test
+        res.json({login:true, username: username, type: loginData.rows[0].type}) //test
         console.log("correct login");
       //added session
       // session = req.session;
@@ -98,7 +107,11 @@ router.post("/signup", async (req, res) => {
 
   //===== using prod DB =====
   const getUser = await pool.query(
+<<<<<<< HEAD
     "SELECT username FROM loginauth WHERE username = '" + username + "'"
+=======
+    "SELECT username from loginauth WHERE username = '" + username + "'"
+>>>>>>> 0b44eaac66f6190c4f2dde04cec8011be51f22e7
   );
   //=========================
 
@@ -113,8 +126,13 @@ router.post("/signup", async (req, res) => {
 
   //===== using prod DB =====
     const newUserQuery = await pool.query(
+<<<<<<< HEAD
       "INSERT INTO loginauth(nickname,username,password) VALUES ($1,$2,$3) RETURNING username",
       [name, username, hashedPass]
+=======
+      "Insert Into loginauth (nickname,username,password,type) VALUES ($1,$2,$3,$4) RETURNING username",
+      [name,username,hashedPass,"regular"]
+>>>>>>> 0b44eaac66f6190c4f2dde04cec8011be51f22e7
     );
   //=========================
 

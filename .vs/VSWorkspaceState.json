@@ -1,13 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
-    "\\server",
-    "\\src",
-    "\\src\\components",
-    "\\src\\pages",
-    "\\src\\stylesheets"
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\components",
+    "\\frontend\\src\\components\\admin",
+    "\\frontend\\src\\components\\newForm",
+    "\\frontend\\src\\pages",
+    "\\frontend\\src\\stylesheets"
   ],
-  "SelectedNode": "\\src\\pages\\NewForm.js",
+  "SelectedNode": "\\frontend\\src\\pages\\Admin.js",
   "PreviewInSolutionExplorer": false
 }

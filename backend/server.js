@@ -2,8 +2,12 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+
+//routers and endpoints
 const userRoute = require("./routers/authRouter");
+const adminRoute = require("./routers/adminRouter");
 const queries = require("./queries")
+
 //init variables
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
@@ -21,6 +25,7 @@ app.get('/api/users', (req, res) => {
   queries.getAllUsers(req, res);
  });
  app.use('/auth', userRoute);
+ app.use('/admindata', adminRoute);
  //post
  /*
  app.post('/api/data', (req, res) => {
