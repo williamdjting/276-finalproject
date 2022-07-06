@@ -14,7 +14,7 @@ function FetchAPI21() {
   const [data, setData] = useState([]);
 
   const apiGet = () => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    fetch('/api/users')
     .then(response => response.json())
     .then( (json) => {
       console.log(json);
@@ -36,17 +36,31 @@ function FetchAPI21() {
           <tr>
             <td className="samerowintable21">
             {data.map((item) => (
-              <ul>{item.userId} </ul>
+              <ul>{item.userid} </ul>
             ))}
             </td>
-            {/* <td className="samerowintable21">
-            {data.map((item) => (
-              <ul>{item.title.substring(0,20)}</ul>
-            ))}
-            </td> */}
+            &nbsp;
+            &nbsp;
+            &nbsp;
             <td className="samerowintable21">
             {data.map((item) => (
-              <ul>{item.completed}</ul>
+              <ul>{item.username}</ul>
+            ))}
+            </td>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <td className="samerowintable21">
+            {data.map((item) => (
+              <ul>{item.password.substring(0,20)}</ul>
+            ))}
+            </td>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <td className="samerowintable21">
+            {data.map((item) => (
+              <ul>{item.nickname}</ul>
             ))}
             </td>
           </tr>

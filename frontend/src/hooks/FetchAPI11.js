@@ -14,7 +14,7 @@ function FetchAPI11() {
   const [data, setData] = useState([]);
 
   const apiGet = () => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    fetch('/api/users')
     .then(response => response.json())
     .then( (json) => {
       console.log(json);
@@ -41,7 +41,7 @@ function FetchAPI11() {
             </td> */}
             <td className="samerowintable11">
             {data.map((item) => (
-              <ul>{item.title.substring(0,20)}</ul>
+              <ul>{item.userid}</ul>
             ))}
             </td>
             {/* <td className="samerowintable11">
