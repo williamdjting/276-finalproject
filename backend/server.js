@@ -23,7 +23,12 @@ app.get('/', (req, res) => {
 });
 app.get('/api/users', (req, res) => {
   queries.getAllUsers(req, res);
- });
+});
+ 
+app.get('/api/users/:userid', (req, res) => {
+  queries.getUserData(req, res);
+});
+
  app.use('/auth', userRoute);
  app.use('/admindata', adminRoute);
  //post
