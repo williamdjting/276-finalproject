@@ -25,7 +25,7 @@ function Component22(props) {
     
     <div id="placeholder22" >
       <header>
-        <h3>List of Component22</h3>
+        <h3>Recent Contact</h3>
       </header>
 
       <section> 

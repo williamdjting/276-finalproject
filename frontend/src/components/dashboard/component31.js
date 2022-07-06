@@ -3,6 +3,8 @@ import '../../pages/Dashboard'
 import '../../stylesheets/dashboardcomponents/component31.css'
 
 
+// not in use
+ 
 function Component31(props) {
 
   const forLoop = () => {

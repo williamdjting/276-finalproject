@@ -27,7 +27,7 @@ function Component11(props) {
     
     <div id="placeholder11">
       <header>
-        <h3>List of Component11</h3>
+        <h3>Welcome User</h3>
       </header>
 
       <section> 
