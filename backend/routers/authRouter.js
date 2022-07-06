@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const pool = require("../db");
-
+const { queries } = require("@testing-library/react");
+const cusQuery = require("../queries")
 // Cookie packages
 // const sessions = require('express-session')
 // const cookieParser = require("cookie-parser");
@@ -84,6 +85,16 @@ else {
 
 });
 
+// gotta wait 1 second for the signup sync to work...
+// pls fix if you got a better way
+function resolveAfter1Seconds() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 1000);
+  });
+}
+
 router.post("/signup", async (req, res) => {
 
   let name = req.body.name;
@@ -111,15 +122,15 @@ router.post("/signup", async (req, res) => {
     //   [name,username, hashedPass]
     // );
 
+
   //===== using prod DB =====
-    const newUserQuery = await pool.query(
-      "INSERT INTO loginauth(nickname,username,password) VALUES ($1,$2,$3) RETURNING username",
-      [name, username, hashedPass]
-    );
+  req.body.password = hashedPass;
+    const newUserQuery = await cusQuery.createUser(req, res);
+    await resolveAfter1Seconds();
+    req.body.userid = newUserQuery.rows[0].userid;
+    cusQuery.generateUserTable(req, res);
   //=========================
-
-
-    res.json({signup:true, username}) //test
+    res.json({ signup: true, username }); //test
     // session = req.session;
     // session.userid = req.body.username;
     // console.log("correct signup");
