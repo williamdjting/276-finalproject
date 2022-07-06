@@ -1,4 +1,5 @@
 const pool = require("./db");
+const bcrypt = require("bcrypt");
 
 // create a new user
 // NOTE: fields are all varchar to handle bad input data to avoid crashes
@@ -46,8 +47,10 @@ const getUserData = (request, response) => {
 
 // updates existing user entry
 const updateNickname = (request, response) => {
-    const id = parseInt(request.params.id)
-    const { nickname, userid } = request.body
+    const id = parseInt(request.params.id);
+    const nickname = request.body.input;
+    const userid = request.body.id;
+    //console.log(request.body.id);
 
     pool.query(
         'UPDATE loginauth SET nickname = $1 WHERE userid = $2',
@@ -63,12 +66,15 @@ const updateNickname = (request, response) => {
 }
 
 // updates existing user entry
-const updatePassword = (request, response) => {
-    const { password, userid } = request.body
+const updatePassword = async (request, response) => {
+    const password = request.body.input;
+    const userid  = request.body.id;
+
+    const hashedPass = await bcrypt.hash(password, 10);
 
     pool.query(
         'UPDATE loginauth SET password = $1 WHERE userid = $2',
-        [password, userid],
+        [hashedPass, userid],
         (error, results) => {
             if (error) {
                 throw error
@@ -129,7 +135,7 @@ const getUserNickname = (request, response) => {
 const getAllUsers = (request, response) => {
 
     pool.query(
-        'SELECT * FROM loginauth u WHERE u.type=$1',["regular"],
+        'SELECT * FROM loginauth u WHERE u.type=$1 order by userid' ,["regular"],
         (error, results) => {
             if (error) {
                 throw error

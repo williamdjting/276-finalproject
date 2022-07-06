@@ -45,7 +45,7 @@ router.post("/login", async (req,res) => {
   let username = req.body.username;
   let password = req.body.password;
  
- const loginData = await pool.query("SELECT id, username, password FROM loginauth u WHERE u.username=$1", [username]);
+ const loginData = await pool.query("SELECT userid, username, password FROM loginauth u WHERE u.username=$1", [username]);
 
  if(loginData.rowCount > 0){ 
     let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].password);
