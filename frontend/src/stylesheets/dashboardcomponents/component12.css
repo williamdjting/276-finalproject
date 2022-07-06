@@ -1,0 +1,8 @@
+#placeholder12 {
+  max-width: 300px;
+  min-width: 300px;
+  max-height: 200px;
+  min-height: 200px;
+  overflow-y: auto;
+  margin-left: 10px;
+}
