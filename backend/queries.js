@@ -129,13 +129,13 @@ const getUserNickname = (request, response) => {
 const getAllUsers = (request, response) => {
 
     pool.query(
-        'SELECT * FROM loginauth',
+        'SELECT * FROM loginauth u WHERE u.type=$1',["regular"],
         (error, results) => {
             if (error) {
                 throw error
             }
-            console.log(results.rows)
-            response.status(200).json(results.rows)
+            response.status(200).json(results.rows);
+           // response.send(results.rows);
         })
 }
 

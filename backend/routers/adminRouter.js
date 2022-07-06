@@ -1,14 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
+const queries = require("../queries")
 
-router.get("/accounts", async (req, res) => {
-  const userAccountData = await pool.query(
-    "SELECT * FROM users u WHERE u.type=$1",
-    ["regular"]
-  );
-  res.send(userAccountData);
-  console.log(userAccountData);
+router.get("/accounts",(req, res) => {
+  queries.getAllUsers(req, res);
 });
 
 module.exports = router;

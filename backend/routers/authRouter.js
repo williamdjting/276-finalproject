@@ -45,12 +45,12 @@ router.post("/login", async (req,res) => {
   let username = req.body.username;
   let password = req.body.password;
  
- const loginData = await pool.query("SELECT id, username, passhash FROM users u WHERE u.username=$1", [username]);
+ const loginData = await pool.query("SELECT id, username, password FROM loginauth u WHERE u.username=$1", [username]);
 
  if(loginData.rowCount > 0){ 
-    let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].passhash);
-    console.log("passhash:" + loginData.rows[0].passhash);
-    console.log("pwd" + password);
+    let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].password);
+    console.log("password:" + loginData.rows[0].password);
+    console.log("pwd: " + password);
     if(isPasswordMatch){
         res.json({login:true, username: username, type: loginData.rows[0].type}) //test
         console.log("correct login");
@@ -80,14 +80,14 @@ router.post("/signup", async (req, res) => {
 
   //Check identify user in the system
   const getUser = await pool.query(
-    "SELECT username from users WHERE username = '" + username + "'"
+    "SELECT username from loginauth WHERE username = '" + username + "'"
   );
 
   //Register the user if no duplicated user
   if (getUser.rowCount === 0) {
     const hashedPass = await bcrypt.hash(password, 10);
     const newUserQuery = await pool.query(
-      "Insert Into users(nickname,username,passhash,type) VALUES ($1,$2,$3,$4) RETURNING username",
+      "Insert Into loginauth (nickname,username,password,type) VALUES ($1,$2,$3,$4) RETURNING username",
       [name,username,hashedPass,"regular"]
     );
     res.json({signup:true, username}) //test

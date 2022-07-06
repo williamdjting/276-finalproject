@@ -2,8 +2,9 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const userRoute = require("./routers/authRouter");
 
+//routers and endpoints
+const userRoute = require("./routers/authRouter");
 const adminRoute = require("./routers/adminRouter");
 const queries = require("./queries")
 
