@@ -37,10 +37,6 @@ function App() {
             }
           >
             <Route path="/" element={<Dashboard />} />
-<<<<<<< HEAD
-            <Route path="/dashboard" element={<Dashboard />} />
-=======
->>>>>>> 0b44eaac66f6190c4f2dde04cec8011be51f22e7
             <Route path="/newForm" element={<NewForm />} />
           </Route>
         </Routes>
