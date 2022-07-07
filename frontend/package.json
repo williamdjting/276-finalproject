@@ -6,7 +6,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "set PORT=process.env.PORT && react-scripts start",
+    "start": "set PORT=8080 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
