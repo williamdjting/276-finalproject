@@ -1,9 +1,12 @@
-
+:root {
+    --nav-background-color: rgb(39, 142, 211);
+    --nav-text-color: #cee1eb;
+  }
 .nav {
     display: flex;
     align-items: center;
     padding: 0px 50px;
-    background-color: antiquewhite;
+    background-color: var(--nav-background-color);
     justify-content: space-between;
     height: 80px;
 }
@@ -33,7 +36,7 @@
     display: flex;
     align-items: center;
     height: 20%;
-    color: #403d39;
+    color: var(--nav-text-color);
     transition: all 0.5s ease 0s;
     padding: 20px 20px;
     margin: 0;
@@ -42,16 +45,24 @@
 }
 
     .nav a:hover {
-        color: #ffecd1;
-        background-color: #b2967d;
+        color: var(--nav-background-color);
+        background-color: var(--nav-text-color);
         height: 100%;
     }
 
+    .nav button{
+        background-color: var(--nav-text-color);
+        color: var(--nav-background-color);
+    }
 
+    .nav button:hover{
+        background-color: white;
+
+    }
 .logo {
     margin-right: auto;
     font-size: 35px;
     padding: 0;
     font-weight: 800;
-    color: #403d39;
+    color: var(--nav-text-color);
 }
