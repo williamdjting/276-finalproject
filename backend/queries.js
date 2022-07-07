@@ -128,7 +128,7 @@ const deleteUser = (request, response) => {
     const id = parseInt(request.params.id)
 
     pool.query(
-        format('DELETE FROM loginauth WHERE id = %I DROP TABLE %I', id, 'user'.concat(id)),
+        format('DELETE FROM loginauth WHERE id = %I; DROP TABLE %I', id, 'user'.concat(id)),
         [id], (error, results) => {
             if (error) {
                 throw error
