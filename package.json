@@ -6,11 +6,11 @@
     "node": "16.x"
   },
   "scripts": {
-    "client": "npm start --prefix frontend",
-    "server": "node ./backend/server.js",
-    "devStart": "concurrently \"npm run server\" \"npm run client\"",
+    "devclient": "npm start --prefix frontend",
+    "devserver": "node ./backend/server.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
     "start": "node ./backend/server.js",
-    "heroku-postbuild": "cd frontend && npm install"
+    "devstart": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
