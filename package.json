@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.3.0",
   "description": "A sample Node.js app using Express 4",
+  "main": "index.js",
   "engines": {
     "node": "16.x"
   },
@@ -9,7 +10,6 @@
     "client": "npm start --prefix frontend",
     "server": "node ./backend/server.js",
     "devStart": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "node ./backend/server.js",
     "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "dependencies": {
