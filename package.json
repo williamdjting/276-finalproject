@@ -6,9 +6,9 @@
     "node": "16.x"
   },
   "scripts": {
-    "devclient": "npm start --prefix frontend",
-    "devserver": "node ./backend/server.js",
-    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "client": "npm start --prefix frontend",
+    "server": "node ./backend/server.js",
+    "heroku-postbuild": "cd ./frontend && npm install && npm run build",
     "start": "node ./backend/server.js && react-scripts start",
     "devstart": "concurrently \"npm run server\" \"npm run client\""
   },
