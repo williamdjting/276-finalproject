@@ -42,6 +42,9 @@ app.get('/api/users/:userid', (req, res) => {
    );
  });
 */
+app.get('*', (req, res) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
 
 //listen
 app.listen(port, () => {
