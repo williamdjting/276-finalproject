@@ -10,7 +10,7 @@ const queries = require("./queries")
 
 //init variables
 const app = express();
-const publicPath = path.join(__dirname, '..', 'public');
+const publicPath = path.join(__dirname, '..','frontend', 'public');
 const port = process.env.PORT || 4000;
 
 //use
