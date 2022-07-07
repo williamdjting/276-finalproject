@@ -18,9 +18,14 @@ app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
 //get
+// app.get('/', (req, res) => {
+//    res.sendFile(path.join(publicPath, 'index.html'));
+// });
+
 app.get('/', (req, res) => {
-   res.sendFile(path.join(publicPath, 'index.html'));
+  res.sendFile(path.resolve(__dirname, 'index.html'));
 });
+
 app.get('/api/users', (req, res) => {
   queries.getAllUsers(req, res);
 });
