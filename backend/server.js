@@ -17,14 +17,11 @@ const port = process.env.PORT || 4000;
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
-//get
-// app.get('/', (req, res) => {
-//    res.sendFile(path.join(publicPath, 'index.html'));
-// });
-
+get
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'index.html'));
+   res.sendFile(path.join(publicPath, 'index.html'));
 });
+
 
 app.get('/api/users', (req, res) => {
   queries.getAllUsers(req, res);
