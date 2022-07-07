@@ -17,7 +17,7 @@ const port = process.env.PORT || 4000;
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
-get
+// get
 app.get('/', (req, res) => {
    res.sendFile(path.join(publicPath, 'index.html'));
 });
