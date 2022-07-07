@@ -125,16 +125,33 @@ const resetPassword = (request, response) => {
 
 // deletes user from a given id
 const deleteUser = (request, response) => {
-    const id = parseInt(request.params.id)
+    const id = parseInt(request.params.id);
+    let temp = true;
+    //const isTableExist =  pool.query(format("SELECT EXISTS ( SELECT FROM  pg_tables WHERE  schemaname = 'public' AND tablename  = %I", 'user'.concat(id)));
+    //console.log("isTable Existed :" + isTableExist[0]);
 
     pool.query(
-        format('DELETE FROM loginauth WHERE id = %I; DROP TABLE %I', id, 'user'.concat(id)),
-        [id], (error, results) => {
+        'DELETE FROM loginauth WHERE userid = $1',  [id],
+        (error, results) => {
             if (error) {
+                temp=false;
                 throw error
             }
-            response.status(200).send(`User deleted with ID: ${id}`)
+         
         })
+
+   
+        pool.query(
+            format('DROP TABLE IF EXISTS %I', 'user'.concat(id)),
+            (error, results) => {
+                if (error) {
+                    temp=false;
+                    throw error
+                }
+
+            })
+            if(temp) response.status(200).send(`User deleted with ID: ${id}`);
+            else response.status(404);
 }
 
 // return user nickname
