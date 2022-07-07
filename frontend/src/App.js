@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
@@ -13,11 +13,19 @@ import WithNav from "./pages/WithNav";
 import { AuthProvider } from "./hooks/useAuth";
 
 function App() {
-  // function RequireAuth({ children }) {
-  //   const authed = localStorage.getItem("isAuthed");
-  //   console.log("authed: " + authed);
-  //   return authed ? children : <Navigate to="/login" replace />;
-  // }
+  function RequireAuth({ children }) {
+    const authed = localStorage.getItem("isAuthed");
+    console.log("authed: " + authed);
+    return authed ? children : <Navigate to="/login" replace />;
+  }
+
+  function SwitchElements() {
+    const role = localStorage.getItem("role");
+    console.log("role: " + role);
+    if (role == "admin") return <Admin />;
+    else if (role == "regular") return <Dashboard />;
+    else return <Dashboard />;
+  }
 
   return (
     <AuthProvider>
@@ -26,17 +34,16 @@ function App() {
           <Route element={<WithoutNav />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/admin" element={<Admin />} />
           </Route>
 
           <Route
             element={
-              // <RequireAuth>
+              <RequireAuth>
                 <WithNav />
-              // </RequireAuth>
+              </RequireAuth>
             }
           >
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<SwitchElements />} />
             <Route path="/newForm" element={<NewForm />} />
           </Route>
         </Routes>

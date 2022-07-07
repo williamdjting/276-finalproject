@@ -15,6 +15,7 @@ const Admin = () => {
   const [input, setInput] = useState("");
   const [success, setSuccess] = useState(false);
   const [mss, setMss] = useState("");
+  const [deleteMss, setDeleteMss] = useState("");
 
   const popupCloseHandler = (e) => {
     setVisibility(e);
@@ -40,6 +41,9 @@ const Admin = () => {
         console.log(error);
       });
   };
+  useEffect(() => {
+    fetchAccounts();
+  }, []);
 
   //change data in database
   const handleChange = async (op) => {
@@ -56,15 +60,32 @@ const Admin = () => {
           setInput("");
           setSuccess(true);
           setMss(res.data);
+          fetchAccounts();
         }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  useEffect(() => {
-    fetchAccounts();
-  }, []);
+
+   //delete data in database
+   const handleDelete = async (op) => {
+    console.log(op);
+    await axios
+      .post("/admindata" + op)
+      .then((res) => {
+        console.log(res.status);
+        if (res.status == 200) {
+          setInput("");
+          setSuccess(true);
+          setDeleteMss(res.data);
+          fetchAccounts();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   //HTML render out
   return (
@@ -74,7 +95,7 @@ const Admin = () => {
         show={visibility}
         title={"User ID - " + id}
       >
-        {success ? <p>{mss}</p> : <div></div>}
+        {(success&&visibility) ? <p>{mss}</p> : <div></div>}
         <input
           type="text"
           name="content"
@@ -105,9 +126,17 @@ const Admin = () => {
           Change Password
         </button>
 
+        <button type="button" className="delete"  onClick={(e) => {
+            handleDelete("/delete/user/"+id);
+            setVisibility(!visibility);
+          }}>
+          Delete User
+        </button>
+
       </PopUpForm>
       <div>
         <h1>Manage Splittr Accounts</h1>
+        {(success&&!visibility) ? <p>{deleteMss}</p> : <div></div>}
         <table>
           <thead>
             <tr>
@@ -129,6 +158,7 @@ const Admin = () => {
                     onClick={(e) => {
                       dataForForm(item.userid, item.username, item.nickname);
                       setVisibility(!visibility);
+                      setSuccess(false);
                     }}
                   >
                     Modify

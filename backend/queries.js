@@ -107,8 +107,8 @@ const deleteUser = (request, response) => {
     const id = parseInt(request.params.id)
 
     pool.query(
-        'DELETE FROM loginauth WHERE id = $1\n' +
-        'DROP TABLE userid_$1',
+        'DELETE FROM loginauth WHERE userid = $1\n', 
+        //+ 'DROP TABLE userid_$1',
         [id], (error, results) => {
             if (error) {
                 throw error

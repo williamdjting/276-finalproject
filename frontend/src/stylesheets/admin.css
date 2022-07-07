@@ -1,71 +1,68 @@
-.admin{
-    display: flex;
-    width:100vw;
-    justify-content: center;
-    padding: 35px;
-
+.admin {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
 }
 
-.admin h1{
-    text-align: center;
-    margin: 50px;
+.admin h1 {
+  text-align: center;
+  margin: 50px;
 }
 
-.admin table{
-    margin-top: 30px;
-    margin: 50px;
-    margin-top: 0;
-    width: auto;
-    border-spacing: 0;
-border-collapse: collapse;
+.admin table {
+  margin-top: 0;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
-.admin td, .admin th{
-    width: auto;
-    padding: 10px 20px;
-
+.admin td,
+.admin th {
+  width: auto;
+  padding: 10px 20px;
 }
 
-.admin th{
-    background-color: gray;
-    text-align: left;
-    color: white;
+.admin th {
+  background-color: gray;
+  text-align: left;
+  color: white;
 }
 
-.admin td{
-    border-bottom: 1px solid silver;
+.admin td {
+  border-bottom: 1px solid silver;
 }
 
 /*button section*/
-.admin .option, .admin .delete{
-    width: 80%;
-    margin: 10px auto;
-    height: 40px;
-    flex-shrink: 0;
+.admin .option,
+.admin .delete {
+  width: 50%;
+  margin: 10px auto;
+  height: 40px;
+  flex-shrink: 0;
 }
 
-.admin input{
-    width: 100%;
+.admin input {
+  width: 100%;
 }
-.admin .delete{
-    background-color: brown;
-    border-color: brown;
-    margin-top: 35px;
-    border-radius: 0;
-
-}
-
-.admin .delete:hover{
-    color: brown;
-    background-color: transparent;
+.admin .delete {
+  background-color: brown;
+  border-color: brown;
+  margin-top: 50px;
+  border-radius: 0;
+  width: 150px;
 }
 
-.admin p{
-    margin-bottom: 15px;
-    background-color: rgb(189, 226, 189);
-    color: darkgreen;
-    font-weight: 400;
-    padding: 10px;
-    width: 100%;
-    text-align: left;
+.admin .delete:hover {
+  color: brown;
+  background-color: transparent;
+}
+
+.admin p {
+  margin-bottom: 15px;
+  background-color: rgb(189, 226, 189);
+  color: darkgreen;
+  font-weight: 400;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
 }

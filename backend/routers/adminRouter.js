@@ -13,9 +13,9 @@ router.post("/modify/nickname",(req, res) => {
 });
 
 
-router.post("/modify/password",(req, res) => {
-  console.log("modify password posted")
-  queries.updatePassword(req,res);
+router.post("/delete/user/:id",(req, res) => {
+  console.log("delete user posted")
+  queries.deleteUser(req,res);
 });
 
 
