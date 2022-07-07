@@ -10,17 +10,19 @@ const queries = require("./queries")
 
 //init variables
 const app = express();
-const publicPath = path.join(__dirname, '..', 'public');
+const publicPath = path.join(__dirname, '..','frontend', 'build');
 const port = process.env.PORT || 4000;
 
 //use
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
-//get
+// get
 app.get('/', (req, res) => {
    res.sendFile(path.join(publicPath, 'index.html'));
 });
+
+
 app.get('/api/users', (req, res) => {
   queries.getAllUsers(req, res);
 });
@@ -40,6 +42,10 @@ app.get('/api/users/:userid', (req, res) => {
    );
  });
 */
+app.get('*', (req, res) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
+
 //listen
 app.listen(port, () => {
    console.log(`Server is up! port: ${port}`);
