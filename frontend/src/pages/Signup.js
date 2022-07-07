@@ -39,19 +39,21 @@ const Signup = () => {
     };
 
     console.log(userObject);
-    await axios
-      .post("/auth/signup", userObject)
-      .then((res) => {
-        console.log(res);
-        if (res.data.signup) {
-          navigate("/login");
-        } else {
-          setErrMsg("Error: User Already Existed");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (pwd == rePwd) {
+      await axios
+        .post("/auth/signup", userObject)
+        .then((res) => {
+          console.log(res);
+          if (res.data.signup) {
+            navigate("/login");
+          } else {
+            setErrMsg("Error: User Already Existed");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (

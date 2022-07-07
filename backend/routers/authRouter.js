@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const pool = require("../db");
-
+const { queries } = require("@testing-library/react");
+const cusQuery = require("../queries")
 // Cookie packages
 // const sessions = require('express-session')
 // const cookieParser = require("cookie-parser");
@@ -45,14 +46,27 @@ router.post("/login", async (req,res) => {
   let username = req.body.username;
   let password = req.body.password;
  
- const loginData = await pool.query("SELECT id, username, passhash FROM users u WHERE u.username=$1", [username]);
+//  const loginData = await pool.query("SELECT id, username, passhash FROM users u WHERE u.username=$1", [username]);
+  
+//===== using prod DB =====
+ const loginData = await pool.query("SELECT userid, username, password FROM loginauth WHERE username=$1", [username]);
+//=========================
+  
+  if (loginData.rowCount > 0) { 
+    console.log(loginData.rows[0].passhash)
+    console.log(loginData.rows[0])
 
- if(loginData.rowCount > 0){ 
-    let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].passhash);
-    console.log("passhash:" + loginData.rows[0].passhash);
+    // let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].passhash);
+    // console.log("passhash:" + loginData.rows[0].passhash);
+
+    //===== using prod DB =====
+    let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].password);
+    console.log("passhash:" + loginData.rows[0].password);
+    //=========================
+
     console.log("pwd" + password);
     if(isPasswordMatch){
-        res.json({login:true, username}) //test
+        res.json({login:true, username: username, type: loginData.rows[0].type}) //test
         console.log("correct login");
       //added session
       // session = req.session;
@@ -71,6 +85,16 @@ else {
 
 });
 
+// gotta wait 1 second for the signup sync to work...
+// pls fix if you got a better way
+function resolveAfter1Seconds() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 1000);
+  });
+}
+
 router.post("/signup", async (req, res) => {
 
   let name = req.body.name;
@@ -79,18 +103,34 @@ router.post("/signup", async (req, res) => {
   let password = req.body.password;
 
   //Check identify user in the system
+  // const getUser = await pool.query(
+  //   "SELECT username FROM users WHERE username = '" + username + "'"
+  // );
+
+  //===== using prod DB =====
   const getUser = await pool.query(
-    "SELECT username from users WHERE username = '" + username + "'"
+    "SELECT username FROM loginauth WHERE username = '" + username + "'"
   );
+  //=========================
 
   //Register the user if no duplicated user
   if (getUser.rowCount === 0) {
     const hashedPass = await bcrypt.hash(password, 10);
-    const newUserQuery = await pool.query(
-      "Insert Into users(nickname,username,passhash) VALUES ($1,$2,$3) RETURNING username",
-      [name,username, hashedPass]
-    );
-    res.json({signup:true, username}) //test
+
+    // const newUserQuery = await pool.query(
+    //   "Insert Into users(nickname,username,passhash) VALUES ($1,$2,$3) RETURNING username",
+    //   [name,username, hashedPass]
+    // );
+
+
+  //===== using prod DB =====
+  req.body.password = hashedPass;
+    const newUserQuery = await cusQuery.createUser(req, res);
+    await resolveAfter1Seconds();
+    req.body.userid = newUserQuery.rows[0].userid;
+    cusQuery.generateUserTable(req, res);
+  //=========================
+    res.json({ signup: true, username }); //test
     // session = req.session;
     // session.userid = req.body.username;
     // console.log("correct signup");

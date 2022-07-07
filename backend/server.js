@@ -2,7 +2,11 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+
+//routers and endpoints
 const userRoute = require("./routers/authRouter");
+const adminRoute = require("./routers/adminRouter");
+const queries = require("./queries")
 
 //init variables
 const app = express();
@@ -17,10 +21,16 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
    res.sendFile(path.join(publicPath, 'index.html'));
 });
-app.get('/api/hello', (req, res) => {
-   res.send({ express: 'Hello From Express' });
- });
+app.get('/api/users', (req, res) => {
+  queries.getAllUsers(req, res);
+});
+ 
+app.get('/api/users/:userid', (req, res) => {
+  queries.getUserData(req, res);
+});
+
  app.use('/auth', userRoute);
+ app.use('/admindata', adminRoute);
  //post
  /*
  app.post('/api/data', (req, res) => {

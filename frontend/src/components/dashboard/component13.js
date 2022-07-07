@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/Dashboard'
 import '../../stylesheets/dashboardcomponents/component13.css'
-
+import FetchAPI13 from '../../hooks/FetchAPI13';
 
 function Component13(props) {
 
@@ -25,11 +25,15 @@ function Component13(props) {
     
     <div id="placeholder13">
       <header>
-        <h3>List of Component13</h3>
+        <h3>Pending Request</h3>
       </header>
 
       <section> 
       {forLoop()}
+      </section>
+
+      <section>
+      <FetchAPI13/>
       </section>
 
     </div>
