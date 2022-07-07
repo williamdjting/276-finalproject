@@ -49,12 +49,13 @@ router.post("/login", async (req,res) => {
 //  const loginData = await pool.query("SELECT id, username, passhash FROM users u WHERE u.username=$1", [username]);
   
 //===== using prod DB =====
- const loginData = await pool.query("SELECT userid, username, password FROM loginauth WHERE username=$1", [username]);
+const loginData = await pool.query("SELECT userid, username, password, type FROM loginauth u WHERE u.username=$1", [username]);
 //=========================
   
   if (loginData.rowCount > 0) { 
     console.log(loginData.rows[0].passhash)
     console.log(loginData.rows[0])
+
 
     // let isPasswordMatch = await bcrypt.compare(password, loginData.rows[0].passhash);
     // console.log("passhash:" + loginData.rows[0].passhash);
@@ -66,8 +67,8 @@ router.post("/login", async (req,res) => {
 
     console.log("pwd" + password);
     if(isPasswordMatch){
-        res.json({login:true, username: username, type: loginData.rows[0].type}) //test
-        console.log("correct login");
+        res.json({login:true, username: username, role: loginData.rows[0].type}) //test
+        console.log(loginData.rows[0].type);
       //added session
       // session = req.session;
       //   session.userid = req.body.username;

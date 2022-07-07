@@ -43,9 +43,8 @@ const Login = () => {
           //setSuccess(true);
 
           //set Auth = true
-          login().then(() => {
+          login(res.data.role).then(() => {
             navigate("/");
-            console.log("navigate to dashboard");
           });
         } else {
           setErrMsg(res.data.status);

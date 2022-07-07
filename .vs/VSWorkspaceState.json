@@ -5,10 +5,8 @@
     "\\frontend\\src",
     "\\frontend\\src\\components",
     "\\frontend\\src\\components\\admin",
-    "\\frontend\\src\\components\\newForm",
-    "\\frontend\\src\\pages",
-    "\\frontend\\src\\stylesheets"
+    "\\frontend\\src\\components\\newForm"
   ],
-  "SelectedNode": "\\frontend\\src\\pages\\Admin.js",
+  "SelectedNode": "\\frontend\\src\\components\\admin\\PopUpForm.js",
   "PreviewInSolutionExplorer": false
 }
