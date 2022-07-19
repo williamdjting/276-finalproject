@@ -143,6 +143,7 @@ const Admin = () => {
               <th>ID</th>
               <th>Nick Name</th>
               <th>Username</th>
+              <th>Email</th>
               <th>Operations</th>
             </tr>
           </thead>
@@ -152,6 +153,7 @@ const Admin = () => {
                 <td>{item.userid}</td>
                 <td>{item.nickname}</td>
                 <td>{item.username}</td>
+                <td>{item.email}</td>
                 <td>
                   <button
                     type="button"

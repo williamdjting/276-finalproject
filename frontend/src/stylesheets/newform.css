@@ -36,11 +36,11 @@ input:hover {
 }
 
 .errorMessage {
-  color:  #CC3333;
+  color:  #c90e0e;
  width: 100%;
  padding: 7px;
  padding-left: 18px;
-  background-color: #e1f6ff;
+  background-color: #fccfcc;
   margin-bottom: 15px;
   font-weight: 500;
   font-size: 15px;
@@ -74,9 +74,16 @@ input[type="button"] {
 
 input[type="submit"]:hover,
 input[type="button"]:hover {
-  width: 70%;
   transition: 0.2s;
   box-shadow: none;
+  background-color: #CC3333;
+  border-color: #CC3333;
+}
+
+input.signUp:hover {
+  color:#CC3333;
+  border-color: #CC3333;
+  background-color: transparent;
 }
 
 button:hover {
@@ -113,15 +120,7 @@ button {
   cursor: pointer;
 }
 
-input.signUp {
-  margin-top: 15px;
-  color: #599dba;
-  background-color: white;
-}
 
-input.signUp:hover {
-  width: 70%;
-}
 /*Text Section------------------------*/
 h2 {
   text-align: center;

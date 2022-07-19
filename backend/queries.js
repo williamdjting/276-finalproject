@@ -5,12 +5,12 @@ const bcrypt = require("bcrypt");
 // create a new user
 // NOTE: fields are all varchar to handle bad input data to avoid crashes
 const createUser = (request, response) => {
-    const { username, password, name } = request.body
+    const { username, password, name, email } = request.body
 
     return new Promise(function (resolve, reject) {
         pool.query(
-            'INSERT INTO loginauth (username, password, nickname) VALUES ($1, $2, $3) RETURNING *',
-            [username, password, name], (error, results) => {
+            'INSERT INTO loginauth (username, password, nickname, email) VALUES ($1, $2, $3, $4) RETURNING *',
+            [username, password, name, email], (error, results) => {
                 if (error) {
                     return reject(error);
                 }

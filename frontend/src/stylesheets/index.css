@@ -33,6 +33,11 @@ body {
   margin-bottom: 30px;
 }
 
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
 /*code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

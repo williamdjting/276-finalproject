@@ -100,7 +100,7 @@ router.post("/signup", async (req, res) => {
 
   let name = req.body.name;
   let username = req.body.username;
-  //let email = req.body.email;
+  let email = req.body.email;
   let password = req.body.password;
 
   //Check identify user in the system
@@ -140,6 +140,25 @@ router.post("/signup", async (req, res) => {
   else{
     res.json({signup:false, status:  "username taken" }) //test
     console.log("wrong signup");
+  }
+});
+
+
+router.post("/checkDup", async (req, res) => {
+
+  let username = req.body.username;
+
+  const getUser = await pool.query(
+    "SELECT username FROM loginauth WHERE username = '" + username + "'"
+  );
+  //check duplicated user
+  if (getUser.rowCount === 0) {
+
+    res.json({ noDuplicate: true, username }); //test
+
+  }
+  else{
+    res.json({noDuplicate:false, status:  "username taken" }) //test
   }
 });
 
