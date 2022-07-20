@@ -74,16 +74,16 @@ const Dashboard = () => {
                 </tr>
                 <tr className='column'>
         
-                    <td className="placeholder2 " >
-                        
+                    {/* <td className="placeholder2 " > */}
+                    <td className="placeholder2 ">
                         <Component21 names={name}/>
                         
                     </td>
-                    <td className="placeholder2 " >
+                    {/* <td className="placeholder2 " >
                         
                         <Component22 names={name}/>
                         
-                    </td>
+                    </td> */}
                 </tr>
                 {/* <tr>
                     <td className="placeholder3" id="placeholder31">
