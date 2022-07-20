@@ -35,8 +35,8 @@ function Component11(props) {
       </section>
 
       <section>
-      Your Total Outstanding Balance is:
-      <FetchAPI11/>
+      <h1>Your Total Outstanding Balance is:
+      <FetchAPI11/></h1>
       </section>
 
     </div>
