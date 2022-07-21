@@ -33,7 +33,7 @@ const Login = () => {
       userid: id,
     };
 
-    localStorage.setItem('userKey', id);
+    // localStorage.setItem('userKey', id);
 
     console.log(userObject);
     await axios
@@ -41,12 +41,14 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
 
+        localStorage.setItem('userKey', id);
+
         if (res.data.login) {
           setUser("");
           setPwd("");
           setID("");
           //setSuccess(true);
-
+          
           //set Auth = true
           login(res.data, user).then(() => {
             navigate("/");
