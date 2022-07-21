@@ -66,9 +66,11 @@ const loginData = await pool.query("SELECT userid, username, password, type FROM
     //=========================
 
     console.log("pwd" + password);
-    if(isPasswordMatch){
-        res.json({login:true, username: username, role: loginData.rows[0].type, id: loginData.rows[0].userid},) //test
-        console.log(loginData.rows[0].userid);
+    if (isPasswordMatch) {
+      res.json({login:true, username: username, role: loginData.rows[0].type}) //test
+      console.log(loginData.rows[0].type);
+        // res.json({login:true, username: username, role: loginData.rows[0].type, id: loginData.rows[0].userid},) //test
+        // console.log(loginData.rows[0].userid);
       //added session
       // session = req.session;
       //   session.userid = req.body.username;
