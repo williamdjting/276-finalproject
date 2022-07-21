@@ -1,6 +1,7 @@
 const pool = require("./db");
 var format = require('pg-format');
 const bcrypt = require("bcrypt");
+// const { use } = require("./routers/adminRouter");
 
 // create a new user
 // NOTE: fields are all varchar to handle bad input data to avoid crashes
@@ -16,38 +17,38 @@ const createUser = (request, response) => {
                 }
                 response.status(200);
                 resolve(results);
-                }
+            }
         )
     })
 }
 // generates an empty user table
 const generateUserTable = (request, response) => {
     const { userid } = request.body;
-    
-    let sql = format('CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount INT, paid BOOL )', "user".concat(userid));
 
-    pool.query( sql, (error, results) => {
-            if (error) {
-                throw error
-            }
-        })
+    let sql = format('CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount NUMERIC(4, 2), paid BOOL )', "user".concat(userid));
+
+    pool.query(sql, (error, results) => {
+        if (error) {
+            throw error
+        }
+    })
 }
 
 // return all user info found in datatable
 // william
 const getAllUserData = (request, response) => {
-  const userid = parseInt(request.params.userid);
-  pool.query(
-      
-      'SELECT * FROM dummytable',
-      
-      (error, results) => {
-    if (error) {
-      throw error
-    }
-    // returns the results found as JSON
-    response.status(200).json(results.rows)
-  })
+    const userid = parseInt(request.params.userid);
+    pool.query(
+
+        'SELECT * FROM dummytable',
+
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            // returns the results found as JSON
+            response.status(200).json(results.rows)
+        })
 }
 
 
@@ -89,7 +90,7 @@ const updateNickname = (request, response) => {
 // updates existing user entry
 const updatePassword = async (request, response) => {
     const password = request.body.input;
-    const userid  = request.body.id;
+    const userid = request.body.id;
 
     const hashedPass = await bcrypt.hash(password, 10);
 
@@ -149,27 +150,33 @@ const deleteUser = (request, response) => {
     //console.log("isTable Existed :" + isTableExist[0]);
 
     pool.query(
-        'DELETE FROM loginauth WHERE userid = $1',  [id],
+        'DELETE FROM loginauth WHERE userid = $1', [id],
         (error, results) => {
             if (error) {
-                temp=false;
+                temp = false;
                 throw error
             }
-         
+
         })
 
-   
-        pool.query(
-            format('DROP TABLE IF EXISTS %I', 'user'.concat(id)),
-            (error, results) => {
-                if (error) {
-                    temp=false;
-                    throw error
-                }
 
-            })
-            if(temp) response.status(200).send(`User deleted with ID: ${id}`);
-            else response.status(404);
+    pool.query(
+        format('DROP TABLE IF EXISTS %I', 'user'.concat(id)),
+        (error, results) => {
+            if (error) {
+                temp = false;
+                throw error
+            }
+
+        })
+    if (temp) {
+        response.status(200).send(`User deleted with ID: ${id}`);
+    }
+
+    else {
+        response.status(404);
+    }
+
 }
 
 // return user nickname
@@ -196,7 +203,6 @@ const getAllUsers = (request, response) => {
                 throw error
             }
             response.status(200).json(results.rows);
-           // response.send(results.rows);
         })
 }
 
@@ -214,6 +220,7 @@ const getUserInfo = (request, response) => {
 
 // export methods to routing
 module.exports = {
+    // Users
     createUser,
     generateUserTable,
     getUserData,

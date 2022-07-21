@@ -25,7 +25,7 @@ function Component21(props) {
     
     <div id="placeholder21">
       <header>
-        <h3>Transaction History</h3>
+        <h3>Your Transaction History</h3>
       </header>
 
       <section> 
