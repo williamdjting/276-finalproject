@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 const Login = () => {
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
+  const [id, setID] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [post, setPost] = useState(null);
@@ -29,7 +30,10 @@ const Login = () => {
     const userObject = {
       username: user,
       password: pwd,
+      userid: id,
     };
+
+    localStorage.setItem('userKey', id);
 
     console.log(userObject);
     await axios
@@ -40,10 +44,11 @@ const Login = () => {
         if (res.data.login) {
           setUser("");
           setPwd("");
+          setID("");
           //setSuccess(true);
 
           //set Auth = true
-          login(res.data.role, user).then(() => {
+          login(res.data, user).then(() => {
             navigate("/");
           });
         } else {
