@@ -30,6 +30,7 @@ const Login = () => {
     const userObject = {
       username: user,
       password: pwd,
+      userid: id,
     };
 
     localStorage.setItem('userKey', id);
@@ -47,7 +48,7 @@ const Login = () => {
           //setSuccess(true);
 
           //set Auth = true
-          login(res.data.role, user).then(() => {
+          login(res.data, user).then(() => {
             navigate("/");
           });
         } else {
