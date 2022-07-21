@@ -12,9 +12,10 @@ import "../stylesheets/fetchAPIcomponents/FetchAPI11.css"
 function FetchAPI11() {
 
   const [data, setData] = useState([]);
+  // const [newdata, setNewdata] = useState([]);
 
   const apiGet = () => {
-    fetch('/api/users')
+    fetch('/api/users/33')
     .then(response => response.json())
     .then( (json) => {
       console.log(json);
@@ -22,11 +23,24 @@ function FetchAPI11() {
       });
   };
 
-    useEffect(() => {
-      apiGet();
-    }, []);
+  useEffect(() => {
+    apiGet();
+  }, []);
 
-    return (
+//onlyUnpaidCharges this is an object array that only has paid: false
+  var onlyUnpaidCharges = data.filter(function (el) {
+    return el.paid == false;
+  })
+
+  console.log("object array of onlyUnpaidCharges",onlyUnpaidCharges)
+
+  var sumOfTotal = onlyUnpaidCharges.reduce((total, obj) => obj.amount + total, 0);
+  // outputs the total unpaid charges 
+
+  console.log("this is the sumOfTotal",sumOfTotal);
+
+
+  return (
       <div>
         {/* <button onClick={apiGet}>FetchAPI</button>
         <br/> */}
@@ -34,16 +48,17 @@ function FetchAPI11() {
 
         <table>
           <tr>
+            {sumOfTotal}
             {/* <td className="samerowintable11">
             {data.map((item) => (
               <ul>{item.userId} </ul>
             ))}
             </td> */}
-            <td className="samerowintable11">
-            {data.map((item) => (
-              <ul>{item.userid}</ul>
+            {/* <td className="samerowintable11">
+            {onlyUnpaidCharges.map((item) => (
+              <ul>{item.reqid}</ul>
             ))}
-            </td>
+            </td> */}
             {/* <td className="samerowintable11">
             {data.map((item) => (
               <ul>{item.completed}</ul>

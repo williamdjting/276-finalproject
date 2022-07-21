@@ -27,7 +27,7 @@ function Component11(props) {
     
     <div id="placeholder11">
       <header>
-        <h3>Welcome User</h3>
+        <h3>Welcome User 33</h3>
       </header>
 
       <section> 
@@ -35,7 +35,8 @@ function Component11(props) {
       </section>
 
       <section>
-      <FetchAPI11/>
+      <h1>Your Total Outstanding Balance is:
+      <FetchAPI11/></h1>
       </section>
 
     </div>

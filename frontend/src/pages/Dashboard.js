@@ -72,65 +72,27 @@ const Dashboard = () => {
                         </td>
                     </td>
                 </tr>
-                <tr className='column'>
-        
-                    <td className="placeholder2 " >
-                        
-                        <Component21 names={name}/>
-                        
-                    </td>
-                    <td className="placeholder2 " >
-                        
-                        <Component22 names={name}/>
-                        
-                    </td>
-                </tr>
-                {/* <tr>
-                    <td className="placeholder3" id="placeholder31">
-                        [Empty placeholder box]
-                        
-                    </td>
-                    <td className="placeholder3" id="dummyform"> */}
-                        {/* <DummyForm/> */}
-                        {/* <form id="dummysubmitform" onSubmit = {formSubmitHandler}>
-                            <input type="text" value={userData1} onChange={e=> setUserData1(e.target.value)}/>
-                            <input type="text" value={userData2} onChange={e=> setUserData2(e.target.value)}/>
-                            <input type="number" value={userData3} onChange={e=> setUserData3(e.target.value)}/>
-                            <input type="submit" text="Submit" intent="primary"/>
-                        </form> */}
 
-                    {/* </td>
-                </tr> */}
+
+
             </table>
-            <form id="dummysubmitform" onSubmit = {formSubmitHandler}>
-                            <input 
-                                id="dummyinputbutton" 
-                                placeholder="Name"
-                                type="text" 
-                                value={userData1} 
-                                onChange={e=> setUserData1(e.target.value)}
-                            />
-                            <input 
-                                id="dummyinputbutton" 
-                                placeholder="Email"
-                                type="text" 
-                                value={userData2} 
-                                onChange={e=> setUserData2(e.target.value)}
-                            />
-                            <input  
-                                id="dummyinputbutton" 
-                                placeholder="Amount" 
-                                type="number" 
-                                value={userData3} 
-                                onChange={e=> setUserData3(e.target.value)}
-                            />
-                            <input 
-                                id="dummysubmitbutton" 
-                                type="submit" 
-                                text="Submit" 
-                                intent="primary"
-                            />
-            </form>
+
+            <table>
+
+            <tr className='column'>
+            
+                    
+                    <td className="placeholder2 ">
+
+                    {/* <td style="width: 100%;"> */}
+                    
+                        <Component21 names={name}/>
+                
+                    </td>
+
+            </tr>
+            
+            </table>
 
         </div>
         
