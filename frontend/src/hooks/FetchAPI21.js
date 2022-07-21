@@ -35,7 +35,7 @@ function FetchAPI21() {
         <table>
           <tr>
           <td className="samerowintable21">
-            Transaction Time and Date
+            Transaction Date
             </td>
             &nbsp;
             &nbsp;
@@ -45,7 +45,7 @@ function FetchAPI21() {
             &nbsp;
             
             <td className="samerowintable21">
-            Transaction Member
+            Transaction User
             </td>
             &nbsp;
             &nbsp;
@@ -72,7 +72,7 @@ function FetchAPI21() {
           <tr>
             <td className="samerowintable21">
             {data.map((item) => (
-              <ul>{item.date} </ul>
+              <ul>{item.date.substring(0,16)} </ul>
             ))}
             </td>
             &nbsp;
