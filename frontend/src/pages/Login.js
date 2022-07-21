@@ -31,6 +31,8 @@ const Login = () => {
       password: pwd,
     };
 
+    localStorage.setItem('userKey', id);
+
     console.log(userObject);
     await axios
       .post("/auth/login", userObject)
