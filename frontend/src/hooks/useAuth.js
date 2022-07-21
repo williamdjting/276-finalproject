@@ -19,7 +19,7 @@ function useAuth() {
         setAuthed(true);
         localStorage.setItem("userid", data.id);
         localStorage.setItem("role", data.role);
-        localStorage.setItem("username", username);
+        localStorage.setItem("username", data.username);
         localStorage.setItem("isAuthed", "true");
         res();
       });
