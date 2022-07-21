@@ -14,10 +14,11 @@ function useAuth() {
         res();
       });
     },
-    login(role) {
+    login(role,username) {
       return new Promise((res) => {
         setAuthed(true);
         localStorage.setItem("role", role);
+        localStorage.setItem("username", username);
         localStorage.setItem("isAuthed", "true");
         res();
       });

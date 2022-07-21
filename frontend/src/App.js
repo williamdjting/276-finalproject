@@ -2,14 +2,21 @@ import "./App.css";
 import React from "react";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 
+//main pages
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup";
-import NewForm from "./pages/NewForm";
 import Admin from "./pages/Admin";
 
+//sub pages
+import NewForm from "./pages/NewForm";
+import Profile from "./pages/Profile";
+
+//page styles
 import WithoutNav from "./pages/WithoutNav";
 import WithNav from "./pages/WithNav";
+
+//customized hook
 import { AuthProvider } from "./hooks/useAuth";
 
 function App() {
@@ -45,6 +52,8 @@ function App() {
           >
             <Route path="/" element={<SwitchElements />} />
             <Route path="/newForm" element={<NewForm />} />
+            <Route path="/profile" element={<Profile />} />
+            
           </Route>
         </Routes>
       </BrowserRouter>

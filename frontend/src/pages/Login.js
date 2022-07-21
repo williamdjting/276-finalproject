@@ -43,7 +43,7 @@ const Login = () => {
           //setSuccess(true);
 
           //set Auth = true
-          login(res.data.role).then(() => {
+          login(res.data.role,user).then(() => {
             navigate("/");
           });
         } else {

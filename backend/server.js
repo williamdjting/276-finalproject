@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const userRoute = require("./routers/authRouter");
 const adminRoute = require("./routers/adminRouter");
 const emailRoute = require("./routers/emailRouter");
+const profileRoute = require("./routers/profileRouter");
 const queries = require("./queries")
 
 //init variables
@@ -35,6 +36,7 @@ app.get('/api/users/:userid', (req, res) => {
  app.use('/auth', userRoute);
  app.use('/admindata', adminRoute);
  app.use('/email', emailRoute);
+ app.use('/profile', profileRoute);
  //post
  /*
  app.post('/api/data', (req, res) => {

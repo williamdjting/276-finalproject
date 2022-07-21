@@ -106,6 +106,24 @@ const updatePassword = async (request, response) => {
     )
 }
 
+// updates email
+const updateEmail = (request, response) => {
+    const email = request.body.input;
+    const userid  = request.body.id;
+
+    pool.query(
+        'UPDATE loginauth SET email = $1 WHERE userid = $2',
+        [email, userid],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            // returns a response for success, not json
+            response.status(200).send(`User modified with new password`)
+        }
+    )
+}
+
 // updates existing user entry
 const resetPassword = (request, response) => {
     const { userid } = request.body
@@ -182,6 +200,17 @@ const getAllUsers = (request, response) => {
         })
 }
 
+const getUserInfo = (request, response) => {
+    const username = request.body.username;
+    pool.query("SELECT * FROM loginauth WHERE username = '" + username + "'",
+    (error, results) => {
+        if (error) {
+            throw error;
+        }
+        //console.log(username);
+     response.status(200).json(results.rows[0]);
+    })
+}
 
 // export methods to routing
 module.exports = {
@@ -193,5 +222,7 @@ module.exports = {
     resetPassword,
     deleteUser,
     getUserNickname,
-    getAllUsers
+    getAllUsers,
+    getUserInfo,
+    updateEmail
 }

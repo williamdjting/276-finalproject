@@ -1,0 +1,33 @@
+.profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 55px;
+}
+
+.profile h3 {
+  width: 40%;
+}
+
+.profile p{
+    font-size: 18px;
+}
+.profile .icon {
+    border: none;
+  height: auto;
+  width: auto;
+  background-color: transparent;
+
+}
+
+.profile .icon img {
+  height: 30px;
+}
+.profile .container {
+  display: flex;
+  border-bottom: 1px solid silver;
+  width: 40%;
+  align-items: center;
+  justify-content: space-between;
+}
+

@@ -2,6 +2,7 @@ import React from "react";
 import "../stylesheets/navbar.css";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import SettingIcon from "../icons/setting.svg"
 
 const NavBar = () => {
   // const authed = useAuth();
@@ -26,13 +27,15 @@ const NavBar = () => {
         </ul>
       ) : (
         <ul>
-          <li>
+          <li className="margin-auto">
             <a href="/">Dashboard</a>
           </li>
 
           <li>
             <a href="/newform">Create Share</a>
           </li>
+
+          <li className="icon"><a href="/profile"><img src={SettingIcon} alt="setting"/></a></li>
 
           <li>
             <button onClick={handleLogout}>Log Out</button>

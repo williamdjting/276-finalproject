@@ -17,11 +17,17 @@ router.post("/modify/password",(req, res) => {
   queries.updatePassword(req,res);
 });
 
+router.post("/modify/email",(req, res) => {
+  console.log("modify email posted")
+  queries.updateEmail(req,res);
+});
+
 
 router.post("/delete/user/:id",(req, res) => {
   console.log("delete user posted")
   queries.deleteUser(req,res);
 });
+
 
 
 module.exports = router;

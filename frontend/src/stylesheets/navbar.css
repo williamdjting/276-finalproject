@@ -1,68 +1,94 @@
 :root {
-    --nav-background-color: rgb(39, 142, 211);
-    --nav-text-color: #cee1eb;
-  }
+  --nav-background-color: #278ed3;
+  --nav-text-color: white;
+}
 .nav {
-    display: flex;
-    align-items: center;
-    padding: 0px 50px;
-    background-color: var(--nav-background-color);
-    justify-content: space-between;
-    height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0px 50px;
+  background-color: var(--nav-background-color);
+  height: 80px;
 }
 
-
-
 .nav ul {
-    display: flex;
-    list-style-type: none;
-    margin: 0;
-    height: 100%;
-    padding: 0;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  height: 100%;
+  padding: 0;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .nav li {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    height: 100%;
-    align-items: center;
+  list-style: none;
+  display: flex;
+  padding: 0;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    height: 20%;
-    color: var(--nav-text-color);
-    transition: all 0.5s ease 0s;
-    padding: 20px 20px;
-    margin: 0;
-    font-size: 17px;
-    font-weight: 400;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 20%;
+  color: var(--nav-text-color);
+  transition: all 0.5s ease 0s;
+  padding: 20px 20px;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 400;
 }
 
-    .nav a:hover {
-        color: var(--nav-background-color);
-        background-color: var(--nav-text-color);
-        height: 100%;
-    }
+.nav a:hover {
+  color: var(--nav-background-color);
+  background-color: var(--nav-text-color);
+  height: 100%;
+}
 
-    .nav button{
-        background-color: var(--nav-text-color);
-        color: var(--nav-background-color);
-    }
+.nav button {
+  width: 100px;
+  margin-left: 15px;
+  font-size: 14px;
+  border-color: var(--nav-background-color);
+}
 
-    .nav button:hover{
-        background-color: white;
-
-    }
-.logo {
-    margin-right: auto;
-    font-size: 35px;
-    padding: 0;
-    font-weight: 800;
+.nav button:hover {
+    border-color: var(--nav-text-color);
+    background-color: var(--nav-background-color);
     color: var(--nav-text-color);
+}
+
+.logo {
+  font-size: 35px;
+  padding: 0;
+  font-weight: 800;
+  color: var(--nav-text-color);
+  margin-right: auto;
+}
+
+.nav .icon img {
+  height: 40px;
+  width: auto;
+}
+
+.nav .icon {
+  margin-left: auto;
+}
+.nav .icon a {
+  padding: 0;
+}
+
+.nav .icon a:hover {
+  height: auto;
+  background-color: transparent;
+  transform: rotate(180deg);
+}
+
+.nav .margin-auto {
+  margin-left: auto;
 }
