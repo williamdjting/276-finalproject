@@ -20,8 +20,6 @@ const port = process.env.PORT || 4000;
 //use
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
-app.use('/auth', userRoute);
-app.use('/admindata', adminRoute);
 ////commented out until this is actually existing and needed  app.use('/request', requestRoute);
 
 // get
@@ -61,6 +59,8 @@ app.post("req/closed", (req, res) => {
 });
 
 
+app.use('/auth', userRoute);
+app.use('/admindata', adminRoute);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));

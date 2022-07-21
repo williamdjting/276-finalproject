@@ -47,7 +47,7 @@ router.post("/login", async (req,res) => {
   let password = req.body.password;
  
 //  const loginData = await pool.query("SELECT id, username, passhash FROM users u WHERE u.username=$1", [username]);
-onsole.log("login posted")
+  
 //===== using prod DB =====
 const loginData = await pool.query("SELECT userid, username, password, type FROM loginauth u WHERE u.username=$1", [username]);
 //=========================
@@ -68,7 +68,7 @@ const loginData = await pool.query("SELECT userid, username, password, type FROM
     console.log("pwd" + password);
     if(isPasswordMatch){
         res.json({login:true, username: username, role: loginData.rows[0].type, id: loginData.rows[0].userid},) //test
-        console.log("id : " + loginData.rows[0].userid);
+        console.log(loginData.rows[0].userid);
       //added session
       // session = req.session;
       //   session.userid = req.body.username;
