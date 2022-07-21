@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 
+global.globalId;
+
 const Login = () => {
+
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [id, setID] = useState("");
@@ -35,17 +38,22 @@ const Login = () => {
 
     // localStorage.setItem('userKey', id);
 
+    globalId = id;
+    console.log(globalId);
+
     console.log(userObject);
     await axios
       .post("/auth/login", userObject)
       .then((res) => {
         console.log(res.data);
 
-        var dynamicId1 = localStorage.setItem('userKey', '35');
-        console.log("this is dynamicId1", dynamicId1);
+        
 
-        var dynamicId3 = localStorage.setItem('userKey', '35');
-        console.log("this is dynamicId3", dynamicId3);
+        // var dynamicId1 = localStorage.setItem('userKey', '35');
+        // console.log("this is dynamicId1", dynamicId1);
+
+        // var dynamicId3 = localStorage.setItem('userKey', '35');
+        // console.log("this is dynamicId3", dynamicId3);
 
         if (res.data.login) {
           setUser("");
