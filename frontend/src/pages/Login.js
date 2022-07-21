@@ -39,7 +39,7 @@ const Login = () => {
     // localStorage.setItem('userKey', id);
 
     globalId = id;
-    console.log(globalId);
+    console.log("this is the globalId", globalId);
 
     console.log(userObject);
     await axios
