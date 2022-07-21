@@ -14,8 +14,8 @@ function FetchAPI11() {
   const [data, setData] = useState([]);
   // const [newdata, setNewdata] = useState([]);
 
-  var dynamicId = localStorage.getItem('userKey');
-  console.log("this is dynamicId", dynamicId);
+  var dynamicId2 = localStorage.getItem('userKey');
+  console.log("this is dynamicId2", dynamicId2);
 
   const apiGet = () => {
     fetch(`/api/users/${dynamicId}`)

@@ -41,7 +41,9 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
 
-        localStorage.setItem('userKey', id);
+        var dynamicId1 = localStorage.setItem('userKey', id);
+
+        console.log("this is dynamicId1", dynamicId1);
 
         if (res.data.login) {
           setUser("");
