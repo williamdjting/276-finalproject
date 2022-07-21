@@ -40,6 +40,7 @@ const Login = () => {
 
     globalId = id;
     console.log("this is the globalId", globalId);
+    console.log("we are here");
 
     console.log(userObject);
     await axios
