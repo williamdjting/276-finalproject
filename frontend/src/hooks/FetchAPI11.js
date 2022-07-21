@@ -14,11 +14,12 @@ function FetchAPI11() {
   const [data, setData] = useState([]);
   // const [newdata, setNewdata] = useState([]);
 
-  var dynamicId2 = localStorage.getItem('userKey');
-  console.log("this is dynamicId2", dynamicId2);
+  // var dynamicId2 = localStorage.getItem('userKey');
+  // console.log("this is dynamicId2", dynamicId2);
 
   const apiGet = () => {
-    fetch(`/api/users/${dynamicId}`)
+    // fetch(`/api/users/${dynamicId}`)
+    fetch('/api/users/33')
     .then(response => response.json())
     .then( (json) => {
       console.log(json);
@@ -35,12 +36,12 @@ function FetchAPI11() {
     return el.paid == false;
   })
 
-  console.log("object array of onlyUnpaidCharges",onlyUnpaidCharges)
+  // console.log("object array of onlyUnpaidCharges",onlyUnpaidCharges)
 
   var sumOfTotal = onlyUnpaidCharges.reduce((total, obj) => obj.amount + total, 0);
   // outputs the total unpaid charges 
 
-  console.log("this is the sumOfTotal",sumOfTotal);
+  // console.log("this is the sumOfTotal",sumOfTotal);
 
 
   return (
