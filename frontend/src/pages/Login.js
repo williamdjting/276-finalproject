@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 const Login = () => {
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
+  const [id, setID] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [post, setPost] = useState(null);
@@ -42,6 +43,7 @@ const Login = () => {
         if (res.data.login) {
           setUser("");
           setPwd("");
+          setID("");
           //setSuccess(true);
 
           //set Auth = true
