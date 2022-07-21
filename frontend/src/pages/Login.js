@@ -40,14 +40,15 @@ const Login = () => {
 
     globalId = id;
     console.log("this is the globalId", globalId);
-    console.log("we are here");
+    console.log("we are here43");
 
     console.log(userObject);
+    console.log("we are here46");
     await axios
       .post("/auth/login", userObject)
       .then((res) => {
         console.log(res.data);
-
+        console.log("we are here50");
         
 
         // var dynamicId1 = localStorage.setItem('userKey', '35');
