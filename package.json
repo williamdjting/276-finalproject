@@ -12,6 +12,7 @@
     "start": "node ./backend/server.js && react-scripts start",
     "devstart": "concurrently \"npm run server\" \"npm run client\""
   },
+"proxy": "http://localhost:3001",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
