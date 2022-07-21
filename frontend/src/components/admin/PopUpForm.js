@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import "../../stylesheets/popwindow.css";
 import PropTypes from "prop-types";
