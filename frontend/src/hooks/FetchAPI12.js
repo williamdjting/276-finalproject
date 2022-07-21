@@ -14,7 +14,7 @@ function FetchAPI12() {
   const [data, setData] = useState([]);
 
   const apiGet = () => {
-    fetch('/api/users')
+    fetch('/api/users/33')
     .then(response => response.json())
     .then( (json) => {
       console.log(json);
@@ -25,6 +25,10 @@ function FetchAPI12() {
     useEffect(() => {
       apiGet();
     }, []);
+
+    var onlyMoneyRequestSent = data.filter(function (el) {
+      return el.paid == false && el.req_sent == true;
+    })
 
     return (
       <div>
@@ -40,16 +44,40 @@ function FetchAPI12() {
             ))}
             </td> */}
             <td className="samerowintable12">
-            {data.map((item) => (
-              <ul>{item.userid}</ul>
+            {onlyMoneyRequestSent.map((item) => (
+              <ul>{item.reqid}</ul>
             ))}
             </td>
             &nbsp;
             &nbsp;
             &nbsp;
             <td className="samerowintable12">
-            {data.map((item) => (
-              <ul>{item.username}</ul>
+            {onlyMoneyRequestSent.map((item) => (
+              <ul>{item.date.substring(0,16)}</ul>
+            ))}
+            </td>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <td className="samerowintable12">
+            {onlyMoneyRequestSent.map((item) => (
+              <ul>{item.receiverid}</ul>
+            ))}
+            </td>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <td className="samerowintable12">
+            {onlyMoneyRequestSent.map((item) => (
+              <ul>{item.amount}</ul>
+            ))}
+            </td>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <td className="samerowintable12">
+            {onlyMoneyRequestSent.map((item) => (
+              <ul>{item.paid.toString()}</ul>
             ))}
             </td>
           </tr>

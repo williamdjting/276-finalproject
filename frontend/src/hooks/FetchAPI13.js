@@ -14,7 +14,7 @@ function FetchAPI13() {
   const [data, setData] = useState([]);
 
   const apiGet = () => {
-    fetch('/api/users')
+    fetch('/api/users/33')
     .then(response => response.json())
     .then( (json) => {
       console.log(json);
@@ -26,6 +26,11 @@ function FetchAPI13() {
       apiGet();
     }, []);
 
+    var onlyMoneyRequestReceived = data.filter(function (el) {
+      return el.paid == false && el.req_sent == false;
+    })
+
+
     return (
       <div>
         {/* <button onClick={apiGet}>FetchAPI</button>
@@ -35,24 +40,40 @@ function FetchAPI13() {
         <table>
           <tr>
             <td className="samerowintable13">
-            {data.map((item) => (
-              <ul>{item.userid} </ul>
+            {onlyMoneyRequestReceived.map((item) => (
+              <ul>{item.reqid} </ul>
             ))}
             </td>
             &nbsp;
             &nbsp;
             &nbsp;
             <td className="samerowintable13">
-            {data.map((item) => (
-              <ul>{item.username}</ul>
+            {onlyMoneyRequestReceived.map((item) => (
+              <ul>{item.date.substring(0,16)}</ul>
             ))}
             </td>
             &nbsp;
             &nbsp;
             &nbsp;
             <td className="samerowintable13">
-            {data.map((item) => (
-              <ul>{item.password.substring(0,20)}</ul>
+            {onlyMoneyRequestReceived.map((item) => (
+              <ul>{item.receiverid}</ul>
+            ))}
+            </td>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <td className="samerowintable12">
+            {onlyMoneyRequestReceived.map((item) => (
+              <ul>{item.amount}</ul>
+            ))}
+            </td>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <td className="samerowintable12">
+            {onlyMoneyRequestReceived.map((item) => (
+              <ul>{item.paid.toString()}</ul>
             ))}
             </td>
           </tr>

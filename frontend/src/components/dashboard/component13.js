@@ -25,7 +25,7 @@ function Component13(props) {
     
     <div id="placeholder13">
       <header>
-        <h3>Pending Request</h3>
+        <h3>Outstanding Money Requests Received</h3>
       </header>
 
       <section> 

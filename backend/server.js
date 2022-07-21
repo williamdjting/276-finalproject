@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 //routers and endpoints
 const userRoute = require("./routers/authRouter");
 const adminRoute = require("./routers/adminRouter");
+//commented out until this is actually existing and needed const requestRoute = require("./routers/requestRouter");
 const queries = require("./queries")
 
 //init variables
@@ -16,6 +17,9 @@ const port = process.env.PORT || 4000;
 //use
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
+app.use('/auth', userRoute);
+app.use('/admindata', adminRoute);
+////commented out until this is actually existing and needed  app.use('/request', requestRoute);
 
 // get
 app.get('/', (req, res) => {
