@@ -14,10 +14,12 @@ function FetchAPI13() {
   const [data, setData] = useState([]);
 
   var dynamicId2 = localStorage.getItem('userKey');
-  console.log("this is dynamicId2", dynamicId2);
+
+  let apiPath = '/api/users/'.concat(dynamicId2)
+  console.log("this is apiPath", apiPath);
 
   const apiGet = () => {
-    fetch(`/api/users/${dynamicId2}`)
+    fetch(apiPath)
     // fetch('/api/users/33')
     .then(response => response.json())
     .then( (json) => {
