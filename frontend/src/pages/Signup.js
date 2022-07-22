@@ -207,7 +207,7 @@ const Signup = () => {
                 required
               />
 
-              <div style={{ width: "250px" }}>
+              <div style={{ width: "260px", marginBottom:"35px"}}>
                 <input
                   type="number"
                   name="code"
@@ -217,7 +217,7 @@ const Signup = () => {
                   required
                   maxLength="6"
                   onBlur={confirmCode}
-                  style={{ marginBottom: "35px", width: "145px" }}
+                  style={{width: "145px", verticalAlign: "middle", margin:"0" }}
                 />
                 <button
                   type="button"
@@ -232,13 +232,17 @@ const Signup = () => {
                           borderRadius: "0",
                           width: "90px",
                           height: "45px",
+                          verticalAlign: "middle",
+                       
                         }
                       : {
                           margin: "0",
-                          marginLeft: "15px",
+                          marginLeft: "15px",  
                           borderRadius: "0",
                           width: "90px",
                           height: "45px",
+                          verticalAlign: "middle",
+                      
                         }
                   }
                 >

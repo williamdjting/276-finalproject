@@ -52,7 +52,7 @@ function App() {
           >
             <Route path="/" element={<SwitchElements />} />
             <Route path="/newForm" element={<NewForm />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/editprofile" element={<Profile />} />
             
           </Route>
         </Routes>

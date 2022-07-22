@@ -15,4 +15,28 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    '/email',
+    createProxyMiddleware({
+      target: 'http://localhost:4000',
+      changeOrigin: true,
+    })
+  );
+
+  app.use(
+    '/profile',
+    createProxyMiddleware({
+      target: 'http://localhost:4000',
+      changeOrigin: true,
+    })
+  );
+
+  app.use(
+    '/admindata',
+    createProxyMiddleware({
+      target: 'http://localhost:4000',
+      changeOrigin: true,
+    })
+  );
 };

@@ -19,7 +19,7 @@ const NavBar = () => {
       <p className="logo">Splittr</p>
 
       {localStorage.getItem("role") == "admin" ? (
-        <ul>
+        <ul style={{justifyContent: "end"}}>
 
           <li>
             <button onClick={handleLogout}>Log Out</button>
@@ -35,7 +35,7 @@ const NavBar = () => {
             <a href="/newform">Create Share</a>
           </li>
 
-          <li className="icon"><a href="/profile"><img src={SettingIcon} alt="setting"/></a></li>
+          <li className="icon"><a href="/editprofile"><img src={SettingIcon} alt="setting"/></a></li>
 
           <li>
             <button onClick={handleLogout}>Log Out</button>
