@@ -45,11 +45,12 @@ const Login = () => {
 
         
 
-        // var dynamicId1 = localStorage.setItem('userKey', '35');
-        // console.log("this is dynamicId1", dynamicId1);
+        localStorage.setItem('userKey', JSON.stringify(res.data.id));
 
-        // var dynamicId3 = localStorage.setItem('userKey', '35');
-        // console.log("this is dynamicId3", dynamicId3);
+        var dynamicId1 = localStorage.getItem('userKey');
+        console.log("this is dynamicId1", dynamicId1);
+
+
 
         if (res.data.login) {
           setUser("");
