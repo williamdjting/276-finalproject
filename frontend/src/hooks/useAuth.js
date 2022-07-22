@@ -17,7 +17,7 @@ function useAuth() {
     login(data) {
       return new Promise((res,username) => {
         setAuthed(true);
-        localStorage.setItem("userid", data.id);
+        localStorage.setItem("userKey", data.id);
         localStorage.setItem("role", data.role);
         localStorage.setItem("username", data.username);
         localStorage.setItem("isAuthed", "true");
