@@ -27,7 +27,7 @@ function Component11(props) {
     
     <div id="placeholder11">
       <header>
-        <h3>Your Total Outstanding Balance is:</h3>
+        <h3>Your Total Outstanding Balance is</h3>
       </header>
 
       <section> 
