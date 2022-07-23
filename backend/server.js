@@ -39,7 +39,7 @@ app.post("/adduser", (req, res) => {
   queries.createUser(req, res);
 });
 
-app.post("/deluser", (req, res) => {
+app.post("/deluser/:id", (req, res) => {
   queries.deleteUser(req, res);
 });
 
