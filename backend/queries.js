@@ -35,6 +35,7 @@ const generateUserTable = (request, response) => {
     if (error) {
       throw error;
     }
+    response.json("created");
   });
 };
 
@@ -132,10 +133,11 @@ const updateEmail = (request, response) => {
 // updates existing user entry
 const resetPassword = (request, response) => {
   const { userid } = request.body;
+  const password = "password";
 
   pool.query(
-    'UPDATE loginauth SET password = "password" WHERE userid = $1',
-    [userid],
+    "UPDATE loginauth SET password = $1 WHERE userid = $2",
+    [password, userid],
     (error, results) => {
       if (error) {
         throw error;
