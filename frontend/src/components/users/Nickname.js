@@ -9,10 +9,10 @@ const Nickname = (props) => {
   const [activated, setActivated] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSave = async() => {
+  const handleSave = async () => {
     const userObject = {
       input,
-      id: props.id
+      id: props.id,
     };
     console.log(input);
     console.log(props.id);
@@ -22,6 +22,8 @@ const Nickname = (props) => {
         if (res.status == 200) {
           setSuccess(true);
           setActivated(false);
+          props.setMssg("Nickname has changed");
+          props.setErr(false);
         }
       })
       .catch((error) => {
@@ -33,22 +35,29 @@ const Nickname = (props) => {
     <div className="profile">
       <h3>Nickname</h3>
       {activated ? (
-        <div className="container">
+        <div className="container" style={{ alignItems: "baseline" }}>
           <input
             type="text"
             name="nickname"
             value={input}
-            onChange={(e)=>setInput(e.target.value)}
-          />
-          <button onClick={handleSave}>save</button>
-          <button
-            onClick={() => {
-              setActivated(false);
-              setInput(props.nickname);
+            onChange={(e) => {
+              setInput(e.target.value);
             }}
-          >
-            cancel
-          </button>
+          />
+
+          <div style={{ whiteSpace: "nowrap" }}>
+            <button onClick={handleSave}>save</button>
+            <button
+              onClick={() => {
+                setActivated(false);
+                setInput(props.nickname);
+                props.setErr(false);
+                props.setMssg("");
+              }}
+            >
+              cancel
+            </button>
+          </div>
         </div>
       ) : (
         <div className="container">
@@ -58,14 +67,14 @@ const Nickname = (props) => {
             onClick={() => {
               setActivated(true);
               setInput(props.nickname);
+              props.setMssg("");
+              props.setErr(false);
             }}
           >
             <img src={EditIcon} alt="edit icon" />
           </button>
         </div>
       )}
-
-{success?(<p>Nickname has changed</p>):(<></>)}
     </div>
   );
 };

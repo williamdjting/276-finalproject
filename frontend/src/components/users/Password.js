@@ -9,10 +9,10 @@ const Password = (props) => {
   const [activated, setActivated] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSave = async() => {
+  const handleSave = async () => {
     const userObject = {
       input,
-      id: props.id
+      id: props.id,
     };
 
     await axios
@@ -22,6 +22,8 @@ const Password = (props) => {
           setSuccess(true);
           setActivated(false);
           setInput("");
+          props.setMssg("Password has changed");
+          props.setErr(false);
         }
       })
       .catch((error) => {
@@ -33,28 +35,38 @@ const Password = (props) => {
     <div className="profile">
       <h3>Password</h3>
       {activated ? (
-        <div className="container">
+        <div className="container" style={{ alignItems: "baseline" }}>
           <input
             type="text"
             name="password"
             value={input}
-            onChange={(e)=>setInput(e.target.value)}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Enter New Password"
           />
-          <button onClick={handleSave}>save</button>
-          <button
-            onClick={() => {
-              setActivated(false);
-            }}
-          >
-            cancel
-          </button>
+          <div style={{ whiteSpace: "nowrap" }}>
+            <button onClick={handleSave}>save</button>
+            <button
+              onClick={() => {
+                setActivated(false);
+              }}
+            >
+              cancel
+            </button>
+          </div>
         </div>
       ) : (
         <div className="container">
           <button
-          style={{width: '190px', margin:'5px 0 15px 0', borderRadius:'0',height:'50px'}}
+            style={{
+              width: "190px",
+              margin: "5px 0 15px 0",
+              borderRadius: "0",
+              height: "50px",
+            }}
             onClick={() => {
               setActivated(true);
+              props.setMssg("");
+              props.setErr(false);
             }}
           >
             Change Password
@@ -62,7 +74,6 @@ const Password = (props) => {
         </div>
       )}
 
-{success?(<p>Password has changed</p>):(<></>)}
     </div>
   );
 };

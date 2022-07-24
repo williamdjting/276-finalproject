@@ -9,10 +9,15 @@ const Profile = () => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [id, setId] = useState("");
-  const [render, setRender] = useState(0);
+  const [mssg, setMssg] = useState("");
+  const [err, setErr] = useState(false);
 
-  const forceReRender = (i) => {
-    setRender(i);
+  const handleMessage = (data) => {
+    setMssg(data);
+  };
+
+  const handleError = (data) => {
+    setErr(data);
   };
   //useEffect
   useEffect(() => {
@@ -35,12 +40,31 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div style={{marginBottom:"55px"}}>
       <h2 style={{ marginTop: "55px" }}>Personal Information</h2>
+      {mssg == "" ? (
+        <></>
+      ) : (
+        <p
+          className="errorMessage"
+          style={
+            !err
+              ? {
+                  width: "550px",
+                  margin: "auto",
+                  backgroundColor: "lightgreen",
+                  color: "green",
+                }
+              : { width: "550px", margin: "auto" }
+          }
+        >
+          {mssg}
+        </p>
+      )}
 
-      <Nickname nickname={nickname} id={id} forceRender={forceReRender}/>
-      <Email email={email} id={id} forceRender={forceReRender}/>
-      <Password id={id} forceRender={forceReRender}/>
+      <Nickname nickname={nickname} id={id} setMssg={handleMessage} setErr={handleError} />
+      <Email email={email} id={id} setMssg={handleMessage} setErr={handleError}/>
+      <Password id={id} setMssg={handleMessage} setErr={handleError}/>
     </div>
   );
 };

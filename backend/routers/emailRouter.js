@@ -47,19 +47,23 @@ let email;
 router.post("/sendCode", async (req, res) => {
   code = Math.random().toString().substring(2, 8);
 
-  const getEmail = await pool.query(
-    "SELECT email FROM loginauth WHERE email = '" + req.body.email + "'"
-  );
+  if (req.body.email == null || req.body.email == "") {
+    res.json({ isSent: false, status: "Email cannot be empty" });
+  } else {
+    const getEmail = await pool.query(
+      "SELECT email FROM loginauth WHERE email = '" + req.body.email + "'"
+    );
 
-  if (getEmail.rowCount === 0) {
-    //mail the code to the email
-    mail(req.body.email, code);
-    email = req.body.email;
-    res.json({ isSent: true });
-    console.log("code " + code + "send to user" + req.body.email);
+    if (getEmail.rowCount === 0) {
+      //mail the code to the email
+      mail(req.body.email, code);
+      email = req.body.email;
+      res.json({ isSent: true });
+      console.log("code " + code + "send to user" + req.body.email);
+    } else {
+      res.json({ isSent: false, status: "Email Already Taken" });
+    }
   }
-
-  else{res.json({isSent: false, status: "Email Already Taken"})}
 });
 
 //check if the code matches the input
@@ -72,6 +76,5 @@ router.post("/confirmCode", (req, res) => {
     res.json({ isMatched: false, status: "Code is Not Valid" });
   }
 });
-
 
 module.exports = router;
