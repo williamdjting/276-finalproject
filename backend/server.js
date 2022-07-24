@@ -31,16 +31,8 @@ app.get("/api/users", (req, res) => {
   queries.getAllUsers(req, res);
 });
 
-app.get("/api/users/:userid", (req, res) => {
-  queries.getUserData(req, res);
-});
-
 app.post("/adduser", (req, res) => {
   queries.createUser(req, res);
-});
-
-app.post("/getUserInfo", (req, res) => {
-  queries.getUserInfo(req, res);
 });
 
 app.post("/generateUserTable", (req, res) => {
@@ -51,24 +43,8 @@ app.post("/getNickname/:userid", (req, res) => {
   queries.getUserNickname(req, res);
 });
 
-app.post("/updateNickname", (req, res) => {
-  queries.updateNickname(req, res);
-});
-
-app.post("/updatePassword", (req, res) => {
-  queries.updatePassword(req, res);
-});
-
 app.post("/resetPassword", (req, res) => {
   queries.resetPassword(req, res);
-});
-
-app.post("/updateEmail", (req, res) => {
-  queries.updateEmail(req, res);
-});
-
-app.post("/deluser/:id", (req, res) => {
-  queries.deleteUser(req, res);
 });
 
 app.use("/auth", userRoute);

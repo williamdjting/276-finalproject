@@ -1,6 +1,7 @@
 var chai = require("chai");
 var chaiHttp = require("chai-http");
 var server = require("../backend/server");
+var server2 = require;
 const bcrypt = require("bcrypt");
 var should = chai.should();
 var expect = chai.expect;
@@ -48,7 +49,7 @@ describe("Unit tests for modifying users (show, add, delete, update)", function 
   //   });
 
   it("should return user information (userid, username, password, nickname, email)", async () => {
-    var res = await chai.request(server).post(`/getUserInfo`).send({
+    var res = await chai.request(server).post(`/profile/get/userInfo`).send({
       username: "testUser"
     });
     res.body.userid.should.equal(userid);
@@ -64,20 +65,26 @@ describe("Unit tests for modifying users (show, add, delete, update)", function 
   });
 
   it("should udpate user nickname", async () => {
-    var res = await chai.request(server).post(`/updateNickname`).send({
-      input: "testNickname",
-      id: userid
-    });
+    var res = await chai
+      .request(server)
+      .post(`/admindata/modify/nickname`)
+      .send({
+        input: "testNickname",
+        id: userid
+      });
     var res2 = await chai.request(server).post(`/getNickname/${userid}`);
     res2.body[0].nickname.should.equal("testNickname");
   });
 
   it("should update user password ", async () => {
-    var res = await chai.request(server).post(`/updatePassword`).send({
-      input: "testPassword",
-      id: userid
-    });
-    var res2 = await chai.request(server).post(`/getUserInfo`).send({
+    var res = await chai
+      .request(server)
+      .post(`/admindata/modify/password`)
+      .send({
+        input: "testPassword",
+        id: userid
+      });
+    var res2 = await chai.request(server).post(`/profile/get/userInfo`).send({
       username: "testUser"
     });
     let isPasswordMatch = await bcrypt.compare(
@@ -88,11 +95,11 @@ describe("Unit tests for modifying users (show, add, delete, update)", function 
   });
 
   it("should update user email", async () => {
-    var res = await chai.request(server).post(`/updateEmail`).send({
+    var res = await chai.request(server).post(`/admindata/modify/email`).send({
       input: "testEmail@gmail.com",
       id: userid
     });
-    var res2 = await chai.request(server).post(`/getUserInfo`).send({
+    var res2 = await chai.request(server).post(`/profile/get/userInfo`).send({
       username: "testUser"
     });
     res2.body.email.should.equal("testEmail@gmail.com");
@@ -102,7 +109,7 @@ describe("Unit tests for modifying users (show, add, delete, update)", function 
     var res = await chai.request(server).post(`/resetPassword`).send({
       userid: userid
     });
-    var res2 = await chai.request(server).post(`/getUserInfo`).send({
+    var res2 = await chai.request(server).post(`/profile/get/userInfo`).send({
       username: "testUser"
     });
     res2.body.password.should.equal("password");
@@ -110,7 +117,9 @@ describe("Unit tests for modifying users (show, add, delete, update)", function 
 
   it("should delete a user from the database", async () => {
     var res2 = await chai.request(server).get("/api/users");
-    var res3 = await chai.request(server).post(`/deluser/${userid}`);
+    var res3 = await chai
+      .request(server)
+      .post(`/admindata/delete/user/${userid}`);
     var res4 = await chai.request(server).get("/api/users");
     (res2.body.length - res4.body.length).should.equal(1);
   });
