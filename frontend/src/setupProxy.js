@@ -39,4 +39,12 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    '/dashboard',
+    createProxyMiddleware({
+      target: 'http://localhost:4000',
+      changeOrigin: true,
+    })
+  );
 };

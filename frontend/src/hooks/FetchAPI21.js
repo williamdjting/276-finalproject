@@ -5,125 +5,58 @@
 
 // Can call fetchapi in any component that needs to display data and within the component manipulate and map the fetchapi object to suit the components needs.
 
-
-import React, { useEffect, useState } from 'react'
-import "../stylesheets/fetchAPIcomponents/FetchAPI21.css"
+import React, { useEffect, useState } from "react";
 
 function FetchAPI21() {
-
   const [data, setData] = useState([]);
 
-  var dynamicId2 = localStorage.getItem('userKey');
+  var dynamicId2 = localStorage.getItem("userKey");
   console.log("this is dynamicId2", dynamicId2);
-  let apiPath = '/api/users/'.concat(dynamicId2)
+  let apiPath = "/api/users/".concat(dynamicId2);
 
   const apiGet = () => {
     fetch(apiPath)
-    // fetch('/api/users/33')
-    .then(response => response.json())
-    .then( (json) => {
-      console.log(json);
-      setData(json);
+      // fetch('/api/users/33')
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        setData(json);
       });
   };
 
-    useEffect(() => {
-      apiGet();
-    }, []);
+  useEffect(() => {
+    apiGet();
+  }, []);
 
-    return (
-      <div>
-        {/* <button onClick={apiGet}>FetchAPI</button>
+  return (
+    <div>
+      {/* <button onClick={apiGet}>FetchAPI</button>
         <br/> */}
-        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 
-        <table>
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>User</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+
+        {/* above is the header */}
+
+        {data.map((item) => (
           <tr>
-          <td className="samerowintable21">
-            Transaction Date
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            
-            <td className="samerowintable21">
-            Transaction User
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable21">
-            Transaction Amount
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable21">
-            Transaction Paid?
-            </td>
-
+            <td>{item.date.substring(0, 10)} </td>
+            <td>{item.date.substring(11, 16)} </td>
+            <td>{item.receiverid}</td>
+            <td  >{item.amount}</td>
+            <td>{item.paid.toString() == "true" ? "paid" : "unpaid"}</td>
           </tr>
-
-          {/* above is the header */}
-          <tr>
-            <td className="samerowintable21">
-            {data.map((item) => (
-              <ul>{item.date.substring(0,16)} </ul>
-            ))}
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable21">
-            {data.map((item) => (
-              <ul>{item.receiverid}</ul>
-            ))}
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable21">
-            {data.map((item) => (
-              <ul>{item.amount}</ul>
-            ))}
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable21">
-            {data.map((item) => (
-              <ul>{item.paid.toString()}</ul>
-            ))}
-            </td>
-          </tr>
-        </table>
-
-
-      </div>
-    );
+        ))}
+      </table>
+    </div>
+  );
 }
 
-
 export default FetchAPI21;
-
-
-
-

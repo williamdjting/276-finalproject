@@ -8,6 +8,7 @@ const userRoute = require("./routers/authRouter");
 const adminRoute = require("./routers/adminRouter");
 const emailRoute = require("./routers/emailRouter");
 const profileRoute = require("./routers/profileRouter");
+const dashboardRoute = require("./routers/dashboardRouter");
 //commented out until this is actually existing and needed const requestRoute = require("./routers/requestRouter");
 const queries = require("./queries")
 const requests = require("./requestQueries")
@@ -40,6 +41,7 @@ app.get('/api/users/:userid', (req, res) => {
  app.use('/admindata', adminRoute);
  app.use('/email', emailRoute);
  app.use('/profile', profileRoute);
+ app.use('/dashboard', dashboardRoute);
  //post
  /*
  app.post('/api/data', (req, res) => {
@@ -58,9 +60,6 @@ app.post("req/closed", (req, res) => {
   requests.viewAllClosedRequests(req, res);
 });
 
-
-app.use('/auth', userRoute);
-app.use('/admindata', adminRoute);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));

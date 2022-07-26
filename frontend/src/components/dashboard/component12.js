@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/Dashboard'
-import '../../stylesheets/dashboardcomponents/component12.css'
 import FetchAPI12 from '../../hooks/FetchAPI12';
 
 function Component12(props) {
@@ -23,9 +22,9 @@ function Component12(props) {
 
   return (
     
-    <div id="placeholder12">
+    <div className="placeholder">
       <header>
-        <h3>Outstanding Money Requests Sent</h3>
+        <h3>Requests Sent</h3>
       </header>
 
       <section> 

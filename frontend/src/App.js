@@ -50,8 +50,8 @@ function App() {
               </RequireAuth>
             }
           >
-            <Route path="/" element={<SwitchElements />} />
-            <Route path="/newForm" element={<NewForm />} />
+            <Route path="/" element={<SwitchElements />}/>
+            <Route path="/newForm" element={<NewForm />}/>
             <Route path="/editprofile" element={<Profile />} />
             
           </Route>

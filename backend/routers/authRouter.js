@@ -108,6 +108,9 @@ router.post("/signup", async (req, res) => {
   //   "SELECT username FROM users WHERE username = '" + username + "'"
   // );
 
+  if(username.includes("@")){
+    res.json({ signup: false, status: "Username cannot contain @" });
+  }
   //===== using prod DB =====
   const getUser = await pool.query(
     "SELECT username FROM loginauth WHERE username = '" + username + "'"

@@ -7,7 +7,6 @@
 
 
 import React, { useEffect, useState } from 'react'
-import "../stylesheets/fetchAPIcomponents/FetchAPI12.css"
 
 function FetchAPI12() {
 
@@ -48,7 +47,7 @@ function FetchAPI12() {
               <ul>{item.userId} </ul>
             ))}
             </td> */}
-            <td className="samerowintable12">
+            <td className="samerowintable">
             {onlyMoneyRequestSent.map((item) => (
               <ul>{item.reqid}</ul>
             ))}
@@ -56,7 +55,7 @@ function FetchAPI12() {
             &nbsp;
             &nbsp;
             &nbsp;
-            <td className="samerowintable12">
+            <td className="samerowintable">
             {onlyMoneyRequestSent.map((item) => (
               <ul>{item.date.substring(0,16)}</ul>
             ))}
@@ -64,7 +63,7 @@ function FetchAPI12() {
             &nbsp;
             &nbsp;
             &nbsp;
-            <td className="samerowintable12">
+            <td className="samerowintable">
             {onlyMoneyRequestSent.map((item) => (
               <ul>{item.receiverid}</ul>
             ))}
@@ -72,7 +71,7 @@ function FetchAPI12() {
             &nbsp;
             &nbsp;
             &nbsp;
-            <td className="samerowintable12">
+            <td className="samerowintable">
             {onlyMoneyRequestSent.map((item) => (
               <ul>{item.amount}</ul>
             ))}
@@ -80,7 +79,7 @@ function FetchAPI12() {
             &nbsp;
             &nbsp;
             &nbsp;
-            <td className="samerowintable12">
+            <td className="samerowintable">
             {onlyMoneyRequestSent.map((item) => (
               <ul>{item.paid.toString()}</ul>
             ))}

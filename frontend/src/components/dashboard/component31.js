@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/Dashboard'
-import '../../stylesheets/dashboardcomponents/component31.css'
+
 
 
 // not in use

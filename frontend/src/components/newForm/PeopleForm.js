@@ -1,54 +1,78 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, userRef } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../../stylesheets/newform.css";
 import deleteIcon from "../../icons/close.svg";
+import axios from "axios";
 
 const PeopleForm = ({ passData }) => {
   const [input, setInput] = React.useState("");
   const [userList, setUserList] = React.useState([]);
   const [reverseList, setReverseList] = React.useState([]);
-
+  const [err, setErr] = React.useState("");
+  const [arr, setArr] = React.useState([]);
+  //nodeRef = useRef();
+  //update input
   const saveInput = (e) => {
     setInput(e.target.value);
-    console.log("children: " + [userList]);
+    setErr("");
   };
 
-  const addNewUser = () => {
-    if (userList.indexOf(input) == -1) {
-      setUserList((prevState) => [...prevState, input]);
+  //validate user when adding to list
+  const handleAddUser = async () => {
+    console.log("Arr: " + arr);
+    console.log("Input: " + input);
+    console.log("List: " + userList);
+
+    if (input == localStorage.getItem("userKey")) {
+      setErr("You cannot add yourself");
+    } else {
+      await axios
+        .post("/dashboard/verify/user", { input: input, arr: arr })
+        .then((res) => {
+          console.log("response: " + JSON.stringify(res.data));
+          if (res.data.valid) {
+            if (userList.indexOf(input) == -1) {
+              setUserList((prevState) => [...prevState, input]);
+              setArr((prevState) => [...prevState, res.data.userid]);
+            }
+          } else {
+            setErr(res.data.status);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
+  const removePeople = (index) => {
+    setArr([...arr.slice(0, index), ...arr.slice(index + 1, arr.length)]);
+  };
+
+  //use Effect
   useEffect(() => {
-    passData(userList);
+    passData(arr);
     setReverseList(userList);
     reverseList.reverse();
+    setErr("");
   }, [userList]);
-  /*
-  const removeUser = (index) => {
-    setTimeout(() => {
-      setUserList([
-        ...userList.slice(0, index),
-        ...userList.slice(index + 1, userList.length),
-      ]);
-    }, 1);
-  };
-*/
+
   return (
     <div
       className="formContent padding border"
       style={{ alignItems: "flex-start" }}
     >
-      <h3 style={{ alignSelf: "flex-start" }}>Add People</h3>
+      <h3 style={{ alignSelf: "flex-start" }}>People List</h3>
+      {err == "" ? <></> : <p className="errorMessage">{err}</p>}
       <div style={{ width: "360px" }}>
         <input
           type="text"
           name="addUserTo"
           value={input}
           onChange={saveInput}
-          placeholder="Email Address"
+          placeholder="Email or Username"
         />
-        <button type="button" onClick={addNewUser}>
+        <button type="button" onClick={handleAddUser}>
           Add
         </button>
       </div>
@@ -64,8 +88,8 @@ const PeopleForm = ({ passData }) => {
                 alt="delete"
                 className="deleteIcon"
                 onClick={() => {
+                  removePeople(userList.indexOf(item));
                   setUserList(userList.filter((t) => t !== item));
-                  passData(userList);
                 }}
               />
             </li>

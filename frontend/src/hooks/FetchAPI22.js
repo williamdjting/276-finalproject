@@ -7,7 +7,6 @@
 
 
 import React, { useEffect, useState } from 'react'
-import "../stylesheets/fetchAPIcomponents/FetchAPI22.css"
 
 function FetchAPI22() {
 
@@ -34,15 +33,13 @@ function FetchAPI22() {
 
         <table>
           <tr>
-            <td className="samerowintable22">
+            <td className="samerowintable">
             {data.map((item) => (
               <ul>{item.userid} </ul>
             ))}
             </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable22">
+
+            <td className="samerowintable">
             {data.map((item) => (
               <ul>{item.nickname} </ul>
             ))}

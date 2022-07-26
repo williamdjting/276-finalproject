@@ -76,33 +76,35 @@ const viewAllClosedRequests = (request, response) => {
 
 // Request Mutators
 
-const createNewRequestSerialized = (request, response) => {
+const createNewRequestSerialized = async (request, response) => {
 
-    const { userid, senderid, receiverids, amount } = request.body;
-    let reqid = null;
+    const {title, userid, senderid, receiverids, amount, eventdate } = request.body;
+
+    if(receiverids.length == 0){
+        response.status(404).send("People List cannot be empty");
+    }
+    var reqid;
+    let temp = true;
     //const isTableExist =  pool.query(format("SELECT EXISTS ( SELECT FROM  pg_tables WHERE  schemaname = 'public' AND tablename  = %I", 'user'.concat(id)));
     //console.log("isTable Existed :" + isTableExist[0]);
 
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-    pool.query(
-        'INSERT INTO requests (host_userid) VALUES ($1) RETURNING reqid', [senderid],
-        (error, results) => {
-            if (error) {
-                temp = false;
-                throw error
-            }
-            reqid = results;
+    const reqData = await pool.query('INSERT INTO requests (host_userid) VALUES ($1) RETURNING reqid', [senderid])
 
-        })
+    if(reqData.rowCount !== 0){ reqid = reqData.rows[0].reqid}     
 
     splitAmount = (amount / receiverids.length)
 
-    receiverids.forEach(receiverid => {
+    
+    receiverids.forEach((receiverid) => {
+        console.log(format('INSERT INTO %I  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(userid), 'TRUE', reqid, date, receiverid, splitAmount, 'FALSE', title, eventdate))
         // insert into host table
+        pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(userid))); //add title if not exists
+        pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(userid)));
         pool.query(
-            format('INSERT INTO "%I"  (reqid, req_sent, date, receiverid, amount, paid) VALUES (%I, %I, %I, %I, %I)', 'user'.concat(userid), 'TRUE', reqid, date, receiverid, splitAmount, 'FALSE'),
+            format('INSERT INTO %I  ( req_sent,reqid, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(userid), 'TRUE', reqid, date, receiverid, splitAmount, 'FALSE', title, eventdate),
             (error, results) => {
                 if (error) {
                     temp = false;
@@ -111,9 +113,13 @@ const createNewRequestSerialized = (request, response) => {
                 }
 
             })
+
+           
         // insert into guest table
+        pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(receiverid))); //add title if not exists
+        pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(receiverid)));
         pool.query(
-            format('INSERT INTO "%I"  (reqid, req_sent, date, receiverid, amount, paid) VALUES (%I, %I, %I, %I, %I)', 'user'.concat(receiverid), 'FALSE', reqid, date, userid, splitAmount, 'FALSE'),
+            format('INSERT INTO %I  ( req_sent,reqid, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(receiverid), 'FALSE', reqid, date, userid, splitAmount, 'FALSE', title, eventdate),
             (error, results) => {
                 if (error) {
                     temp = false;
@@ -123,19 +129,19 @@ const createNewRequestSerialized = (request, response) => {
             })
     });
 
-    if (temp) {
-        response.status(200).send(`Request added with reqid: ${reqid}`);
-    }
+        response.status(200).send();
 
-    else {
-        response.status(404);
-    }
+
 
 }
 
 const createNewRequest = (request, response) => {
+    if(request.body.receiverids.length == 0){
+        response.status(404).send("People List cannot be empty");
+    }
 
-    const { userid, senderid, receiverid, amount } = request.body;
+
+    const {title, userid, senderid, receiverids, amount, eventdate } = request.body;
     let reqid = null;
     //const isTableExist =  pool.query(format("SELECT EXISTS ( SELECT FROM  pg_tables WHERE  schemaname = 'public' AND tablename  = %I", 'user'.concat(id)));
     //console.log("isTable Existed :" + isTableExist[0]);
@@ -157,37 +163,34 @@ const createNewRequest = (request, response) => {
 
 
 
-    // insert into host table
-    pool.query(
-        format('INSERT INTO "%I"  (reqid, req_sent, date, receiverid, amount, paid) VALUES (%I, %I, %I, %I, %I)', 'user'.concat(userid), 'TRUE', reqid, date, receiverid, amount, 'FALSE'),
-        (error, results) => {
-            if (error) {
-                temp = false;
+           // insert into host table
+           pool.query(format('ALTER TABLE "%I" ADD COLUMN IF NOT EXISTS title VARCHAR'), 'user'.concat(userid)); //add title if not exists
+           pool.query(format('ALTER TABLE "%I" ADD COLUMN IF NOT EXISTS eventdate VARCHAR'), 'user'.concat(userid));
+           pool.query(
+               format('INSERT INTO "%I"  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%I, %I, %I, %I, %I, %I, %I, %I)', 'user'.concat(userid), 'TRUE', reqid, date, receiverids[0], amount, 'FALSE', title, eventdate),
+               (error, results) => {
+                   if (error) {
+                       temp = false;
+   
+                       throw error
+                   }
+   
+               })
+           // insert into guest table
+           pool.query(format('ALTER TABLE "%I" ADD COLUMN IF NOT EXISTS title VARCHAR'), 'user'.concat(userid)); //add title if not exists
+           pool.query(format('ALTER TABLE "%I" ADD COLUMN IF NOT EXISTS eventdate VARCHAR'), 'user'.concat(userid));
+           pool.query(
+               format('INSERT INTO "%I"  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%I, %I, %I, %I, %I, %I, %I, %I)', 'user'.concat(receiverids[0]), 'FALSE', reqid, date, userid, amount, 'FALSE', title, eventdate),
+               (error, results) => {
+                   if (error) {
+                       temp = false;
+   
+                       throw error
+                   }
+               })
 
-                throw error
-            }
 
-        })
-    // insert into guest table
-    pool.query(
-        format('INSERT INTO "%I"  (reqid, req_sent, date, receiverid, amount, paid) VALUES (%I, %I, %I, %I, %I)', 'user'.concat(receiverid), 'FALSE', reqid, date, userid, amount, 'FALSE'),
-        (error, results) => {
-            if (error) {
-                temp = false;
-
-                throw error
-            }
-        })
-
-
-    if (temp) {
         response.status(200).send(`Request added with reqid: ${reqid}`);
-    }
-
-    else {
-        response.status(404);
-    }
-
 }
 
 

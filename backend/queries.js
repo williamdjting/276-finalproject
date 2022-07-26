@@ -25,7 +25,7 @@ const createUser = (request, response) => {
 const generateUserTable = (request, response) => {
     const { userid } = request.body;
 
-    let sql = format('CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount NUMERIC(4, 2), paid BOOL )', "user".concat(userid));
+    let sql = format('CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount NUMERIC(4, 2), paid BOOL, title VARCHAR )', "user".concat(userid));
 
     pool.query(sql, (error, results) => {
         if (error) {

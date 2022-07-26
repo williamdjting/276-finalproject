@@ -5,26 +5,24 @@
 
 // Can call fetchapi in any component that needs to display data and within the component manipulate and map the fetchapi object to suit the components needs.
 
-
-import React, { useEffect, useState } from 'react'
-import "../stylesheets/fetchAPIcomponents/FetchAPI11.css"
+import React, { useEffect, useState } from "react";
+import "../stylesheets/dashboard/fetch.css";
 
 function FetchAPI11() {
-
   const [data, setData] = useState([]);
   // const [newdata, setNewdata] = useState([]);
 
-  var dynamicId2 = localStorage.getItem('userKey');
+  var dynamicId2 = localStorage.getItem("userKey");
   console.log("this is dynamicId2", dynamicId2);
-  let apiPath = '/api/users/'.concat(dynamicId2)
+  let apiPath = "/api/users/".concat(dynamicId2);
 
   const apiGet = () => {
     fetch(apiPath)
-    // fetch('/api/users/33')
-    .then(response => response.json())
-    .then( (json) => {
-      console.log(json);
-      setData(json);
+      // fetch('/api/users/33')
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        setData(json);
       });
   };
 
@@ -32,54 +30,45 @@ function FetchAPI11() {
     apiGet();
   }, []);
 
-//onlyUnpaidCharges this is an object array that only has paid: false
+  //onlyUnpaidCharges this is an object array that only has paid: false
   var onlyUnpaidCharges = data.filter(function (el) {
     return el.paid == false;
-  })
+  });
 
   // console.log("object array of onlyUnpaidCharges",onlyUnpaidCharges)
 
-  var sumOfTotal = onlyUnpaidCharges.reduce((total, obj) => obj.amount + total, 0);
-  // outputs the total unpaid charges 
+  var sumOfTotal = onlyUnpaidCharges.reduce(
+    (total, obj) => obj.amount + total,
+    0
+  );
+  // outputs the total unpaid charges
 
   // console.log("this is the sumOfTotal",sumOfTotal);
 
-
   return (
-      <div>
-        {/* <button onClick={apiGet}>FetchAPI</button>
+    <div>
+      {/* <button onClick={apiGet}>FetchAPI</button>
         <br/> */}
-        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 
-        <table>
-          <tr>
-            ${sumOfTotal}
-            {/* <td className="samerowintable11">
+          <h2>${sumOfTotal}</h2>
+          {/* <td className="samerowintable11">
             {data.map((item) => (
               <ul>{item.userId} </ul>
             ))}
             </td> */}
-            {/* <td className="samerowintable11">
+          {/* <td className="samerowintable11">
             {onlyUnpaidCharges.map((item) => (
               <ul>{item.reqid}</ul>
             ))}
             </td> */}
-            {/* <td className="samerowintable11">
+          {/* <td className="samerowintable11">
             {data.map((item) => (
               <ul>{item.completed}</ul>
             ))}
             </td> */}
-          </tr>
-        </table>
-
-
-      </div>
-    );
+    </div>
+  );
 }
 
-
 export default FetchAPI11;
-
-
-
-
