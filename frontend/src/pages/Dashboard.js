@@ -12,37 +12,18 @@ import Component22 from "../components/dashboard/component22";
 // import Component31 from '../components/dashboard/component31';
 
 const Dashboard = () => {
-  useEffect(() => {
-    let emptyVal = localStorage.getItem("texts");
-    let subVal;
-    if (emptyVal === null) {
-      subVal = [];
-    } else {
-      subVal = JSON.parse(localStorage.getItem("texts"));
-    }
-    setName(subVal);
-  }, []);
-
-  const [name, setName] = useState([]);
-  const [userData1, setUserData1] = useState("");
-  const [userData2, setUserData2] = useState("");
-  const [userData3, setUserData3] = useState();
-
-  const formSubmitHandler = (e) => {
-    e.preventDefault();
-
-    setName([...name, userData1]);
-    let updatedSetName = [...name, userData1];
-    // every setName state change updates the updatedSetName variable with a bigger string array that is then hit with setItem
-    localStorage.setItem("texts", JSON.stringify(updatedSetName));
-  };
+  const [state, setState] = useState(true);
 
   return (
     <div className="dashboard">
-      <Component11 names={name} />
-      <Component12 names={name} />
-      <Component13 names={name} />
-      <Component21 names={name} />
+      <Component11 />
+      <div className="request-container placeholder">
+        <h3>Requests</h3>
+        <button className="option1" onClick={()=>{setState(true)}}>Received</button>
+        <button className="option2" onClick={()=>{setState(false)}}>Sent</button>
+        {state?(<Component13 />):(<Component12 />)}
+      </div>
+      <Component21 />
     </div>
   );
 };

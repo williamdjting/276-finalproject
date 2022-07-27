@@ -18,33 +18,44 @@ const viewRequestByID = (request, response) => {
         })
 }
 
-// Look at all requests sent
-const viewSentRequestsByUser = (request, response) => {
-    const { userid, reqid } = request.body;
+// Look at all requests Received
+const viewReceivedRequestsByUser = async(request, response) => {
+    const userid = request.params.id;
 
-    pool.query(
-        format("SELECT * FROM %I WHERE receiverid = '%I' AND req_sent IS TRUE", 'user'.concat(userid), reqid),
-        (error, results) => {
-            if (error) {
-                throw error
-            }
-            response.status(200).json(results.rows)
+    const unpaidRequestQuery = "SELECT * FROM %I WHERE req_sent = 'f' AND paid = 'f' ORDER BY reqid DESC";
+    const result = await pool.query(format(unpaidRequestQuery, 'user'.concat(userid)));
+    const arr = await pool.query(format("SELECT DISTINCT receiverid from %I where req_sent = 'f' AND paid = 'f'", 'user'.concat(userid))); //get all sent user id
+    var obj = {};
 
-        })
+    for(var i=0; i<arr.rowCount; i++){
+        const nickName = await pool.query("SELECT nickname FROM loginauth WHERE userid = $1", [arr.rows[i].receiverid])
+        if(nickName !== 0){obj[arr.rows[i].receiverid] = nickName.rows[0].nickname;}
+    }
+
+    response.status(200).json({result: result.rows, userlist: obj});
 }
 
-const viewReceivedRequestsByUser = (request, response) => {
-    const { userid, reqid } = request.body;
+const viewSentRequestsByUser = async(request, response) => {
+    const userid = request.params.id;
 
-    pool.query(
-        format("SELECT * FROM %I WHERE receiverid = '%I' AND req_sent IS NOT TRUE", 'user'.concat(userid), reqid),
-        (error, results) => {
-            if (error) {
-                throw error
-            }
-        response.status(200).json(results.rows)
+    const unpaidRequestQuery = "SELECT reqid, date, eventdate, title, SUM(amount) AS amount, " + 
+    "STRING_AGG((CASE WHEN paid THEN receiverid END)::character varying, ', ') paidUser, " + 
+    "STRING_AGG((CASE WHEN paid = 'f' THEN receiverid END)::character varying, ', ') unpaidUser " + 
+    "FROM %I GROUP BY reqid, title, eventdate, date HAVING COUNT(req_sent) > SUM (CASE WHEN paid THEN 1 ELSE 0 END) " +
+    "AND SUM(CASE WHEN req_sent THEN 1 ELSE 0 END)>0 " +
+    "ORDER BY reqid DESC";
 
-        })
+    const result = await pool.query(format(unpaidRequestQuery, 'user'.concat(userid)));
+    const arr = await pool.query(format("SELECT DISTINCT receiverid from %I where req_sent", 'user'.concat(userid))); //get all sent user id
+    
+    var obj = {};
+
+    for(var i=0; i<arr.rowCount; i++){
+        const nickName = await pool.query("SELECT nickname from loginauth where userid = $1", [arr.rows[i].receiverid])
+        if(nickName !== 0){obj[arr.rows[i].receiverid] = nickName.rows[0].nickname;}
+    }
+
+    response.status(200).json({result: result.rows, userlist: obj});
     
 }
 
@@ -60,18 +71,25 @@ const viewAllOpenRequests = (request, response) => {
         })
 }
 
-const viewAllClosedRequests = (request, response) => {
-    const { userid } = request.body;
+const viewAllClosedRequests = async (request, response) => {
+    const userid = request.params.id;
 
-    pool.query(
-        format("SELECT * FROM %I WHERE paid IS TRUE", 'user'.concat(userid)),
-        (error, results) => {
-            if (error) {
-                throw error
-            }
-            response.status(200).json(results.rows)
+    const unpaidRequestQuery = "SELECT reqid, date, eventdate, title, SUM(amount) AS amount, req_sent, " + 
+    "STRING_AGG(receiverid::character varying, ', ') receiverid " + 
+    "FROM %I GROUP BY reqid, title, eventdate, req_sent, date HAVING COUNT(req_sent) = SUM (CASE WHEN paid THEN 1 ELSE 0 END) " +
+    "ORDER BY reqid DESC";
 
-        })
+    const result = await pool.query(format(unpaidRequestQuery, 'user'.concat(userid)));
+    const arr = await pool.query(format("SELECT DISTINCT receiverid from %I where paid = 't'", 'user'.concat(userid))); //get all sent user id
+    
+    var obj = {};
+
+    for(var i=0; i<arr.rowCount; i++){
+        const nickName = await pool.query("SELECT nickname FROM loginauth where userid = $1", [arr.rows[i].receiverid])
+        if(nickName !== 0){obj[arr.rows[i].receiverid] = nickName.rows[0].nickname;}
+    }
+
+    response.status(200).json({result: result.rows, userlist: obj});
 }
 
 // Request Mutators

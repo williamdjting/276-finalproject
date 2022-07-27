@@ -6,22 +6,22 @@
 // Can call fetchapi in any component that needs to display data and within the component manipulate and map the fetchapi object to suit the components needs.
 
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 function FetchAPI21() {
   const [data, setData] = useState([]);
+  const [names, setNames] = useState({});
 
-  var dynamicId2 = localStorage.getItem("userKey");
-  console.log("this is dynamicId2", dynamicId2);
-  let apiPath = "/api/users/".concat(dynamicId2);
+  var userid = localStorage.getItem("userKey");
 
-  const apiGet = () => {
-    fetch(apiPath)
-      // fetch('/api/users/33')
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        setData(json);
-      });
+  const apiGet = async () => {
+    await axios
+      .get("/dashboard/history/" + userid)
+      .then((res) => {
+        setData(res.data.result);
+        setNames(res.data.userlist);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -35,23 +35,16 @@ function FetchAPI21() {
       {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 
       <table>
-        <tr>
-          <th>Date</th>
-          <th>Time</th>
-          <th>User</th>
-          <th>Amount</th>
-          <th>Status</th>
-        </tr>
 
         {/* above is the header */}
 
         {data.map((item) => (
-          <tr>
+          <tr key={item.reqid}>
             <td>{item.date.substring(0, 10)} </td>
-            <td>{item.date.substring(11, 16)} </td>
-            <td>{item.receiverid}</td>
-            <td  >{item.amount}</td>
-            <td>{item.paid.toString() == "true" ? "paid" : "unpaid"}</td>
+            <td>{item.title} </td>
+            <td>{item.req_sent ? ("to " + item.receiverid.split(", ").length + users):("from " + item.receiverid)}</td>
+            <td >{"$"+item.amount}</td>
+            <a href=""> view more </a>
           </tr>
         ))}
       </table>

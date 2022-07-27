@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 const query = require("../requestQueries");
+var format = require('pg-format');
 
 //verify if the user name entered is valid
 router.post("/verify/user", async (req, res) => {
@@ -52,9 +53,28 @@ router.post("/verify/user", async (req, res) => {
 });
 
 router.post("/sendRequest", (req, res) => {
+  query.createNewRequestSerialized(req, res);
+});
 
-    query.createNewRequestSerialized(req, res);
+router.get("/requestSent/:id", async (req, res) => {
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(req.params.id))); //add title if not exists
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(req.params.id)));
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS reqid INT', 'user'.concat(req.params.id)));
+  query.viewSentRequestsByUser(req, res);
+});
 
+router.get("/requestReceived/:id", async (req, res) => {
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(req.params.id))); //add title if not exists
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(req.params.id)));
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS reqid INT', 'user'.concat(req.params.id)));
+  query.viewReceivedRequestsByUser(req, res);
+});
+
+router.get("/history/:id", async (req, res) => {
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(req.params.id))); //add title if not exists
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(req.params.id)));
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS reqid INT', 'user'.concat(req.params.id)));
+  query.viewAllClosedRequests(req, res);
 });
 
 module.exports = router;

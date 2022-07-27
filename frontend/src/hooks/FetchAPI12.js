@@ -5,96 +5,45 @@
 
 // Can call fetchapi in any component that needs to display data and within the component manipulate and map the fetchapi object to suit the components needs.
 
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function FetchAPI12() {
-
   const [data, setData] = useState([]);
+  const [names, setNames] = useState([]);
 
-  var dynamicId2 = localStorage.getItem('userKey');
-  console.log("this is dynamicId2", dynamicId2);
-  let apiPath = '/api/users/'.concat(dynamicId2)
+  const userid = localStorage.getItem("userKey");
 
-  const apiGet = () => {
-    fetch(apiPath)
-    // fetch('/api/users/33')
-    .then(response => response.json())
-    .then( (json) => {
-      console.log(json);
-      setData(json);
-      });
+  const apiGet = async () => {
+    await axios
+      .get("/dashboard/requestSent/" + userid)
+      .then((res) => {
+        setData(res.data.result);
+        setNames(res.data.userlist);
+        console.log(res.data.userlist);
+        console.log(res.data.result);
+      })
+      .catch((err) => console.log(err));
   };
 
-    useEffect(() => {
-      apiGet();
-    }, []);
 
-    var onlyMoneyRequestSent = data.filter(function (el) {
-      return el.paid == false && el.req_sent == true;
-    })
+  useEffect(() => {
+    apiGet();
+  }, []);
 
-    return (
-      <div>
-        {/* <button onClick={apiGet}>FetchAPI</button>
-        <br/> */}
-        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-
-        <table>
-          <tr>
-            {/* <td className="samerowintable12">
-            {data.map((item) => (
-              <ul>{item.userId} </ul>
-            ))}
-            </td> */}
-            <td className="samerowintable">
-            {onlyMoneyRequestSent.map((item) => (
-              <ul>{item.reqid}</ul>
-            ))}
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable">
-            {onlyMoneyRequestSent.map((item) => (
-              <ul>{item.date.substring(0,16)}</ul>
-            ))}
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable">
-            {onlyMoneyRequestSent.map((item) => (
-              <ul>{item.receiverid}</ul>
-            ))}
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable">
-            {onlyMoneyRequestSent.map((item) => (
-              <ul>{item.amount}</ul>
-            ))}
-            </td>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <td className="samerowintable">
-            {onlyMoneyRequestSent.map((item) => (
-              <ul>{item.paid.toString()}</ul>
-            ))}
-            </td>
-          </tr>
-        </table>
-
-
-      </div>
-    );
+  return (
+    <div className = "items">
+      {data.map((item) => (
+        <div key={item.reqid} className="item">
+          <h4>{item.title} </h4>
+          <p>{"$" + item.amount}</p>
+          <p>{item.paiduser == null?("0 paid"):(item.paiduser.split(", ").length + " paid")}</p>
+          <p>{item.unpaiduser == null?("0 unpaid"):(item.unpaiduser.split(", ").length + " unpaid")}</p>
+          <button>view</button>
+        </div>
+      ))}
+    </div>
+  );
 }
 
-
 export default FetchAPI12;
-
-
-
-
