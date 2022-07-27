@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect }from "react";
 import "../stylesheets/admin.css";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PopUpForm from "../components/admin/PopUpForm";
 
@@ -16,6 +17,12 @@ const Admin = () => {
   const [success, setSuccess] = useState(false);
   const [mss, setMss] = useState("");
   const [deleteMss, setDeleteMss] = useState("");
+
+  const navigate = useNavigate();
+
+  const jumpToForm = (data) => {
+    navigate("/reqtable", {state:{userid: data}});
+  };
 
   const popupCloseHandler = (e) => {
     setVisibility(e);
@@ -68,8 +75,8 @@ const Admin = () => {
       });
   };
 
-   //delete data in database
-   const handleDelete = async (op) => {
+  //delete data in database
+  const handleDelete = async (op) => {
     console.log(op);
     await axios
       .post("/admindata" + op)
@@ -95,7 +102,7 @@ const Admin = () => {
         show={visibility}
         title={"User ID - " + id}
       >
-        {(success&&visibility) ? <p>{mss}</p> : <div></div>}
+        {success && visibility ? <p>{mss}</p> : <div></div>}
         <input
           type="text"
           name="content"
@@ -120,23 +127,26 @@ const Admin = () => {
           Change Nickname
         </button>
 
-        <button type="button" className="option"  onClick={(e) => {
+        <button
+          type="button"
+          className="option"
+          onClick={(e) => {
             handleChange("/modify/password");
-          }}>
+          }}
+        >
           Change Password
         </button>
 
-        <button type="button" className="delete"  onClick={(e) => {
+        {/*<button type="button" className="delete"  onClick={(e) => {
             handleDelete("/delete/user/"+id);
             setVisibility(!visibility);
           }}>
           Delete User
-        </button>
-
+        </button>*/}
       </PopUpForm>
       <div>
         <h1>Manage Splittr Accounts</h1>
-        {(success&&!visibility) ? <p>{deleteMss}</p> : <div></div>}
+        {success && !visibility ? <p>{deleteMss}</p> : <div></div>}
         <table>
           <thead>
             <tr>
@@ -164,6 +174,14 @@ const Admin = () => {
                     }}
                   >
                     Modify
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      jumpToForm(item.userid);
+                    }}
+                  >
+                    Data
                   </button>
                 </td>
               </tr>

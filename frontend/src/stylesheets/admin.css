@@ -66,3 +66,9 @@
   width: 100%;
   text-align: left;
 }
+
+.adminRequest td, .adminRequest th{
+  width: auto;
+  padding: 12px;
+  border: 1px solid silver;
+}

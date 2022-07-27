@@ -55,7 +55,6 @@ const getAllUserData = (request, response) => {
 // returns user Data table
 const getUserData = (request, response) => {
     const userid = parseInt(request.params.userid);
-    console.log(format('SELECT * FROM %I', 'user'.concat(userid)));
     pool.query(
         format('SELECT * FROM %I', 'user'.concat(userid)),
         (error, results) => {

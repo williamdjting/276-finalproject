@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 //sub pages
 import NewForm from "./pages/NewForm";
 import Profile from "./pages/Profile";
+import RequestForm from "./components/admin/RequestForm";
 
 //page styles
 import WithoutNav from "./pages/WithoutNav";
@@ -41,6 +42,7 @@ function App() {
           <Route element={<WithoutNav />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/reqtable" element={<RequestForm />} />
           </Route>
 
           <Route
