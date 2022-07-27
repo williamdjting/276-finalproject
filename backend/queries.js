@@ -16,18 +16,19 @@ const createUser = (request, response) => {
         if (error) {
           return reject(error);
         }
-        response.status(200).json(results.rows);
+        response.status(200);
         resolve(results);
       }
     );
   });
 };
+
 // generates an empty user table
 const generateUserTable = (request, response) => {
   const { userid } = request.body;
 
   let sql = format(
-    "CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount NUMERIC(4, 2), paid BOOL )",
+    "CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount NUMERIC(4, 2), paid BOOL, title VARCHAR )",
     "user".concat(userid)
   );
 
@@ -35,7 +36,6 @@ const generateUserTable = (request, response) => {
     if (error) {
       throw error;
     }
-    response.json("created");
   });
 };
 
@@ -163,6 +163,7 @@ const deleteUser = (request, response) => {
         temp = false;
         throw error;
       }
+      response.status(200);
     }
   );
 

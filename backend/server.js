@@ -39,6 +39,10 @@ app.post("/generateUserTable", (req, res) => {
   queries.generateUserTable(req, res);
 });
 
+app.post("/getUserData/:userid", (req, res) => {
+  queries.getUserData(req, res);
+});
+
 app.post("/getNickname/:userid", (req, res) => {
   queries.getUserNickname(req, res);
 });
