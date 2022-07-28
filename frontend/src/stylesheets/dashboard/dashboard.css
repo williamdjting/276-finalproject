@@ -61,7 +61,7 @@ align-content: center;
 
 /*Request Option Button Section*/
 .dashboard .option1{
-  border-radius: 0;
+  border-radius: 25px 0 0 25px;
   background: linear-gradient(to right, transparent 50%, #278ed3 50%);
   background-size: 200%;
   background-position: left;
@@ -75,7 +75,7 @@ align-content: center;
 }
 
 .dashboard .option2{
-  border-radius: 0;
+  border-radius: 0 25px 25px 0;
   background: linear-gradient(to left, transparent 50%, #278ed3 50%);
   background-size: 200%;
   background-position: right;
@@ -93,7 +93,8 @@ align-content: center;
 /*each item in the request data*/
 .dashboard .items{
   height: 90%;
-  overflow: auto;
+  overflow-Y: scroll;
+  scroll-behavior: smooth;
 }
 .dashboard .item{
   border: 1px solid silver;
@@ -145,6 +146,16 @@ overflow: hidden;
   grid-column: 5/6;
   grid-row: 3/4;
   margin-top: 20px;
+}
+
+.item .item-6{
+  grid-column: 4/6; 
+  text-align: right; 
+  grid-row: 2/3;
+  color: var(--sub-text-color);
+  font-weight: 500;
+  font-size: 15px;
+  overflow: hidden;
 }
 
 

@@ -35,11 +35,12 @@ function FetchAPI12() {
     <div className = "items">
       {data.map((item) => (
         <div key={item.reqid} className="item">
-          <h4>{item.title} </h4>
-          <p>{"$" + item.amount}</p>
-          <p>{item.paiduser == null?("0 paid"):(item.paiduser.split(", ").length + " paid")}</p>
-          <p>{item.unpaiduser == null?("0 unpaid"):(item.unpaiduser.split(", ").length + " unpaid")}</p>
-          <button>view</button>
+          <h4 className="item-1">{item.title} </h4>
+          <p className="item-4">{item.eventdate}</p>
+          <p className="item-3">{"$" + item.amount}</p>
+          <p className="item-6">{item.paiduser == null?("0 paid"):(item.paiduser.split(", ").length + " paid")}</p>     
+          <p className="item-2">{item.unpaiduser == null?("0 unpaid"):(item.unpaiduser.split(", ").length + " unpaid")}</p>
+          <button className="item-5">view</button>
         </div>
       ))}
     </div>

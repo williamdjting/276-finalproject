@@ -21,35 +21,25 @@ function FetchAPI13() {
         setData(res.data.result);
         setNames(res.data.userlist);
         //console.log(res.data.userlist)
-
       })
       .catch((err) => console.log(err));
   };
-
-
 
   useEffect(() => {
     apiGet();
   }, []);
 
-
   return (
-    <div>
-      <div className="items">
-        {data.map((item) => (
-          <div key={item.reqid} className="item">
-            <h4 className="item-1">{item.title} </h4>
-            <p className="item-2">
-              {"from " + names[item.receiverid]}
-            </p>
-            <p className="item-3">{"$" + item.amount}</p>            
-            <p className="item-4">{ item.eventdate}</p>
-            <button className="item-5">pay</button>
-
-
-          </div>
-        ))}
-      </div>
+    <div className="items">
+      {data.map((item) => (
+        <div key={item.reqid} className="item">
+          <h4 className="item-1">{item.title} </h4>
+          <p className="item-2">{"from " + names[item.receiverid]}</p>
+          <p className="item-3">{"$" + item.amount}</p>
+          <p className="item-4">{item.eventdate}</p>
+          <button className="item-5">pay</button>
+        </div>
+      ))}
     </div>
   );
 }

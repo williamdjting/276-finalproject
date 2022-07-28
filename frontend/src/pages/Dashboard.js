@@ -19,7 +19,11 @@ const Dashboard = () => {
     <div className="dashboard">
       <Component11 />
       <div className="request-container placeholder">
+
+
         <h3>Requests</h3>
+
+
         <div
           style={{
             display: "flex",
@@ -28,6 +32,8 @@ const Dashboard = () => {
           }}
           className="request-buttons"
         >
+
+
           <button
           onMouseEnter={()=>{setHover(true)}}
           onMouseLeave={()=>{setHover(false)}}
@@ -43,6 +49,10 @@ const Dashboard = () => {
           >
             Received
           </button>
+
+
+
+
           <button
           onMouseEnter={()=>{setHover(true)}}
           onMouseLeave={()=>{setHover(false)}}
@@ -58,8 +68,12 @@ const Dashboard = () => {
           >
             Sent Out
           </button>
+
+
         </div>
+
         {state ? <Component13 /> : <Component12 />}
+
       </div>
       <Component21 />
     </div>
