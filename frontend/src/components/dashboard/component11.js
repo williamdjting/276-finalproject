@@ -5,7 +5,7 @@ import FetchAPI11 from "../../hooks/FetchAPI11";
 
 function Component11(props) {
   return (
-    <div className="placeholder info">
+    <div className="placeholder info-container">
       <h3>Total Outstanding Balance</h3>
 
         <FetchAPI11 />

@@ -20,10 +20,12 @@ function FetchAPI13() {
       .then((res) => {
         setData(res.data.result);
         setNames(res.data.userlist);
+        //console.log(res.data.userlist)
 
       })
       .catch((err) => console.log(err));
   };
+
 
 
   useEffect(() => {
@@ -36,13 +38,15 @@ function FetchAPI13() {
       <div className="items">
         {data.map((item) => (
           <div key={item.reqid} className="item">
-            <h4>{item.title} </h4>
-            <p>{"$" + item.amount}</p>
-            <p>
-              {"from " + item.receiverid}
+            <h4 className="item-1">{item.title} </h4>
+            <p className="item-2">
+              {"from " + names[item.receiverid]}
             </p>
-            <p>{"eventdate" + item.eventdate}</p>
-            <button>pay</button>
+            <p className="item-3">{"$" + item.amount}</p>            
+            <p className="item-4">{ item.eventdate}</p>
+            <button className="item-5">pay</button>
+
+
           </div>
         ))}
       </div>
