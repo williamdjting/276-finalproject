@@ -24,7 +24,7 @@ const createUser = (request, response) => {
 };
 
 // generates an empty user table
-const generateUserTable = (request, response) => {
+const generateUserTable = async (request) => {
   const { userid } = request.body;
 
   let sql = format(
@@ -32,11 +32,12 @@ const generateUserTable = (request, response) => {
     "user".concat(userid)
   );
 
-  pool.query(sql, (error, results) => {
-    if (error) {
-      throw error;
-    }
-  });
+  try {
+    const results = await pool.query(sql);
+    return "table created";
+  } catch (error) {
+    return "table not created";
+  }
 };
 
 // return all user info found in datatable

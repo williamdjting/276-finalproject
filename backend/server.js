@@ -35,8 +35,8 @@ app.post("/adduser", (req, res) => {
   queries.createUser(req, res);
 });
 
-app.post("/generateUserTable", (req, res) => {
-  queries.generateUserTable(req, res);
+app.post("/generateUserTable", async (req, res) => {
+  var result = await queries.generateUserTable(req, res);
 });
 
 app.post("/getUserData/:userid", (req, res) => {

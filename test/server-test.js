@@ -44,13 +44,11 @@ describe("Unit tests for modifying users (show, add, delete, update)", function 
 
   it("should create user's individual data table", async () => {
     //create individual user table
-    chai
-      .request(server)
-      .post(`/generateUserTable`)
-      .send({
-        userid: userid
-      })
-      .end();
+    var res = await chai.request(server).post(`/generateUserTable`).send({
+      userid: userid
+    });
+    console.log(res);
+    // res.should.equal("table created");
     //get data from user table, which is still empty. However, it is proof that the table is created
     var res2 = await chai.request(server).post(`/getUserData/${userid}`);
     res2.body.should.be.a("array");
@@ -130,6 +128,8 @@ describe("Unit tests for modifying users (show, add, delete, update)", function 
       .request(server)
       .post(`/admindata/delete/user/${userid}`);
     var res4 = await chai.request(server).get("/api/users");
+    console.log(res2.body.length);
+    console.log(res4.body.length);
     (res2.body.length - res4.body.length).should.equal(1);
   });
 });
@@ -144,7 +144,9 @@ describe("Functional tests for signup and login from authRouter.js", function ()
       password: "testSignup"
     });
     res.body.signup.should.equal(true);
-    //checking if the user is in the database
+    res.body.tableCreationResponse.should.equal("table created");
+
+    //checking if the user is in the database and matching the credentials
     var res2 = await chai.request(server).post(`/profile/get/userInfo`).send({
       username: "testSignup"
     });
@@ -204,7 +206,10 @@ describe("Functional tests for signup and login from authRouter.js", function ()
   it("should delete a user from the database", async () => {
     var res2 = await chai.request(server).get("/api/users");
     var res3 = await chai.request(server).post(`/admindata/delete/user/${uid}`);
+    // var res3 = await chai.request(server).post(`/admindata/delete/user/274`);
     var res4 = await chai.request(server).get("/api/users");
-    (res2.body.length - res4.body.length).should.equal(1);
+    var res5 = await chai.request(server).get("/api/users");
+
+    (res2.body.length - res5.body.length).should.equal(1);
   });
 });
