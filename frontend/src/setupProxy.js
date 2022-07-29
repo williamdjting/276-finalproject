@@ -47,4 +47,12 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    '/create-payment-intent',
+    createProxyMiddleware({
+      target: 'http://localhost:4000',
+      changeOrigin: true,
+    })
+  );
 };

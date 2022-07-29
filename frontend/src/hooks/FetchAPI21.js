@@ -42,7 +42,8 @@ function FetchAPI21() {
           <tr key={item.reqid}>
             <td>{item.date.substring(0, 10)} </td>
             <td>{item.title} </td>
-            <td>{item.req_sent ? ("to " + item.receiverid.split(", ").length + users):("from " + item.receiverid)}</td>
+            {/* <td>{item.req_sent ? ("to " + item.receiverid.split(", ").length + users):("from " + item.receiverid)}</td> */}
+            <td>{item.req_sent ? ("to " + item.receiverid.split(", ").length + names):("from " + item.receiverid)}</td>
             <td >{"$"+item.amount}</td>
             <a href=""> view more </a>
           </tr>
