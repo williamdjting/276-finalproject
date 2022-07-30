@@ -2,6 +2,8 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const stripe = require("stripe")('sk_test_51LQ5kqFl5V6uZIiCOf8WtvaDjLmtTKfu3VltveuO8deIjRrffUDYncu9kSgHrkHJXbwBdQzmfAccqdsbL8UVRF7300O5yya8pf');
+
 
 //routers and endpoints
 const userRoute = require("./routers/authRouter");
@@ -58,6 +60,31 @@ app.post("req/open",(req, res) => {
 
 app.post("req/closed", (req, res) => {
   requests.viewAllClosedRequests(req, res);
+});
+
+
+//Stripe stuff
+const paymentAmount = (items) => {
+  
+  return 1400;
+};
+
+
+app.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: paymentAmount(items),
+    currency: "eur",
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
 });
 
 

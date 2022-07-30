@@ -26,6 +26,8 @@ form {
   align-items: center;
 }
 
+
+
 input {
   display: inline-block;
   border-radius: 5px;
@@ -269,4 +271,18 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+/*dashboard form setting*/
+.dashboard form{
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  padding-top: 1px;
+
+}
+
+.dashboard .pay-button{
+  margin-top: 25px;
+  height: 40px;
 }

@@ -34,7 +34,7 @@ const Dashboard = () => {
       <PopUpForm
         onClose={popupCloseHandler}
         show={visibility}
-        title={"Check Out"}
+        title={"Payment"}
       >
         <CheckoutForm />
       </PopUpForm>
