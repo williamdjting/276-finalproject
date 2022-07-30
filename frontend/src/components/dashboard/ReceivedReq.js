@@ -8,7 +8,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function FetchAPI13() {
+function FetchAPI13(props) {
   const [data, setData] = useState([]);
   const [names, setNames] = useState([]);
 
@@ -37,7 +37,7 @@ function FetchAPI13() {
           <p className="item-2">{"from " + names[item.receiverid]}</p>
           <p className="item-3">{"$" + item.amount}</p>
           <p className="item-4">{item.eventdate}</p>
-          <button className="item-5">pay</button>
+          <button className="item-5" onClick={()=>props.passData(true)}>pay</button>
         </div>
       ))}
     </div>
