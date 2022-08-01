@@ -2,6 +2,8 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const stripe = require("stripe")('sk_test_51LQ5kqFl5V6uZIiCOf8WtvaDjLmtTKfu3VltveuO8deIjRrffUDYncu9kSgHrkHJXbwBdQzmfAccqdsbL8UVRF7300O5yya8pf');
+
 
 //routers and endpoints
 const userRoute = require("./routers/authRouter");
