@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   PaymentElement,
   useStripe,
@@ -32,6 +33,16 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
+          axios
+            .post("/request/pay-successful", {
+              userid: localStorage.getItem("userKey"),
+              reqid: localStorage.getItem("rid"),
+              receiverid: localStorage.getItem("hid")
+            }).then((res) => {
+              console.log("Payment successful, request has been closed");
+            }, (error) => {
+              console.log("Error: Payment was successful, but request failed to close");
+            });
           break;
         case "processing":
           setMessage("Your payment is processing.");

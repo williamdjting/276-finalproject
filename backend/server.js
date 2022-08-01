@@ -11,6 +11,7 @@ const adminRoute = require("./routers/adminRouter");
 const emailRoute = require("./routers/emailRouter");
 const profileRoute = require("./routers/profileRouter");
 const dashboardRoute = require("./routers/dashboardRouter");
+const requestRoute = require("./routers/requestRouter");
 //commented out until this is actually existing and needed const requestRoute = require("./routers/requestRouter");
 const queries = require("./queries");
 const requests = require("./requestQueries");
@@ -61,6 +62,7 @@ app.use('/admindata', adminRoute);
 app.use('/email', emailRoute);
 app.use('/profile', profileRoute);
 app.use('/dashboard', dashboardRoute);
+app.use('/request', requestRoute);
 //post
 /*
  app.post('/api/data', (req, res) => {
