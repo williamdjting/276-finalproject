@@ -22,10 +22,15 @@
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "ejs": "^3.1.5",
     "express": "^4.18.1",
+<<<<<<< HEAD
     "http": "^0.0.1-security",
+=======
+>>>>>>> testing
     "http-proxy-middleware": "^2.0.6",
     "i": "^0.3.7",
     "js": "^0.1.0",
