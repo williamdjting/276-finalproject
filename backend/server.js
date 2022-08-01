@@ -42,6 +42,8 @@ app.post("/generateUserTable", async (req, res) => {
   var result = await queries.generateUserTable(req, res);
 });
 
+app.post("/closerequest/:reqid")
+
 app.post("/getUserData/:userid", (req, res) => {
   queries.getUserData(req, res);
 });

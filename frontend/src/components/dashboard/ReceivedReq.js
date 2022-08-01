@@ -37,7 +37,7 @@ function FetchAPI13(props) {
           <p className="item-2">{"from " + names[item.receiverid]}</p>
           <p className="item-3">{"$" + item.amount}</p>
           <p className="item-4">{item.eventdate}</p>
-          <button className="item-5" onClick={()=>props.passData(true)}>pay</button>
+          <button className="item-5" id={item.reqid} onClick={()=>props.passData(true)}>pay</button>
         </div>
       ))}
     </div>

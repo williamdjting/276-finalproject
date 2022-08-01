@@ -12,11 +12,14 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+
+
+
   useEffect(() => {
     if (!stripe) {
       return;
     }
-
+    setMessage("");
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
     );
@@ -76,6 +79,10 @@ export default function CheckoutForm() {
     setIsLoading(false);
   };
 
+  const handleClick = event => {
+    console.log(event.currentTarget.id);
+  };
+
   return (
     <form
       id="payment-form"
@@ -86,7 +93,7 @@ export default function CheckoutForm() {
 
       <PaymentElement id="payment-element" />
 
-      <button disabled={isLoading || !stripe || !elements} id="submit" className="pay-button">
+      <button disabled={isLoading || !stripe || !elements} id="submit" className="pay-button" onClick={handleClick}>
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay Now"}
         </span>
