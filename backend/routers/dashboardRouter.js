@@ -77,4 +77,8 @@ router.get("/history/:id", async (req, res) => {
   query.viewAllClosedRequests(req, res);
 });
 
+router.get("/getInfo/:userid", async (req, res) => {
+  query.requestInfo(req, res);
+});
+
 module.exports = router;

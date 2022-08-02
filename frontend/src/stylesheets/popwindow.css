@@ -13,7 +13,7 @@
 .popup {
     margin: 25px auto;
     padding: 50px;
-    background: #fff;
+    background: white;
     border-radius: 5px;
     width: 500px;
     height: 90vh;
@@ -23,8 +23,7 @@
 }
 
     .popup h2 {
-        margin: 0;
-        color: #333;
+        color: var(--dark-text-color);
         text-align: left;
         font-size: 25px;
         padding-left: 10px;
@@ -42,12 +41,12 @@
         text-align: center;
         font-weight: bold;
         text-decoration: none;
-        color: #333;
+        color: var(--dark-text-color);
     }
 
         .popup .close:hover {
             cursor: pointer;
-            color: #000;
+            color: var(--dark-text-color);
             transform: rotate(180deg);
         }
 
@@ -72,5 +71,4 @@
     .dashboard .content{
         overflow-y: auto;
         height: 85%;
- 
     }

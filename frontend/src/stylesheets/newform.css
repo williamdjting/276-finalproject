@@ -2,8 +2,8 @@
   --background-color: #278ed3;
   --hover-color: #52b788;
   --nav-text-color: white;
-  --dark-text-color: #403d39;
-  --sub-text-color: #777777;
+  --dark-text-color: #696969;
+  --sub-text-color: #999999;
 }
 
 
@@ -37,15 +37,15 @@ input {
   height: 50px;
   padding: 10px 18px;
   font-size: 16px;
-  color: #403d39;
+  color: var(--dark-text-color);
   transition: 0.3s;
   outline: none;
 }
 
 input:focus,
 input:hover {
-  border: 1px solid #403d39;
-  box-shadow: 6px 6px #403d39;
+  border: 1px solid var(--dark-text-color);
+  box-shadow: 6px 6px var(--dark-text-color);
 }
 
 input:hover::placeholder{
@@ -157,12 +157,12 @@ h2 {
   font-weight: 900;
   font-size: 30px;
   margin-bottom: 40px;
-  color: #403d39;
+  color: var(--dark-text-color);
 }
 
 h3 {
   margin-bottom: 15px;
-  color: #403d39;
+  color: var(--dark-text-color);
 }
 
 .formContent ul {
@@ -219,27 +219,27 @@ h3 {
 
 /* scoll bar */
 /* width */
-ul::-webkit-scrollbar {
+ul::-webkit-scrollbar, div::-webkit-scrollbar {
   width: 7px;
   border-radius: 20px;
   transition: 0.2s;
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: rgb(201, 240, 255,.4);
   transition: 0.2s;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: silver;
+  background: rgb(158, 216, 255,.7);
   border-radius: 10px;
   transition: 0.2s;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #777;
+  background: var(--background-color);
   transition: 0.5s;
 }
 

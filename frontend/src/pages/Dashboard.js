@@ -7,7 +7,7 @@ import "../stylesheets/dashboard/component.css";
 import Component11 from "../components/dashboard/component11";
 import Component12 from "../components/dashboard/SentReq";
 import Component13 from "../components/dashboard/ReceivedReq";
-import Component21 from "../components/dashboard/component21";
+import Component21 from "../components/dashboard/history";
 
 //stripe Check Out
 import CheckoutForm from "../components/dashboard/CheckOut";
@@ -101,59 +101,15 @@ const Dashboard = () => {
       ) : (
         <></>
       )}
+
+
       <div className="dashboard">
-        <PopUpForm
-          onClose={popupCloseHandler}
-          show={visibility}
-          title={category}
-        >
-          {category == "Payment" ? (
-            <CheckoutForm
-              reqid={reqid}
-              receiverid={receiverid}
-              amount={amount}
-              setSuccessPay={setSuccessPay}
-            />
-          ) : (
-            <div className="invoice">
-              {/*invoice for received req*/}
-              <h2 style={{ padding: "0" }}>{title}</h2>
 
-              
-              <p><strong>Request ID </strong>{reqid}</p>
 
-              
-              <strong>Paid Users</strong>
-              {paid ? (
-                <div>
-                  {paid.map((item) => (
-                    <p>{names[item]}</p>
-                  ))}
-                </div>
-              ) : (
-                <p>None Paid User</p>
-              )}
-
-              <strong>Unpaid Users</strong>
-              {unpaid ? (
-                <div>
-                  {unpaid.map((item) => (
-                    <p>{names[item]}</p>
-                  ))}
-                </div>
-              ) : (
-                <p>None UnPaid User</p>
-              )}
-
-              <strong>Invoice Date</strong>
-              <p>{invoiceDate.substring(0, 10)}</p>
-              <strong>Event Date</strong>
-              <p>{eventDate}</p>
-            </div>
-          )}
-        </PopUpForm>
 
         <Component11 />
+
+
         <div className="request-container placeholder">
           <h3>Requests</h3>
 
@@ -212,7 +168,67 @@ const Dashboard = () => {
             <Component12 passData={passData} passPaidUnPaid={passPaidUnPaid} />
           )}
         </div>
-        <Component21 />
+
+
+        <Component21 passData={passData} passPaidUnPaid={passPaidUnPaid}/>
+
+
+
+
+        <PopUpForm
+          onClose={popupCloseHandler}
+          show={visibility}
+          title={category}
+        >
+
+
+          {category == "Payment" ? (
+            <CheckoutForm
+              reqid={reqid}
+              receiverid={receiverid}
+              amount={amount}
+              setSuccessPay={setSuccessPay}
+            />
+          ) : (
+
+
+            <div className="invoice">
+              {/*invoice for received req*/}
+              <h2 style={{ padding: "0" }}>{title}</h2>
+
+              <strong>Request ID </strong>
+              <p>{reqid}</p>
+
+              <strong>Paid Users</strong>
+              {paid ? (
+                <div>
+                  {paid.map((item) => (
+                    <p>{names[item]}</p>
+                  ))}
+                </div>
+              ) : (
+                <p>None Paid User</p>
+              )}
+
+              <strong>Unpaid Users</strong>
+              {unpaid ? (
+                <div>
+                  {unpaid.map((item) => (
+                    <p>{names[item]}</p>
+                  ))}
+                </div>
+              ) : (
+                <p>None UnPaid User</p>
+              )}
+
+              <strong>Invoice Date</strong>
+              <p>{invoiceDate.substring(0, 10)}</p>
+              <strong>Event Date</strong>
+              <p>{eventDate}</p>
+            </div>
+          )}
+        </PopUpForm>
+
       </div>
     </div>
   );

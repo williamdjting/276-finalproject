@@ -335,6 +335,30 @@ const requestPaid = (request, response) => {
 
 }
 
+const requestInfo = async (request, response) => {
+    const {userid} = request.params;
+
+    const query = "SELECT req_sent, SUM(amount) FROM %I WHERE paid='f' GROUP BY req_sent ORDER BY req_sent"
+    const data = await pool.query(format(query, 'user'.concat(userid)));
+
+    if(data.rowCount==0){ response.status(200).send({sent: 0, receive: 0});}
+
+    else if(data.rowCount==1){
+        if(data.rows[0].req_sent){
+            response.status(200).send({sent: data.rows[0].sum, receive: 0})
+        }
+        else{
+            response.status(200).send({sent: 0, receive: data.rows[0].sum})
+        }
+    }
+
+    else{
+        response.status(200).send({sent: data.rows[1].sum, receive: data.rows[0].sum})
+    }
+    
+
+}
+
 // export methods to routing
 module.exports = {
     viewRequestByID,
@@ -346,5 +370,6 @@ module.exports = {
     createNewRequest,
     editRequestAmount,
     editRequestUser,
-    requestPaid
+    requestPaid,
+    requestInfo
 }
