@@ -8,7 +8,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function FetchAPI12() {
+function FetchAPI12(props) {
   const [data, setData] = useState([]);
   const [names, setNames] = useState([]);
 
@@ -32,15 +32,50 @@ function FetchAPI12() {
   }, []);
 
   return (
-    <div className = "items">
+    <div className="items">
       {data.map((item) => (
         <div key={item.reqid} className="item">
           <h4 className="item-1">{item.title} </h4>
           <p className="item-4">{item.eventdate}</p>
           <p className="item-3">{"$" + item.amount}</p>
-          <p className="item-6">{item.paiduser == null?("0 paid"):(item.paiduser.split(", ").length + " paid")}</p>     
-          <p className="item-2">{item.unpaiduser == null?("0 unpaid"):(item.unpaiduser.split(", ").length + " unpaid")}</p>
-          <button className="item-5">view</button>
+          <p className="item-6">
+            {item.paiduser == null
+              ? "0 paid"
+              : item.paiduser.split(", ").length + " paid"}
+          </p>
+          <p className="item-2">
+            {item.unpaiduser == null
+              ? "0 unpaid"
+              : item.unpaiduser.split(", ").length + " unpaid"}
+          </p>
+          <button
+            className="item-5"
+            onClick={() => {
+              props.passData(
+                true,
+                "Invoice",
+                item.title,
+                item.date,
+                item.eventdate,
+                item.amount,
+                names,
+                item.reqid
+              );
+
+              item.paiduser && item.unpaiduser
+                ? props.passPaidUnPaid(
+                    item.paiduser.split(", "),
+                    item.unpaiduser.split(", ")
+                  )
+                : item.paiduser
+                ? props.passPaidUnPaid(item.paiduser.split(", "), null)
+                : item.unpaiduser
+                ? props.passPaidUnPaid(null, item.unpaiduser.split(", "))
+                : props.passPaidUnPaid(null, null);
+            }}
+          >
+            view
+          </button>
         </div>
       ))}
     </div>

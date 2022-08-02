@@ -117,12 +117,12 @@ const createNewRequestSerialized = async (request, response) => {
 
     
     receiverids.forEach((receiverid) => {
-        console.log(format('INSERT INTO %I  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(userid), 'TRUE', reqid, date, receiverid, splitAmount, 'FALSE', title, eventdate))
+        console.log(format('INSERT INTO %I  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(userid), reqid,'TRUE', date, receiverid, splitAmount, 'FALSE', title, eventdate))
         // insert into host table
         pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(userid))); //add title if not exists
         pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(userid)));
         pool.query(
-            format('INSERT INTO %I  ( req_sent,reqid, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(userid), 'TRUE', reqid, date, receiverid, splitAmount, 'FALSE', title, eventdate),
+            format('INSERT INTO %I  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(userid), reqid,'TRUE', date, receiverid, splitAmount, 'FALSE', title, eventdate),
             (error, results) => {
                 if (error) {
                     temp = false;
@@ -134,10 +134,12 @@ const createNewRequestSerialized = async (request, response) => {
 
            
         // insert into guest table
+        console.log(format('INSERT INTO %I  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(receiverid), reqid, 'FALSE', date, userid, splitAmount, 'FALSE', title, eventdate))
+
         pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(receiverid))); //add title if not exists
         pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(receiverid)));
         pool.query(
-            format('INSERT INTO %I  ( req_sent,reqid, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(receiverid), 'FALSE', reqid, date, userid, splitAmount, 'FALSE', title, eventdate),
+            format('INSERT INTO %I  (reqid, req_sent, date, receiverid, amount, paid, title, eventdate) VALUES (%L, %L, %L, %L, %L, %L, %L, %L)', 'user'.concat(receiverid), reqid, 'FALSE', date, userid, splitAmount, 'FALSE', title, eventdate),
             (error, results) => {
                 if (error) {
                     temp = false;
@@ -217,7 +219,7 @@ const editRequestAmount = (request, response) => {
 
     // update host table
     pool.query(
-        format('UPDATE "%I" SET amount = %I WHERE reqid = %I AND receiverid = %I', 'user'.concat(userid), amount, reqid, receiverid),
+        format('UPDATE "%I" SET amount = %I WHERE reqid = %L AND receiverid = %L', 'user'.concat(userid), amount, reqid, receiverid),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -228,7 +230,7 @@ const editRequestAmount = (request, response) => {
         })
     // update guest table
     pool.query(
-        format('UPDATE "%I" SET amount = %I WHERE reqid = %I AND receiverid = %I', 'user'.concat(receiverid), amount, reqid, userid),
+        format('UPDATE "%I" SET amount = %I WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), amount, reqid, userid),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -252,7 +254,7 @@ const editRequestUser = (request, response) => {
 
     // update host table
     pool.query(
-        format('UPDATE "%I" SET receiverid = %I WHERE reqid = %I AND receiverid = %I', 'user'.concat(userid), receiverid, reqid, oldid),
+        format('UPDATE "%I" SET receiverid = %I WHERE reqid = %L AND receiverid = %L', 'user'.concat(userid), receiverid, reqid, oldid),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -266,7 +268,7 @@ const editRequestUser = (request, response) => {
     // NOTE: We do not need to update the copied row's receiverid as that id represents the user it was sent from 
     //      which is the host, and that did not change when the row gets edited
     pool.query(
-        format('INSERT INTO %I (SELECT * FROM %I WHERE reqid = %I AND receiverid = %I)', 'user'.concat(receiverid), 'user'.concat(oldid), reqid, userid),
+        format('INSERT INTO %I (SELECT * FROM %I WHERE reqid = %L AND receiverid = %L)', 'user'.concat(receiverid), 'user'.concat(oldid), reqid, userid),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -300,10 +302,11 @@ const editRequestUser = (request, response) => {
 
 const requestPaid = (request, response) => {
     const { reqid, userid, receiverid } = request.body;
-
+    temp = true;
+    console.log(format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), reqid, userid));
     // update host table
     pool.query(
-        format('UPDATE "%I" SET paid = "TRUE" WHERE reqid = %I AND receiverid = %I', 'user'.concat(userid), reqid, receiverid),
+        format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(userid), reqid, receiverid),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -314,7 +317,7 @@ const requestPaid = (request, response) => {
         })
     // update guest table
     pool.query(
-        format('UPDATE "%I" SET paid = "TRUE" WHERE reqid = %I AND receiverid = %I', 'user'.concat(receiverid), reqid, userid),
+        format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), reqid, userid),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -323,7 +326,7 @@ const requestPaid = (request, response) => {
             }
         })
     if (temp) {
-        response.status(200).send(`User deleted with ID: ${id}`);
+        response.status(200).send(`RequestID: ${reqid} closed for user ${userid}`);
     }
 
     else {

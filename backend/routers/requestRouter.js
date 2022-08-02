@@ -13,6 +13,9 @@ router.get("/closed",(req, res) => {
   });
 
 
+  router.post("/pay-successful",(req, res) => {
+    requests.requestPaid(req, res);
+  });
 
 
 module.exports = router;

@@ -19,82 +19,201 @@ const Dashboard = () => {
   const [hover, setHover] = useState(false);
   const [visibility, setVisibility] = useState(false);
 
+  //use to switch between different elements on pop up
+  const [category, setCategory] = useState("");
+
+  //success state
+  const [success, setSuccess] = useState(false);
+
+  //data to show in invoice and data for payment
+  const [eventDate, setEventDate] = useState("");
+  const [names, setNames] = useState([]);
+  const [invoiceDate, setInvoiceDate] = useState("");
+  const [title, setTitle] = useState("");
+  const [reqid, setReqid] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [receiverid, setReceiverID] = useState("");
+  const [paid, setPaid] = useState([]);
+  const [unpaid, setUnpaid] = useState([]);
+
   //close pop up window
   const popupCloseHandler = (e) => {
     setVisibility(e);
   };
 
-  //communicate Pop Up with child elements
-  const passData = (visibility) => {
-    setVisibility(visibility);
+  //get receiver id
+  const passReceiverID = (data) => {
+    setReceiverID(data);
   };
 
+  //set success
+  const setSuccessPay = (data) => {
+    setSuccess(data);
+    setVisibility(false);
+  };
+
+  //communicate Pop Up with child elements
+  const passData = (
+    visibility,
+    category,
+    title,
+    invoiceDate,
+    eventDate,
+    amount,
+    names,
+    reqid
+  ) => {
+    setVisibility(visibility);
+    setTitle(title);
+    setInvoiceDate(invoiceDate);
+    setEventDate(eventDate);
+    setAmount(amount);
+    setNames(names);
+    setCategory(category);
+    setReqid(reqid);
+  };
+
+  //get paid and unpaid
+  const passPaidUnPaid = (paid, unpaid) => {
+    setPaid(paid);
+    setUnpaid(unpaid);
+  };
+
+  useEffect(() => {
+    setSuccess(false);
+  }, [reqid, title, amount, names]);
+
+  //render html elements
   return (
-    <div className="dashboard">
-      <PopUpForm
-        onClose={popupCloseHandler}
-        show={visibility}
-        title={"Payment"}
-      >
-        <CheckoutForm />
-      </PopUpForm>
-
-      <Component11 />
-      <div className="request-container placeholder">
-        <h3>Requests</h3>
-
-        <div
+    <div>
+      {success ? (
+        <p
+          className="errorMessage"
           style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "25px",
+            color: "green",
+            backgroundColor: "lightgreen",
+            textAlign: "center",
+            margin: "0",
           }}
-          className="request-buttons"
         >
-          <button
-            onMouseEnter={() => {
-              setHover(true);
-            }}
-            onMouseLeave={() => {
-              setHover(false);
-            }}
-            style={
-              state && !hover
-                ? { backgroundPosition: "right", color: "white" }
-                : undefined
-            }
-            className="option1"
-            onClick={() => {
-              setState(true);
-            }}
-          >
-            Received
-          </button>
+          {"Payment to " + names[0] + " is Successful"}
+        </p>
+      ) : (
+        <></>
+      )}
+      <div className="dashboard">
+        <PopUpForm
+          onClose={popupCloseHandler}
+          show={visibility}
+          title={category}
+        >
+          {category == "Payment" ? (
+            <CheckoutForm
+              reqid={reqid}
+              receiverid={receiverid}
+              amount={amount}
+              setSuccessPay={setSuccessPay}
+            />
+          ) : (
+            <div className="invoice">
+              {/*invoice for received req*/}
+              <h2 style={{ padding: "0" }}>{title}</h2>
 
-          <button
-            onMouseEnter={() => {
-              setHover(true);
+              
+              <p><strong>Request ID </strong>{reqid}</p>
+
+              
+              <strong>Paid Users</strong>
+              {paid ? (
+                <div>
+                  {paid.map((item) => (
+                    <p>{names[item]}</p>
+                  ))}
+                </div>
+              ) : (
+                <p>None Paid User</p>
+              )}
+
+              <strong>Unpaid Users</strong>
+              {unpaid ? (
+                <div>
+                  {unpaid.map((item) => (
+                    <p>{names[item]}</p>
+                  ))}
+                </div>
+              ) : (
+                <p>None UnPaid User</p>
+              )}
+
+              <strong>Invoice Date</strong>
+              <p>{invoiceDate.substring(0, 10)}</p>
+              <strong>Event Date</strong>
+              <p>{eventDate}</p>
+            </div>
+          )}
+        </PopUpForm>
+
+        <Component11 />
+        <div className="request-container placeholder">
+          <h3>Requests</h3>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "25px",
             }}
-            onMouseLeave={() => {
-              setHover(false);
-            }}
-            style={
-              !state && !hover
-                ? { backgroundPosition: "left", color: "white" }
-                : undefined
-            }
-            className="option2"
-            onClick={() => {
-              setState(false);
-            }}
+            className="request-buttons"
           >
-            Sent Out
-          </button>
+            <button
+              onMouseEnter={() => {
+                setHover(true);
+              }}
+              onMouseLeave={() => {
+                setHover(false);
+              }}
+              style={
+                state && !hover
+                  ? { backgroundPosition: "right", color: "white" }
+                  : undefined
+              }
+              className="option1"
+              onClick={() => {
+                setState(true);
+              }}
+            >
+              Received
+            </button>
+
+            <button
+              onMouseEnter={() => {
+                setHover(true);
+              }}
+              onMouseLeave={() => {
+                setHover(false);
+              }}
+              style={
+                !state && !hover
+                  ? { backgroundPosition: "left", color: "white" }
+                  : undefined
+              }
+              className="option2"
+              onClick={() => {
+                setState(false);
+              }}
+            >
+              Sent Out
+            </button>
+          </div>
+
+          {state ? (
+            <Component13 passData={passData} passReceiverID={passReceiverID} />
+          ) : (
+            <Component12 passData={passData} passPaidUnPaid={passPaidUnPaid} />
+          )}
         </div>
-
-        {state ? <Component13 passData = {passData}/> : <Component12 />}
+        <Component21 />
       </div>
-      <Component21 />
     </div>
   );
 };
