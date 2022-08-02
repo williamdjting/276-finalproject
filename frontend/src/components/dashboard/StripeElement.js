@@ -30,7 +30,7 @@ export default function CheckoutForm(props) {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage(null);
-          props.setSuccess(true);
+          
           axios
             .post("/request/pay-successful", {
               //reqid={reqid} receiverid={receiverid} amount={amount} setSuccessPay={setSuccessPay}
@@ -40,6 +40,7 @@ export default function CheckoutForm(props) {
             })
             .then(
               (res) => {
+                props.setSuccess(true);
                 console.log("Payment successful, request has been closed");
               },
               (error) => {
