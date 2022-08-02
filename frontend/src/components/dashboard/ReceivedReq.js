@@ -8,7 +8,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+<<<<<<< HEAD
 function FetchAPI13(props) {
+=======
+function FetchAPI13() {
+
+>>>>>>> c501a15 (got the test form to work and response to return)
   const [data, setData] = useState([]);
   const [names, setNames] = useState([]);
 
@@ -46,6 +51,7 @@ function FetchAPI13(props) {
           </p>
           <p className="item-3">{"$" + item.amount}</p>
           <p className="item-4">{item.eventdate}</p>
+<<<<<<< HEAD
           <button
             className="item-5"
             onMouseDown={paymentClick(item)}
@@ -66,6 +72,9 @@ function FetchAPI13(props) {
           >
             pay
           </button>
+=======
+          <button className="item-5">pay</button>
+>>>>>>> c501a15 (got the test form to work and response to return)
         </div>
       ))}
     </div>
