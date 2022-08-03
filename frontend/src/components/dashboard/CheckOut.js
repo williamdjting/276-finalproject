@@ -29,6 +29,7 @@ const CheckOut = (props) => {
 
   return (
     <div className="App">
+      {console.log(clientSecret)}
       {clientSecret && (
         <Elements
         stripe={stripePromise}
