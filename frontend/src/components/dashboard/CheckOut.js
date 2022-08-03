@@ -31,11 +31,12 @@ const CheckOut = (props) => {
     <div className="App">
       {clientSecret && (
         <Elements
+        stripe={stripePromise}
           options={{
             clientSecret,
             appearance,
           }}
-          stripe={stripePromise}
+          
         >
           <CheckoutForm
             reqid={props.reqid}
