@@ -85,11 +85,6 @@ app.use("/auth", userRoute);
 app.use("/admindata", adminRoute);
 
 //Stripe stuff
-const paymentAmount = (items) => {
-  
-  return 1400;
-};
-
 
 app.post("/create-payment-intent", async (req, res) => {
   const { amount} = req.body;

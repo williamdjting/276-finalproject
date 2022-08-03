@@ -12,9 +12,16 @@ const stripePromise = loadStripe(
 
 const CheckOut = (props) => {
   const [clientSecret, setClientSecret] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
   const appearance = {
     theme: "stripe",
   };
+
+const setRef = (data) => {
+setRefresh(data);
+}
+
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch("/create-payment-intent", {
@@ -23,21 +30,22 @@ const CheckOut = (props) => {
       body: JSON.stringify({ amount: props.amount }),
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((data) => {
+        setClientSecret(data.clientSecret);
+        setRefresh(true);
+      });
   }, [props.reqid]);
-
 
   return (
     <div className="App">
-
-      {console.log(stripePromise)}
-      {clientSecret && (
+      {console.log(clientSecret)}
+      {(clientSecret && refresh) && (
         <Elements
+          stripe={stripePromise}
           options={{
             clientSecret,
             appearance,
           }}
-          stripe={stripePromise}
         >
           {console.log("run")}
           <CheckoutForm
@@ -46,6 +54,7 @@ const CheckOut = (props) => {
             amount={props.amount}
             setSuccessPay={props.setSuccessPay}
             clientSecret={clientSecret}
+            setRef = {setRef}
           />
         </Elements>
       )}

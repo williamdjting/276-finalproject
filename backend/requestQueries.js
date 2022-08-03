@@ -332,7 +332,7 @@ const requestPaid = (request, response) => {
 
     // update host table     
     pool.query(
-            format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(userid), reqid, receiverid),
+            format('UPDATE "%I" SET close_date = %L , paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(userid), now, reqid, receiverid),
             (error, results) => {
                 if (error) {
                     temp = false;
@@ -342,22 +342,10 @@ const requestPaid = (request, response) => {
     
             }) 
 
-    pool.query(
-        format('UPDATE "%I" SET close_date = %L WHERE reqid = %L AND paid ', 'user'.concat(userid), now, reqid),
-        (error, results) => {
-            if (error) {
-                temp = false;
-
-                throw error
-            }
-
-        })
    
-    console.log(format('UPDATE "%L" SET close_date = %I WHERE reqid = %L AND paid ', 'user'.concat(userid), now, reqid));
-    console.log(format('UPDATE "%L" SET close_date = %I , paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), now, reqid, userid));
     // update guest table
     pool.query(
-        format('UPDATE "%I" SET close_date = %L , paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), now, reqid, userid),
+        format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), reqid, userid),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -365,6 +353,20 @@ const requestPaid = (request, response) => {
                 throw error
             }
         })
+
+    
+        pool.query(
+            format('UPDATE "%I" SET close_date = %L WHERE reqid = %L', 'user'.concat(receiverid), now, reqid),
+            (error, results) => {
+                if (error) {
+                    temp = false;
+    
+                    throw error
+                }
+            })
+
+    
+
     if (temp) {
         response.status(200).send(`RequestID: ${reqid} closed for user ${userid}`);
     }

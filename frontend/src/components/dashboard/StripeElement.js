@@ -68,6 +68,7 @@ export default function CheckoutForm(props) {
             .then(
               (res) => {
                 props.setSuccessPay(true);
+                props.setRef(false);
                 elements.getElement(PaymentElement).clear();
                 console.log("Payment successful, request has been closed");
               },
