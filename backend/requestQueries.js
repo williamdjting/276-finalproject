@@ -74,10 +74,10 @@ const viewAllOpenRequests = (request, response) => {
 const viewAllClosedRequests = async (request, response) => {
     const userid = request.params.id;
 
-    const unpaidRequestQuery = "SELECT reqid, date, eventdate, title, SUM(amount) AS amount, req_sent, " + 
+    const unpaidRequestQuery = "SELECT reqid, date, eventdate, title, SUM(amount) AS amount, req_sent, close_date, " + 
     "STRING_AGG(receiverid::character varying, ', ') receiverid " + 
-    "FROM %I GROUP BY reqid, title, eventdate, req_sent, date HAVING COUNT(req_sent) = SUM (CASE WHEN paid THEN 1 ELSE 0 END) " +
-    "ORDER BY reqid DESC";
+    "FROM %I GROUP BY reqid, title, eventdate, req_sent, date, close_date HAVING COUNT(req_sent) = SUM (CASE WHEN paid THEN 1 ELSE 0 END) " +
+    "ORDER BY close_date";
 
     const result = await pool.query(format(unpaidRequestQuery, 'user'.concat(userid)));
     const arr = await pool.query(format("SELECT DISTINCT receiverid from %I where paid = 't'", 'user'.concat(userid))); //get all sent user id
@@ -303,10 +303,13 @@ const editRequestUser = (request, response) => {
 const requestPaid = (request, response) => {
     const { reqid, userid, receiverid } = request.body;
     temp = true;
-    console.log(format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), reqid, userid));
-    // update host table
+    const now = new Date();
+
+    //console.log(format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), reqid, userid));
+    
+    //add a column close date if it's not existed in table
     pool.query(
-        format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(userid), reqid, receiverid),
+        format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS close_date TIMESTAMP', 'user'.concat(userid)),
         (error, results) => {
             if (error) {
                 temp = false;
@@ -315,9 +318,46 @@ const requestPaid = (request, response) => {
             }
 
         })
+
+    pool.query(
+            format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS close_date TIMESTAMP', 'user'.concat(receiverid)),
+            (error, results) => {
+                if (error) {
+                    temp = false;
+    
+                    throw error
+                }
+    
+            })    
+
+    // update host table     
+    pool.query(
+            format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(userid), reqid, receiverid),
+            (error, results) => {
+                if (error) {
+                    temp = false;
+    
+                    throw error
+                }
+    
+            }) 
+
+    pool.query(
+        format('UPDATE "%I" SET close_date = %L WHERE reqid = %L AND paid ', 'user'.concat(userid), now, reqid),
+        (error, results) => {
+            if (error) {
+                temp = false;
+
+                throw error
+            }
+
+        })
+   
+    console.log(format('UPDATE "%L" SET close_date = %I WHERE reqid = %L AND paid ', 'user'.concat(userid), now, reqid));
+    console.log(format('UPDATE "%L" SET close_date = %I , paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), now, reqid, userid));
     // update guest table
     pool.query(
-        format('UPDATE "%I" SET paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), reqid, userid),
+        format('UPDATE "%I" SET close_date = %L , paid = TRUE WHERE reqid = %L AND receiverid = %L', 'user'.concat(receiverid), now, reqid, userid),
         (error, results) => {
             if (error) {
                 temp = false;

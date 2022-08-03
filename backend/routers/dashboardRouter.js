@@ -74,6 +74,7 @@ router.get("/history/:id", async (req, res) => {
   await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS title VARCHAR', 'user'.concat(req.params.id))); //add title if not exists
   await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS eventdate VARCHAR', 'user'.concat(req.params.id)));
   await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS reqid INT', 'user'.concat(req.params.id)));
+  await pool.query(format('ALTER TABLE %I ADD COLUMN IF NOT EXISTS close_date TIMESTAMP', 'user'.concat(req.params.id)));
   query.viewAllClosedRequests(req, res);
 });
 
