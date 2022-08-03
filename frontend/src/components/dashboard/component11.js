@@ -24,6 +24,10 @@ const Component11 = (props) => {
     apiGet();
   }, []);
 
+  useEffect(() => {
+    apiGet();
+  }, [props.passSuccess]);
+
   return (
     <div className="info-container">
       <div className="userinfo">

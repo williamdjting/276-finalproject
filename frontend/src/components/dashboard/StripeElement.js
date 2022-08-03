@@ -67,6 +67,7 @@ export default function CheckoutForm(props) {
             .then(
               (res) => {
                 props.setSuccessPay(true);
+                elements.getElement(PaymentElement).clear();
                 console.log("Payment successful, request has been closed");
               },
               (error) => {
@@ -111,8 +112,9 @@ export default function CheckoutForm(props) {
         id="submit"
         className="pay-button"
         onClick={handleClick}
+        style={{marginTop: "35px"}}
       >
-        {isLoading ? "Loading..." : "Pay $" + props.amount}
+        {isLoading ? "Loading..." : "Pay Now"}
       </button>
     </form>
   );

@@ -22,6 +22,10 @@ function Component21(props) {
     apiGet();
   }, []);
 
+  useEffect(() => {
+    apiGet();
+  }, [props.passSuccess]);
+
   return (
     <div className="placeholder history-container">
       <h3>Transaction History</h3>

@@ -29,6 +29,10 @@ function FetchAPI13(props) {
     apiGet();
   }, []);
 
+  useEffect(() => {
+    apiGet();
+  }, [props.passSuccess]);
+
   const paymentClick = (item) => {
     localStorage.setItem("rid", item.reqid);
     localStorage.setItem("hid", item.receiverid);

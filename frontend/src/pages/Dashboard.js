@@ -108,7 +108,7 @@ const Dashboard = () => {
 
 
 
-        <Component11 />
+        <Component11 passSuccess = {success}/>
 
 
         <div className="request-container placeholder">
@@ -164,14 +164,14 @@ const Dashboard = () => {
           </div>
 
           {state ? (
-            <Component13 passData={passData} passReceiverID={passReceiverID} />
+            <Component13 passData={passData} passReceiverID={passReceiverID} passSuccess = {success}/>
           ) : (
-            <Component12 passData={passData} passPaidUnPaid={passPaidUnPaid} />
+            <Component12 passData={passData} passPaidUnPaid={passPaidUnPaid} passSuccess = {success}/>
           )}
         </div>
 
 
-        <Component21 passData={passData} passPaidUnPaid={passPaidUnPaid}/>
+        <Component21 passData={passData} passPaidUnPaid={passPaidUnPaid} passSuccess = {success}/>
 
 
 
