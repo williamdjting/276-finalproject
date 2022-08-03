@@ -28,7 +28,7 @@ const generateUserTable = async (request) => {
   const { userid } = request.body;
 
   let sql = format(
-    "CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount NUMERIC(4, 2), paid BOOL, title VARCHAR )",
+    "CREATE TABLE %I (req_sent BOOL, date DATE, receiverid INT, amount NUMERIC(200, 2), paid BOOL, title VARCHAR )",
     "user".concat(userid)
   );
 
