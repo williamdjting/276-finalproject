@@ -64,7 +64,7 @@ function FetchAPI13(props) {
               props.passReceiverID(item.receiverid);
             }}
           >
-            pay
+            Pay
           </button>
         </div>
       ))}

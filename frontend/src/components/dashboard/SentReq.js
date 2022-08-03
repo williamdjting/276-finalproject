@@ -74,7 +74,7 @@ function FetchAPI12(props) {
                 : props.passPaidUnPaid(null, null);
             }}
           >
-            view
+            View
           </button>
         </div>
       ))}

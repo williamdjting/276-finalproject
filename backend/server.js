@@ -92,17 +92,21 @@ const paymentAmount = (items) => {
 
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
+  const { amount} = req.body;
 
+  console.log(amount);
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: paymentAmount(items),
-    currency: "eur",
+    amount: amount*100,
+    currency: 'usd',
     automatic_payment_methods: {
-      enabled: true,
+      enabled: true
     },
-  });
 
+   // payment_method: '{{CARD_ID}}'
+  });
+  console.log("payment Intent is: " + paymentIntent.amount);
+  console.log("client secret is: " + paymentIntent.client_secret);
   res.send({
     clientSecret: paymentIntent.client_secret,
   });

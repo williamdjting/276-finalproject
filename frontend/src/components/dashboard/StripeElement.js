@@ -13,24 +13,50 @@ export default function CheckoutForm(props) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [check, setCheck] = useState(false);
+
   useEffect(() => {
-    if (!stripe) {
+    setMessage(null);
+  }, [props.reqid]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-    setMessage("");
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
 
-    if (!clientSecret) {
-      return;
-    }
+    setIsLoading(true);
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        // Make sure to change this to your payment completion page
+        return_url: "http://localhost:3000",
+      },
+      redirect: "if_required",
+    });
+
+    console.log("after pay" + JSON.stringify(paymentIntent));
+    // This point will only be reached if there is an immediate error when
+    // confirming the payment. Otherwise, your customer will be redirected to
+    // your `return_url`. For some payment methods like iDEAL, your customer will
+    // be redirected to an intermediate site first to authorize the payment, then
+    // redirected to the `return_url`.
+
+    if (error) {
+      if (error.type === "card_error" || error.type === "validation_error") {
+        setMessage(error.message);
+      } else {
+        setMessage("An unexpected error occurred.");
+      }
+    } else if (paymentIntent) {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage(null);
-          
+
           axios
             .post("/request/pay-successful", {
               //reqid={reqid} receiverid={receiverid} amount={amount} setSuccessPay={setSuccessPay}
@@ -40,7 +66,7 @@ export default function CheckoutForm(props) {
             })
             .then(
               (res) => {
-                props.setSuccess(true);
+                props.setSuccessPay(true);
                 console.log("Payment successful, request has been closed");
               },
               (error) => {
@@ -60,53 +86,23 @@ export default function CheckoutForm(props) {
           setMessage("Something went wrong.");
           break;
       }
-    });
-  }, [stripe]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
-      return;
-    }
-
-    setIsLoading(true);
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
-      },
-      redirect: "if_required",
-    });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-
-    if (error) {
-      if (error.type === "card_error" || error.type === "validation_error") {
-        setMessage(error.message);
-      } else {
-        setMessage("An unexpected error occurred.");
-      }
     }
     setIsLoading(false);
   };
 
   const handleClick = (event) => {
     console.log(event.currentTarget.id);
+    setMessage(null);
   };
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message" className="errorMessage">{message}</div>}
+      {message && (
+        <div id="payment-message" className="errorMessage">
+          {message}
+        </div>
+      )}
 
       <PaymentElement id="payment-element" />
 
@@ -116,15 +112,7 @@ export default function CheckoutForm(props) {
         className="pay-button"
         onClick={handleClick}
       >
-        <span id="button-text">
-          {isLoading ? (
-            <div className="spinner" id="spinner">
-              Loading...
-            </div>
-          ) : (
-            "Pay $" + props.amount
-          )}
-        </span>
+        {isLoading ? "Loading..." : "Pay $" + props.amount}
       </button>
     </form>
   );

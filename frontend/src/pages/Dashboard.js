@@ -50,6 +50,7 @@ const Dashboard = () => {
   const setSuccessPay = (data) => {
     setSuccess(data);
     setVisibility(false);
+    console.log("payment succesful");
   };
 
   //communicate Pop Up with child elements
@@ -96,7 +97,7 @@ const Dashboard = () => {
             margin: "0",
           }}
         >
-          {"Payment to " + names[0] + " is Successful"}
+          {"Payment to " + names[receiverid] + " is Successful"}
         </p>
       ) : (
         <></>
