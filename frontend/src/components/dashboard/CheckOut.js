@@ -24,11 +24,13 @@ const CheckOut = (props) => {
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, []);
+  }, [props.reqid]);
 
 
   return (
     <div className="App">
+
+      {console.log(stripePromise)}
       {clientSecret && (
         <Elements
           options={{
@@ -37,6 +39,7 @@ const CheckOut = (props) => {
           }}
           stripe={stripePromise}
         >
+          {console.log("run")}
           <CheckoutForm
             reqid={props.reqid}
             receiverid={props.receiverid}

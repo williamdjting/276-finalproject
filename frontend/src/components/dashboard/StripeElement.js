@@ -13,11 +13,10 @@ export default function CheckoutForm(props) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     setMessage(null);
-  }, [props.reqid]);
+  }, [props.reqid, props.clientSecret]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,13 +38,15 @@ export default function CheckoutForm(props) {
       redirect: "if_required",
     });
 
-    console.log("after pay" + JSON.stringify(paymentIntent));
+    console.log("element: " + elements);
+    console.log("after pay " + JSON.stringify(paymentIntent));
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-
+    console.log("error is: " + JSON.stringify(error));
+    
     if (error) {
       if (error.type === "card_error" || error.type === "validation_error") {
         setMessage(error.message);
@@ -112,7 +113,7 @@ export default function CheckoutForm(props) {
         id="submit"
         className="pay-button"
         onClick={handleClick}
-        style={{marginTop: "35px"}}
+        style={{ marginTop: "35px" }}
       >
         {isLoading ? "Loading..." : "Pay Now"}
       </button>
